@@ -1,0 +1,241 @@
+<?php
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\node\NodeInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+function tarkett_claims_theme() {
+	return array(
+		'claims_form' => array(
+			'variables' => array('title' => NULL),
+		),
+		'defects_photo' => array(
+			'variables' => array(
+				'name' => NULL,
+				'description' => NULL,
+			),
+		),
+		'defects_photo_only' => array(
+			'variables' => array(
+				'name' => NULL,
+			),
+		),
+		'defects_video' => array(
+			'variables' => array(
+				'name' => NULL,
+				'embeded' => false,
+			),
+		),
+		'docs_list' => array(
+			'variables' => array(
+				'name' => NULL,
+			),
+		),
+		'printing_pokupatel_claim' => array(
+			'variables' => array(
+				'node' => NULL,
+				'user' => NULL,
+				'qrurl' => '',
+			),
+		),
+		'printing_magazin_claim' => array(
+			'variables' => array(
+				'node' => NULL,
+				'user' => NULL,
+				'qrurl' => '',
+			),
+		),
+		'printing_distributor_claim' => array(
+			'variables' => array(
+				'node' => NULL,
+				'user' => NULL,
+				'qrurl' => '',
+			),
+		),
+		'claims_added_email' => array(
+			'variables' => array(
+				'claim_id' => NULL,
+				'claim_link' => NULL,
+				'fio' => NULL,
+				'login' => NULL,
+				'passwd' => NULL,
+			),
+		),
+		'mail_template' => ['variables' => ['content' => NULL]],
+	);
+}
+
+function tarkett_claims_views_query_alter($view, $query) {
+	if ($view->id() == 'prodavec_spisok_obrasenii') {// && $view->getDisplay()->display['id'] == 'attachment_1'
+		foreach ($query->where as &$condition_group) {
+			foreach ($condition_group['conditions'] as &$condition) {
+				if ($condition['field'] == 'node__field_privazka_magazina.field_privazka_magazina_target_id') {
+					$condition['value'] = \Drupal::currentUser()->id();
+				}
+				
+			}
+		}
+	}
+	if ($view->id() == 'distributor_spisok_obrasenii') {// && $view->getDisplay()->display['id'] == 'attachment_1'
+		foreach ($query->where as &$condition_group) {
+			foreach ($condition_group['conditions'] as &$condition) {
+				if ($condition['field'] == 'node__field_privazka_distributor.field_privazka_distributor_target_id') {
+					$condition['value'] = \Drupal::currentUser()->id();
+				}
+				
+			}
+		}
+	}
+	if ($view->id() == 'pokupatel_spisok_obrasenii') {// && $view->getDisplay()->display['id'] == 'attachment_1'
+		$ids = [];
+		$ids[] = \Drupal::currentUser()->id();
+		foreach ($query->where as &$condition_group) {
+			foreach ($condition_group['conditions'] as &$condition) {
+				if ($condition['field'] == 'node_field_data.uid') {
+					$condition['value'] = $ids;
+				}
+				
+			}
+		}
+	}
+	if ($view->id() != 'pokupatel_spisok_obrasenii') {
+		if ($view->getDisplay()->display['id'] == "new") {
+			$user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+			foreach ($query->where as &$condition_group) {
+				foreach ($condition_group['conditions'] as &$condition) {
+					if ($condition['field'] == 'node__field_responsiblecontactuid.field_responsiblecontactuid_value') {
+						$condition['value'] = $user->field_contactuid->value;
+					}
+				}
+			}
+		}
+	}
+}
+
+/**
+ * Пытаемся определить права доступа к данным обращения/претензии
+ * - для обращения/претензии проверяется наличие связи пользователя с этим обращением/претензией
+ * - если связи нет, осуществляется редирект на список пользовательских обращений с сообщением
+ *
+ * @param \Drupal\node\NodeInterface $node 					- "узел" данных
+ * @param str $operation									- тип действия
+ * @param \Drupal\Core\Session\AccountInterface $account	- аккаунт пользователя
+ * @return
+ */
+function tarkett_claims_node_access($node, $operation, $account) {
+	// Читаем роли пользователя, выбираем основную
+	$roles = $account->getRoles();
+	$main_role = array_pop($roles);
+	$node_type = $node->getType();
+
+	// Если пользователь не авторизован, отправляем его на авторизацию
+	if (('anonymous' === $main_role) && ('page' !== $node_type)) {
+		$data = drupal_get_destination();
+		if (isset($data['destination'])) {
+			setcookie('destination', $data['destination'], 0, '/');
+		}
+		$response = new RedirectResponse(
+			\Drupal\Core\Url::fromUserInput(
+				'/user/login'
+			)->toString()
+		);
+		$response->send();
+		return;
+	}
+
+	// Вычисляем адрес страницы со списком обращений/претензий пользователя
+	$redirect_url = '/claims_lists_' . (('distributor' === $main_role) ? 'distributors' : $main_role);
+
+	// Открываются для просмотра только обращения/претензии
+	if ('obrasenie_pretenzia' !== $node_type) {
+		// @TODO: попробовать найти "родительское" обращение/претензию и проверить доступ к ней
+
+		// if ('view' == $operation) {
+		// 	// Сообщаем об отсутствии прав на просмотр данных
+		// 	drupal_set_message(t('У вас нет прав доступа к этим данным.'), 'error');
+		// 	// Отправляем пользователя на страницу списка
+		// 	$response = new RedirectResponse(\Drupal\Core\Url::fromUserInput($redirect_url)->toString());
+		// 	return $response->send();
+		// } else {
+			return;
+		// }
+	}
+
+	// Запоминаем ID пользователя
+	$user_id = $account->id();
+	// Читаем данные пользователя
+	$user = \Drupal\user\Entity\User::load($user_id);
+
+	// Читаем "владельца" (автора) обращения/претензии
+	$owner = $node->getOwner();
+	// Проверяем, является ли пользователь "владельцем" обращения/претензии
+	$not_owner = ($user_id !== $owner->uid->value);
+
+	// // Проверяем, является ли пользователь "ответственным за этап" обработки обращения/претензии
+	// $not_responsible = !in_array(
+	// 	$node->field_responsiblecontactuid->value,
+	// 	array($user->field_contactuid->value, $user->field_uid->value)
+	// );
+
+	// Проверяем, является ли пользователь "магазином", связанным с обращением/претензией
+	$not_linked_market = true;
+	if (('magazin' === $main_role) &&
+		($values = $node->field_privazka_magazina->getValue()) &&
+		(0 < count($values)) &&
+		(isset($values[0]['target_id'])) &&
+		($market_id = $values[0]['target_id']) &&
+		($user_id === $market_id)) {
+		$not_linked_market = false;
+	}
+
+	// Проверяем, является ли пользователь "дистрибьютором", связанным с обращением/претензией
+	$not_linked_distributor = true;
+	if (('distributor' === $main_role) &&
+		($values = $node->field_privazka_distributor->getValue()) &&
+		(0 < count($values)) &&
+		(isset($values[0]['target_id'])) &&
+		($distributor_id = $values[0]['target_id']) &&
+		($user_id === $distributor_id)) {
+		$not_linked_distributor = false;
+	}
+
+	// Проверяем наличие связи пользователя с обращением/претензией
+	$not_linked = ($not_linked_market && $not_linked_distributor);
+
+	// Пользователь не является "владельцем", "ответственным за этап" или связанным с обращением/претензией
+	// if ($not_owner && $not_responsible && $not_linked) {
+	// Пользователь не является "владельцем" или связанным с обращением/претензией
+	if ($not_owner && $not_linked) {
+		// Сообщаем ему об отсутствии прав на просмотр данных
+		drupal_set_message(t('У вас нет прав доступа к этому обращению или претензии.'), 'error');
+		// Отправляем пользователя на страницу списка
+		$response = new RedirectResponse(\Drupal\Core\Url::fromUserInput($redirect_url)->toString());
+		return $response->send();
+	}
+
+	// Пользователь может просматривать данные обращения/претензии
+
+	// Если пользователь является "ответственным за этап",
+	// дальнейшая проверка и обработка прекращается
+	// if (in_array(
+	// 		$node->field_responsiblecontactuid->value,
+	// 		[$user->field_contactuid->value, $user->field_uid->value]
+	// 	)) {
+	// 	return;
+	// }
+
+	// Выставляем признаки "архивности" для недавно закрытых процессов
+	if ('magazin' === $main_role) {
+		if (true == $node->field_market_just_closed->value) {
+			$node->field_market_just_closed = 0;
+			$node->save();
+		}
+	}
+	if ('distributor' === $main_role) {
+		if (true == $node->field_distributor_just_closed->value) {
+			$node->field_distributor_just_closed = 0;
+			$node->save();
+		}
+	}
+}

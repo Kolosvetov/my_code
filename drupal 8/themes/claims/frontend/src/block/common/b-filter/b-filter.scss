@@ -1,0 +1,99 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-filter {
+	border-bottom: 1px solid #cdcdcd;
+	width: 1120px;
+	margin: 0 40px 40px;
+
+	@include grid-row();
+	&__title {
+		padding-right: 40px;
+		color: #265165;
+		font-size: 21px;
+		font-weight: 600;
+		line-height: 20px;
+		text-align: right;
+		position: relative;
+		margin-bottom: 50px;
+	}
+	&__toggle {
+		position: absolute;
+		right: 0;
+		top: -3px;
+		transform: rotate(90deg);
+
+		@include sprite($i-more);
+		&::before {
+			top: 0;
+			left: 0;
+			content: "";
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			opacity: 0;
+			transition: opacity 0.1s;
+
+			@include sprite($i-more-active);
+		}
+
+		&:hover {
+			&::before {
+				opacity: 1;
+			}
+		}
+		&--toggled {
+			transform: rotate(270deg);
+		}
+	}
+}
+
+.b-filter-fields {
+	@include grid-row();
+	@include grid-column(10, 0);
+	@include grid-column-offset(2);
+	@include grid-column-end();
+	margin-bottom: 50px;
+
+	&__field-fullwidth {
+		width: 100% !important;
+	}
+
+	&__field-short {
+		width: 144px !important;
+	}
+
+	&__label {
+		display: inline-block;
+		color: #878787;
+		margin: 0 15px 5px 10px;
+		vertical-align: middle;
+	}
+	&__input {
+		margin-bottom: 30px;
+	}
+
+	&__select {
+		text-align: left;
+		display: inline-block;
+	}
+
+	.form-item-field-claims-date-value-max.form-item:not(.js-form-wrapper),
+	.form-item-field-claims-date-value-min.form-item:not(.js-form-wrapper) {
+		width: 144px !important;
+		margin-right: 45px;
+
+		input {
+			width: 100%;
+		}
+		label {
+			right: calc(100% + 17px);
+			width: auto !important;
+			left: auto !important;
+		}
+	}
+}
+
+.c-toggle {
+	display: none;
+}

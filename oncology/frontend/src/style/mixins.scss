@@ -1,0 +1,30 @@
+
+@mixin custom_placeholder {
+	::-webkit-input-placeholder {
+		@content;
+	}
+
+	:-moz-placeholder {
+		@content;
+	}
+
+	::-moz-placeholder {
+		@content;
+	}
+
+	:-ms-input-placeholder {
+		@content;
+	}
+}
+
+@mixin span_bottom_line($width, $type, $color) {
+	span {
+		border-bottom: $width $type $color;
+	}
+
+	&:hover {
+		span {
+			border-bottom: $width $type rgba(0, 0, 0, 0);
+		}
+	}
+}

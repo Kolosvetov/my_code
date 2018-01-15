@@ -1,0 +1,257 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-advantages {
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+
+	&__list,
+	&__item {
+		width: 100%;
+		position: relative;
+
+		@include breakpoint(xlarge) {
+			width: 100%;
+		}
+	}
+
+	&__item {
+		padding: 0 25px;
+		position: absolute;
+		right: -2000px;
+		opacity: 0;
+		top: 0;
+		transition: opacity 0.2s linear 0s, right 0.7s linear 0.2s;
+
+		&.start {
+			right: 0;
+			opacity: 1;
+			transition: opacity 0s linear 0s, right 0s linear 0s;
+		}
+
+		&.active {
+			right: 0;
+			opacity: 1;
+		}
+
+		@include breakpoint(small) {
+			padding: 0 58px;
+		}
+
+		@include breakpoint(medium) {
+			padding: 0 85px;
+
+			img {
+				width: 325px;
+			}
+		}
+
+		@include breakpoint(xlarge) {
+			padding: 0 150px;
+
+			img {
+				width: 430px;
+				float: left;
+			}
+		}
+
+		@include breakpoint(xxlarge) {
+			padding: 0 25px;
+
+			img {
+				width: 480px;
+			}
+		}
+	}
+
+	&__list {
+		position: relative;
+		overflow: hidden;
+
+		@include breakpoint(medium) {
+			margin-top: 50px;
+		}
+	}
+
+	&__item-title {
+		color: $color-green-x-light;
+		display: block;
+		font-size: 2.5em;
+		line-height: 1em;
+		margin-bottom: 28px;
+		text-transform: lowercase;
+		font-weight: 900;
+		text-align: center;
+		margin-top: -30px;
+		-moz-hyphens: auto;
+		-webkit-hyphens: auto;
+		-ms-hyphens: auto;
+
+		@include breakpoint(small) {
+			font-size: 3.2em;
+		}
+
+		@include breakpoint(medium) {
+			position: relative;
+			top: -205px;
+			left: 38px;
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+
+		@include breakpoint(xlarge) {
+			margin-top: 0;
+			text-align: left;
+			left: -1.7em;
+			top: 0.7em;
+		}
+	}
+
+	&__item-src {
+		line-height: 1.5em;
+		display: inline-block;
+
+		@include breakpoint(large) {
+			width: 250px;
+			margin-left: 375px;
+			margin-top: -90px;
+		}
+
+		@include breakpoint(xlarge) {
+			width: calc(100% - 3em - 430px);
+			margin-left: 3em;
+			margin-top: 7em;
+		}
+
+		@include breakpoint(xlarge) {
+			width: calc(100% - 3em - 480px);
+		}
+	}
+
+	&__prev,
+	&__next {
+		background: url('~img/common/i-orange-arrow.png');
+		background-repeat: no-repeat;
+		position: absolute;
+		top: 151px;
+		width: 19px;
+		height: 59px;
+		background-size: contain;
+		cursor: pointer;
+
+		@include breakpoint(small) {
+			width: 23px;
+			height: 78px;
+			top: 275px;
+		}
+
+		@include breakpoint(medium) {
+			top: 245px;
+			background-size: auto;
+		}
+
+		@include breakpoint(xlarge) {
+			top: 145px;
+		}
+	}
+
+	&__next {
+		right: -19px;
+
+		@include breakpoint(small) {
+			right: 0;
+		}
+
+		@include breakpoint(medium) {
+			right: 0;
+
+			@include sprite($i-big-arrow-right);
+
+			&:hover {
+				@include sprite($i-green-big-arrow-right);
+			}
+		}
+	}
+
+	&__prev {
+		left: -19px;
+		transform: rotate(180deg);
+
+		@include breakpoint(small) {
+			left: 0;
+		}
+
+		@include breakpoint(medium) {
+			left: 0;
+
+			@include sprite($i-big-arrow-right);
+
+			&:hover {
+				@include sprite($i-green-big-arrow-right);
+			}
+		}
+	}
+
+	&__pager {
+		display: none;
+		float: left;
+		width: 100%;
+		margin-top: 3em;
+		text-align: center;
+
+		& > a {
+			display: inline-block;
+			position: relative;
+			width: 85px;
+			height: 84px;
+			font-size: 1.4em !important;
+			color: $color-black;
+			font-weight: 300 !important;
+
+			& > svg {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				left: 0;
+				top: 0;
+			}
+
+			& > span {
+				width: 100%;
+				left: 0;
+				line-height: 3.8em;
+				text-align: center;
+				position: absolute;
+				border-bottom: 0 !important;
+			}
+
+			@include breakpoint(small) {
+				width: 80px;
+			}
+
+			@include breakpoint(medium) {
+				display: inline-block;
+				float: none;
+			}
+		}
+
+		@include breakpoint(small) {
+			display: block;
+			margin-left: -25px;
+			width: calc(100% + 50px);
+		}
+	}
+
+	@include breakpoint(xxlarge) {
+		margin-top: 0;
+		padding: 0 110px 0 190px;
+	}
+}
+
+@include breakpoint(xlarge) {
+	h2 {
+		width: 100%;
+	}
+}

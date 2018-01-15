@@ -1,0 +1,55 @@
+@import "~style";
+
+.b-head {
+	padding: 26px 0;
+	background: #eff3f4;
+
+	@include grid-column(12, 0);
+	&__h1 {
+		text-align: center;
+		color: #17323d;
+		font-size: 52px;
+		margin-top: -1px;
+		line-height: 100%;
+		font-weight: 600;
+
+		@include grid-column(12, 0);
+	}
+	&__description {
+		text-align: center;
+		color: #17323d;
+		font-size: 16px;
+		line-height: 140%;
+		margin-top: 18px;
+		font-weight: 300;
+
+		@include grid-column(12, 0);
+	}
+	.c-ok {
+		clear: both;
+	}
+}
+
+.l-back {
+	height: 28px;
+	color: #01b5d8;
+	font-size: 15px;
+	font-weight: bold;
+
+	&::before {
+		content: "";
+		width: 28px;
+		height: 28px;
+		background: url(~img/common/back.png) 0 0 no-repeat;
+		float: left;
+		margin-right: 12px;
+	}
+	&::after {
+		content: "Вернуться";
+		float: left;
+		margin-top: 3px;
+	}
+
+	@include grid-column(11, 0);
+	@include grid-column-offset(1);
+}

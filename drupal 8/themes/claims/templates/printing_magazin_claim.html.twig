@@ -1,0 +1,103 @@
+{#
+/**
+ * Страница претензии магазина для печати
+ */
+#}
+{% set claim = node %}
+{% set retail = element_by_target_id(node.field_claims_dannye_magazina.value[0]['target_id'], 'node') %}
+{% set distributor = element_by_target_id(node.field_dannye_distributora.value[0]['target_id'], 'node') %}
+{% set distribuser = element_by_target_id(retail.field_market_consumer_distributo.value[0]['target_id'], 'user') %}
+	<header>
+		<div class="claim-block claim-print">
+			<div class="claim-block__panel">
+				<div class="claim-print__logo"><img src="/sites/default/files/images/logo/print-logo-new.png"/></div>
+			</div>
+			<div class="claim-block__panel">
+				<div class="claim-print__title print-button">
+					Печать
+				</div>
+			</div>
+		</div>
+	</header>
+	<main>
+ 		<div class="claim-blocks">
+			<div class="claim-block claim-top claim-top_magazin">
+				<img src="{{ qrurl }}" class="claim-top__qr-code"/>
+				<div class="claim-top__url">
+					Уникальная ссылка на обращение:<br/>
+					<a href="/node/{{ node.nid.value }}" target="_blank">claims.tarkett.ru/node/{{ claim.nid.value }}</a>
+				</div>
+				<h1>Претензия магазина № {{ claim.nid.value }}</h1>
+				<h2>от {{ claim.field_claims_date.value|date('d.m.Y') }}</h2>
+			</div>
+			<div class="claim-block claim-block_unbordered claim-distributor">
+				<div class="claim-block__panel claim-block__panel_right">
+					{% if distribuser.field_ur_lico_name.value %}<strong>{{ distribuser.field_ur_lico_name.value }}</strong><br>{% elseif distribuser.name.value %}<strong>{{ distribuser.name.value }}</strong><br>{% endif %}
+					{% if distributor.field_d_fio.value %}Менеджеру отдела по работе с претензиями<br>
+					{{ distributor.field_d_fio.value }}<br>{% endif %}
+					{# {адрес}<br> #}
+					{% if distributor.field_distributor_email.value %}{{ distributor.field_distributor_email.value }}<br>{% endif %}
+					{% if distributor.field_distributor_phone.value %}{{ distributor.field_distributor_phone.value }}<br>{% endif %}
+				</div>
+			</div>
+			<div class="claim-block claim-head">
+				<div class="claim-block__panel claim-block__panel_full">
+					<h3 class="centered">ПРЕТЕНЗИЯ</h3>
+					<p>При получении товаров, поставляемых Вами по документам:</p>
+{% if retail.field_market_consumer_invoices.value %}
+					<p>Счёт-фактура № {{ retail.field_market_consumer_invoices.value }} от {% if retail.field_market_consumer_invoices_d.value|replace({'-':'','.':'','/':''}) %}{{ retail.field_market_consumer_invoices_d.value|date('d.m.Y') }}{% endif %}</p>
+{% endif %}
+{% if retail.field_market_torg_12.value %}
+					<p>Акт торг 12 № {{ retail.field_market_torg_12.value }} от {% if retail.field_market_torg_12_date.value|replace({'-':'','.':'','/':''}) %}{{ retail.field_market_torg_12_date.value|date('d.m.Y') }}{% endif %}</p>
+{% endif %}
+				</div>
+			</div>
+			<div class="claim-block claim-goods">
+				<div class="claim-block__panel">
+					<h3>Информация о купленном товаре</h3>
+					<span class="claim-block__title">Категория продукта:</span> {{ claim.field_product_cat.value|default('не указана') }}
+					<br/><span class="claim-block__title">Коллекция:</span> {{ claim.field_product_name.value|default('не указана') }}
+					<br/><span class="claim-block__title">Количество купленного товара:</span> {{ claim.field_product_count_all.value|default('не указано') }} {{ claim.field_product_count_all_ez.value }}
+					<br/><span class="claim-block__title">Количество товара с дефектом:</span> {{ claim.field_product_count_bad.value|default('не указано') }} {{ claim.field_product_count_bad_ez.value }}
+					<br/><span class="claim-block__title">Стоимость:</span> {% if claim.field_product_price.value %}{{ claim.field_product_price.value }} руб.{% else %}не указана{% endif %}
+					<br/><span class="claim-block__title">Возможно предоставить образец?</span> {% if 1 == claim.field_product_can_show.value %}Да{% else %}Нет{% endif %}
+				</div><div class="claim-block__panel">
+					<img class="claim-block__image address-map" data-address="{{ claim.field_product_address_city.value|raw }}, {{ claim.field_product_address.value|raw }}" alt="Карта с адресом места нахождения товара"/>
+				</div>
+			</div>
+{% if claim.field_defect_text.value %}
+			<div class="claim-block claim-description">
+				<h3>Описание проблемы магазином</h3>
+				{{ claim.field_defect_text.value }}
+			</div>
+{% endif %}
+{% if 0 < node.field_photo_magazin|length %}
+			<div class="claim-block claim-block_unbordered claim-defects">
+				<h3>Дополнительная информация</h3>
+				<div></div>
+	{% for magazin_photo in node.field_photo_magazin %}
+				<img class="claim-block__image claim-block__image_grid" src="{{ file_url(magazin_photo.entity.fileuri) }}"/>
+	{% endfor %}
+			</div>
+{% endif %}
+			<div class="claim-signature claim-signature_with_data">
+				<div class="claim-block__panel claim-block__panel_full">
+					<span class="claim-signature__title">Менеджер по претензиям:</span>
+					<span class="claim-signature__field claim-signature__field_signature">&nbsp;</span>
+					<span class="claim-signature__note">
+	 				{% if user.field_user_fio.value %}{{ user.field_user_fio.value }}<br>{% elseif retail.field_market_consumer_fio.value %}{{ retail.field_market_consumer_fio.value }}<br>{% endif %}
+	 				от {{ 'now'|date('d.m.Y') }}
+	 				</span>
+ 				</div>
+				<div class="claim-block__panel claim-block__panel_more">
+					<strong>{% if user.field_ur_lico_name.value %}{{ user.field_ur_lico_name.value }}{% else %}{{ user.name.value }}{% endif %}</strong><br>
+					{# {адрес}<br> #}
+					{% if user.field_user_phone.value %}Тел.: {{ user.field_user_phone.value }}<br>{% elseif retail.field_market_consumer_phone.value %}Тел.: {{ retail.field_market_consumer_phone.value }}<br>{% endif %}
+					{% if user.field_user_email.value %}Email: {{ user.field_user_email.value }}<br>{% elseif retail.field_market_consumer_email.value %}Email: {{ retail.field_market_consumer_email.value }}<br>{% endif %}
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer>
+		<button class="c-button print-button">Печать</button>
+	</footer>

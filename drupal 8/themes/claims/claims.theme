@@ -1,0 +1,272 @@
+<?php
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+function claims_preprocess(&$vars) 
+{
+	$node_references = [];
+	if (isset($vars['node'])) {
+		if(isset($vars['node']->field_defects)) {
+			foreach ($vars['node']->field_defects->getValue() as $d) {
+				$target_node = \Drupal\node\Entity\Node::load($d['target_id']);
+				$node_references[] = $target_node;
+			}
+			$category = '';
+			if (($cat_value = $vars['node']->field_product_cat->getValue()) &&
+				is_array($cat_value) &&
+				isset($cat_value[0]) &&
+				isset($cat_value[0]['value'])) {
+				$category = $cat_value[0]['value'];
+			}
+			$vars['node_references'] = process_problems($node_references, $category);
+		}
+	}
+}
+
+function claims_preprocess_page(&$vars) 
+{
+	$vars['url'] = $_SERVER['REQUEST_URI'];
+}
+
+function claims_preprocess_html(&$vars)
+{
+	$user = $vars['user'];
+	$roles = $user->getRoles();
+
+	if ((strpos($_SERVER['REQUEST_URI'], '/node') === 0) &&
+		(strpos($_SERVER['REQUEST_URI'], '/print') > 0)) {
+		$vars['attributes']['class'][] = 'printing';
+	} else {
+		if (('anonymous' !== $roles[0]) &&
+			(false === array_search('pokupatel', $roles))) {
+			$vars['attributes']['class'][] = 'role--magazin';
+		}
+		
+		if ((false !== array_search('pokupatel', $roles)) ||
+		    (('anonymous' === $roles[0]) &&
+		     (substr_count($_SERVER['REQUEST_URI'], '/add_consumer_claim') != 0))) {
+			$vars['attributes']['class'][] = 'role--pokupatel';
+		}
+		
+		if ((substr_count($_SERVER['REQUEST_URI'], '/user/login') != 0) ||
+			(substr_count($_SERVER['REQUEST_URI'], '/user/password') != 0)) {
+			$vars['attributes']['class'][] = 'login-page';
+			$vars['attributes']['class'][] = 'role--magazin';
+		}
+	}
+}
+
+function p_fieldset($p_fieldset, $node_reference)
+{
+	$res = [];
+	foreach ($p_fieldset as $key => $data) {
+		if (is_array($data)) {
+			if (isset($data['#type']) && ($data['#type'] == 'fieldset')) {
+				$res[]['#title'] = isset($data['#title'])? $data['#title']:null;
+				$res[] = p_fieldset($data, $node_reference);
+			} elseif (isset($data['#type']) && ($data['#type'] == 'container')) {
+				$res = array_merge($res, p_fieldset($data, $node_reference));
+			} else {
+				$res[] = p_field($data, $key, $node_reference);
+			}
+		}
+	}
+	return $res;
+}
+function p_field($field, $key, $node_reference)
+{
+	$value = '-';
+
+	if (count($node_reference->defect)!=0 && property_exists($node_reference->defect, $key)) {
+		if (isset($field['#options'])) {
+			$value = isset($field['#options'][$node_reference->defect->$key]) ?
+						$field['#options'][$node_reference->defect->$key] :
+						null;
+		} elseif (!empty($node_reference->defect->$key)) {
+			$value = $node_reference->defect->$key;
+		}
+	} else {
+		$value = null;
+	}
+
+	return [
+		'key' => $key,
+		'#type' => isset($field['#type']) ? $field['#type'] : null,
+		'title' => isset($field['#title']) ? $field['#title'] : null,
+		'value' => $value,
+	];
+}
+
+function process_problems($node_references, $category)
+{
+	$ar_res = [];
+
+	$data = \Drupal::service('tarkett_claims.claims_class_defects')->getDefects($category);
+	$defects = ($data && isset($data['defects'])) ? $data['defects'] : [];
+	$service_name = 'tarkett_claims.claims_class_forms_' . (($data && isset($data['start'])) ? $data['start'] : '');
+
+	$ob = \Drupal::hasService($service_name) ? \Drupal::service($service_name) : null;
+
+	foreach ($node_references as $node_reference_db) {
+		$node_reference = GuzzleHttp\json_decode($node_reference_db->field_opisanie_defekta->value);
+		$defects_keys = explode('_', $node_reference->defect_type);
+		if (isset($defects[$defects_keys[1]])) {
+			$main_defect_type = $defects[$defects_keys[1]]['title'];
+			$second_defect_type = $defects[$defects_keys[1]]['rows'][$defects_keys[2]];
+		} else {
+			$main_defect_type = '';
+			$second_defect_type = '';
+		}
+		$fields = $ob ? call_user_func_array([$ob, $node_reference->defect_type], [$node_reference->defect_status]) : [];
+		$arResult = [];
+		$arResult = p_fieldset($fields, $node_reference);
+
+		$ar_res[] = [
+			'fields' => $arResult,
+			'main_defect_type' => $main_defect_type,
+			'second_defect_type' => $second_defect_type,
+			'node' => $node_reference_db,
+		];
+	}
+	return $ar_res;
+}
+function claims_preprocess_views_view_unformatted(&$vars) 
+{
+}
+function claims_preprocess_views_view_fields(&$vars) 
+{
+	$vars['entity'] = $vars['row']->_entity;
+}
+function claims_preprocess_views_exposed_form(&$form)
+{
+	$roles = \Drupal::currentUser()->getRoles();
+	
+	if ($roles[1] == 'pokupatel') {
+		$form['form']['nid']['#attributes']['placeholder'] = $form['form']['nid']['#title'];
+		$form['form']['nid']['#attributes']['class'] = ['b-middle-form__search-input'];
+		$form['form']['actions']['submit']['#attributes']['class'] = ['b-middle-form__search-submit'];
+		$form['form']['actions']['submit']['#value'] = '';
+		unset($form['form']['nid']['#title']);
+		
+	} else {
+		$form['form']['actions']['submit']['#attributes']['class'] = ['c-button'];
+		if (isset($form['form']['field_claims_date_value'])) {
+				$form['form']['field_claims_date_value']['max']['#title'] = '-';
+				$form['form']['field_claims_date_value']['max']['#attributes']['class'] = ['date'];
+				$form['form']['field_claims_date_value']['min']['#attributes']['class'] = ['date'];
+				$form['form']['field_claims_date_value_fieldset'] = [
+					'#type' => 'fieldset',
+					'field_claims_date_value' => $form['form']['field_claims_date_value'],
+				];
+				$actions = $form['form']['actions'];
+				unset($form['form']['actions']);
+				unset($form['form']['field_claims_date_value']);
+				$actions['clear'] = [
+					'#type' => 'html_tag',
+					'#tag' => 'div',
+					'#value' => 'Сбросить',
+					'#attributes' => ['style' => ['margin-left:37px;'],'class' => ['c-button', 'form-clear'], 'onclick' => 'location.reload(true);return false;'],
+				];
+				$form['form']['actions'] = $actions;
+		}
+		if (isset($form['form']['field_privazka_distributor_target_id'])) {
+			$form['form']['field_privazka_distributor_target_id']['#autocomplete_route_name'] = true;
+			$form['form']['field_privazka_distributor_target_id']['#type'] = 'select';
+			$form['form']['field_privazka_distributor_target_id']['#theme'] = 'select';
+			$form['form']['field_privazka_distributor_target_id']['#options'] = array_merge(['' => '- Любой -'],\Drupal::service('tarkett_claims.claims_class_utils')->get_users_list_by_role('distributor'));
+			unset($form['form']['field_privazka_distributor_target_id']['#input']);
+		}
+	}
+}
+function claims_preprocess_region(&$variables)
+{
+	if ((strpos($_SERVER['REQUEST_URI'], '/user/login') !== false) ||
+		(strpos($_SERVER['REQUEST_URI'], '/user/password') !== false)) {
+		$variables['attributes'] = ['class' => 'user-login-form'];
+	}
+}
+//function claims_preprocess(&$variables)
+//{
+//	$url_parts = explode('?', $_SERVER['REQUEST_URI']);
+//	$url = str_replace('/index_dev.php', '', $url_parts[0]);
+//	$roles = \Drupal::currentUser()->getRoles();
+//	
+//	if ($url == '/' && array_search('anonymous', $roles) !== false) {
+//		$response = new RedirectResponse('/user/login');
+//		$response->send();
+//	} elseif($url == '/') {
+//		$main_role = array_pop($roles);
+//		$response = new RedirectResponse(\Drupal::url('tarkett_structure.claims_lists_'.$main_role.'_notab'));
+//		$response->send();
+//	}
+//}
+
+/* Пробрасывает large-классы в описание элемента label */
+function claims_preprocess_form_element(&$vars = array()) {
+	$element = isset($vars['element']) ? $vars['element'] : [];
+	if (isset($element['#attributes']) &&
+		isset($element['#attributes']['class'])) {
+		$large_css = [];
+		$class_names = is_array($element['#attributes']['class']) ?
+							$element['#attributes']['class'] :
+							array_map('trim', explode(' ', $element['#attributes']['class']));
+		foreach ($class_names as $class) {
+			if (0 !== strpos($class, 'large-label')) {
+				continue;
+			}
+			$large_css[] = $class;
+		}
+		if (0 === count($large_css)) {
+			return;
+		}
+		if (!isset($vars['label'])) {
+			return;
+		}
+		if (!isset($vars['label']['#title_attributes'])) {
+			$vars['label']['#title_attributes'] = [];
+		}
+		if (!isset($vars['label']['#title_attributes']['class'])) {
+			$vars['label']['#title_attributes']['class'] = [];
+		}
+		foreach ($large_css as $class) {
+			$vars['label']['#title_attributes']['class'][] = $class;
+		}
+	}
+}
+
+/* Подставляет large-классы, проброшенные от элемента, в тег label */
+function claims_preprocess_form_element_label(&$vars = array()) {
+	$element = isset($vars['element']) ? $vars['element'] : [];
+	$class_names = array();
+	if (isset($element['#title_attributes']) &&
+		isset($element['#title_attributes']['class'])) {
+		$class_names = is_array($element['#title_attributes']['class']) ?
+							$element['#title_attributes']['class'] :
+							array_map('trim', explode(' ', $element['#title_attributes']['class']));
+	}
+	if (0 === count($class_names)) {
+		if (1 < ($lines = preg_match_all('{<br\s?/?>}', $vars['title']['#markup']) + 1)) {
+			if (4 < $lines) {
+				$lines = 4;
+			}
+			$class_names = array(
+				'large-label',
+				'large-label-' . strval($lines),
+			);
+		}
+	}
+	if (0 === count($class_names)) {
+		return;
+	}
+	if (!isset($vars['attributes'])) {
+		$vars['attributes'] = [];
+	}
+	if (!isset($vars['attributes']['class'])) {
+		$vars['attributes']['class'] = [];
+	}
+	foreach ($class_names as $class) {
+		if (0 !== strpos($class, 'large-label')) {
+			continue;
+		}
+		$vars['attributes']['class'][] = $class;
+	}
+}

@@ -1,0 +1,327 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-links_with_desc {
+	margin: 70px 0 0;
+
+	@include grid-column(12, 0);
+
+	&.without-margin-top {
+		margin-top: 0;
+	}
+
+	&.full {
+		.b-links_with_desc__link {
+			@include grid-column(12, 0);
+			@include grid-column-end();
+
+			padding-right: 20px;
+
+			@include breakpoint(large) {
+				@include grid-column(6, 0);
+				@include grid-column-end();
+
+				padding-right: 20px;
+			}
+		}
+	}
+
+	&__link {
+		float: left;
+		margin-bottom: 40px;
+		padding-right: 20px;
+
+		@include grid-column(12, 0);
+
+		&.with_img {
+			& > a {
+				background: none;
+				padding-left: 0;
+
+				img {
+					margin-right: 23px;
+				}
+			}
+		}
+
+		& > a {
+			color: $color-black;
+			font-size: 1.2em;
+			line-height: 1.2em;
+			font-weight: 700;
+			padding-left: 55px;
+			min-height: 40px;
+			display: block;
+			background: url(~img/common/i-orange-arrow-with-circle.png) 0 0 no-repeat;
+			background-size: auto !important;
+
+			span {
+				border-bottom: 2px solid $color-green-x-light;
+
+				&:hover {
+					border-bottom: 0;
+				}
+			}
+
+			&.not-link {
+				cursor: default;
+
+				span {
+					border: none;
+				}
+			}
+
+			@include breakpoint(small) {
+				font-size: 1.4em;
+			}
+		}
+
+		&.not-links {
+			a {
+				cursor: default;
+
+				span {
+					border: none;
+				}
+			}
+		}
+
+		&.map-marker {
+			& > a {
+				background: url(~img/common/i-contact-orange-marker.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-1 {
+			& > a {
+				background: url(~img/common/i-service-1.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-2 {
+			& > a {
+				background: url(~img/common/i-service-2.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-3 {
+			& > a {
+				background: url(~img/common/i-service-3.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-4 {
+			& > a {
+				background: url(~img/common/i-service-4.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-5 {
+			& > a {
+				background: url(~img/common/i-service-5.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-6 {
+			& > a {
+				background: url(~img/common/i-service-6.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-7 {
+			& > a {
+				background: url(~img/common/i-service-7.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-8 {
+			& > a {
+				background: url(~img/common/i-service-8.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-9 {
+			& > a {
+				background: url(~img/common/i-service-9.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-10 {
+			& > a {
+				background: url(~img/common/i-service-10.png) 0 0 no-repeat;
+			}
+		}
+
+		&.service-11 {
+			& > a {
+				background: url(~img/common/i-service-11.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-1 {
+			& > a {
+				background: url(~img/common/i-doctor-type-1.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-2 {
+			& > a {
+				background: url(~img/common/i-doctor-type-2.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-3 {
+			& > a {
+				background: url(~img/common/i-doctor-type-3.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-4 {
+			& > a {
+				background: url(~img/common/i-doctor-type-4.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-5 {
+			& > a {
+				background: url(~img/common/i-doctor-type-5.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-6 {
+			& > a {
+				background: url(~img/common/i-doctor-type-6.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-7 {
+			& > a {
+				background: url(~img/common/i-doctor-type-7.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-8 {
+			& > a {
+				background: url(~img/common/i-doctor-type-8.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-9 {
+			& > a {
+				background: url(~img/common/i-doctor-type-9.png) 0 0 no-repeat;
+			}
+		}
+
+		&.doctor-type-10 {
+			& > a {
+				background: url(~img/common/i-doctor-type-10.png) 0 0 no-repeat;
+			}
+		}
+
+		&.department-3 {
+			& > a {
+				background: url(~img/common/i-departments-3.png) 0 0 no-repeat;
+			}
+		}
+
+		&.department-4 {
+			& > a {
+				background: url(~img/common/i-departments-4.png) 0 0 no-repeat;
+			}
+		}
+
+		&.deseases-1 {
+			& > a {
+				background: url(~img/common/i-deseases-1.png) 0 0 no-repeat;
+			}
+		}
+
+		p {
+			padding: 20px 0 0 55px;
+			margin-bottom: 0;
+
+			&.with-mark {
+				background: url(~img/common/i-orange-arrow-with-circle.png) 0 0 no-repeat;
+				padding-top: 0;
+			}
+		}
+
+		&:nth-child(2n+1) {
+			clear: both;
+		}
+
+		@include breakpoint(medium) {
+			@include grid-column(6, 0);
+			@include grid-column-offset(0);
+			@include grid-column-end();
+
+			padding-right: 20px;
+		}
+
+		@include breakpoint(large) {
+			padding-left: 0;
+
+			@include grid-column-offset(0);
+			@include grid-column-end();
+		}
+	}
+
+	&__sublinks {
+		margin-left: 55px !important;
+		margin-top: 20px !important;
+
+		&.not-links {
+			a {
+				cursor: default;
+
+				&:hover {
+					color: $color-green-x-dark;
+				}
+			}
+
+			li.mark {
+				a {
+					cursor: pointer;
+				}
+			}
+		}
+
+		a {
+			color: $color-green-x-dark;
+			text-decoration: underline;
+
+			&:hover {
+				color: $color-green-x-light;
+				text-decoration: none;
+			}
+
+			&.not-link {
+				cursor: default;
+				text-decoration: none;
+
+				&:hover {
+					color: $color-green-x-dark;
+				}
+			}
+		}
+
+		li {
+			margin-bottom: 0 !important;
+
+			&.mark {
+				a {
+					font-weight: bold;
+					color: $color-green-x-light;
+				}
+
+				&::before {
+					display: none;
+				}
+			}
+		}
+	}
+
+	@include breakpoint(xlarge) {
+		@include grid-column-row(250);
+	}
+}

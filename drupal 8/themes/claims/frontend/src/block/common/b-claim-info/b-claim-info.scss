@@ -1,0 +1,94 @@
+@import "~style";
+@import "~style/_sprite";
+
+article {
+	.b-claim-info {
+		@include grid-column(10, 0);
+		@include grid-column-offset(1);
+		@include grid-column-end();
+		&_view {
+			@include grid-column(12, 0);
+			@include grid-column-offset(0);
+			padding-left: 40px;
+			padding-right: 40px;
+		}
+		&.colored {
+			background: rgba(239, 243, 244, 0.3);
+		}
+		&.width-100 {
+			@include grid-column(12, 0);
+			@include grid-column-offset(0);
+			@include grid-column-end();
+			margin-bottom: 40px;
+			padding-bottom: 20px;
+			.b-claim-info__options {
+				@include grid-column(10, 0);
+				@include grid-column-offset(1);
+				@include grid-column-end();
+			}
+		}
+	}
+}
+
+.b-claim-info {
+	@include grid-column(12, 0);
+	&__section {
+		@include grid-column(2, 0);
+	}
+	&__option-head {
+		font-size: 32px;
+		font-weight: 600;
+		margin-bottom: 15px;
+		margin-top: 49px;
+	}
+	&__option-description {
+		table {
+			width: calc(50% - 20px);
+			float: left;
+			&:first-child {
+				margin-right: 40px;
+			}
+			tr {
+				td {
+					&:first-child {
+						width: 308px;
+					}
+				}
+			}
+		}
+	}
+	&__option {
+		@include grid-column(12, 0);
+		&:first-child {
+			.b-claim-info__option-head {
+				margin-top: 0;
+			}
+		}
+		&_bordered {
+			border-style: solid;
+			border-color: $main-border-color;
+			border-width: 0;
+			border-top-width: 1px;
+			margin-top: 24px;
+			padding-bottom: 24px;
+
+			.b-claim-info__option-head {
+				margin-top: 24px;
+			}
+		}
+	}
+}
+
+.b-claim-info-status {
+	.b-claim-item__field--claims-status {
+		float: right;
+		text-align: right;
+		margin-right: 39px;
+		&::before {
+			position: relative;
+			display: inline-block;
+			top: 2px !important;
+		}
+	}
+}
+

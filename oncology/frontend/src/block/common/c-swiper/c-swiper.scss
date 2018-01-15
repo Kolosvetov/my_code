@@ -1,0 +1,30 @@
+@import "~style";
+@import "~swiper/dist/css/swiper.css";
+
+.swiper-slide {
+	text-align: center;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+	background-image: url(~img/common/i-orange-arrow-46x154.png);
+	background-size: 100% 60%;
+	width: 46px;
+	height: 100%;
+	position: absolute;
+	top: 21px;
+}
+
+.swiper-button-prev {
+	left: -50px;
+}
+
+.swiper-button-next {
+	transform: rotate(180deg);
+	right: -50px;
+}
+
+.swip-container {
+	position: relative;
+	margin-bottom: 50px;
+}

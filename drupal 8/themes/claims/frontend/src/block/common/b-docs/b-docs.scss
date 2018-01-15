@@ -1,0 +1,54 @@
+@import "~style";
+
+.b-docs {
+	color: #aabdc3;
+	font-size: 28px;
+	font-weight: 400;
+	line-height: 28px;
+
+	&__item {
+		box-sizing: border-box;
+		padding: 12px;
+		padding-right: 92px;
+		position: relative;
+		border: 1px solid $main-border-color;
+		float: left;
+		width: 100%;
+		height: 52px;
+		overflow: hidden;
+		margin: 5px 0;
+		> div {
+			display: inline-block;
+		}
+		&.clone {
+			display: none;
+		}
+	}
+
+	&__edit,
+	&__delete {
+		width: 28px;
+		height: 28px;
+		cursor: pointer;
+		position: absolute;
+		top: 12px;
+	}
+
+	&__edit {
+		background: url(~img/sprite/png/i-edit.png) 0 0;
+		right: 52px;
+		&:hover,
+		&:focus {
+			background-image: url(~img/sprite/png/i-edit-active.png);
+		}
+	}
+
+	&__delete {
+		background: url(~img/sprite/png/i-trash.png) 0 0;
+		right: 12px;
+		&:hover,
+		&:focus {
+			background-image: url(~img/sprite/png/i-trash-active.png);
+		}
+	}
+}

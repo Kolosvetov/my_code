@@ -1,0 +1,15 @@
+parameters:
+    frontend.frontend_assets.class: Drupal\frontend\Bundle\FrontendAssets
+    frontend.twig.extension.assets.class: Drupal\frontend\Bundle\AssetsExtension
+    frontend.frontend_assets.root: 'sites/all/themes/claims/frontend/assets'
+    frontend.frontend_assets.url: 'sites/all/themes/claims/builds'
+
+services:
+    frontend.frontend_assets:
+            class: %frontend.frontend_assets.class%
+            arguments: [@kernel, %frontend.frontend_assets.root%, %frontend.frontend_assets.url%]
+    frontend.twig.extension.assets:
+            class: Drupal\frontend\Bundle\AssetsExtension
+            public: false
+            tags:
+                - { name: twig.extension }

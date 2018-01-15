@@ -1,0 +1,31 @@
+@import "~style";
+@import "~style/_sprite";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-claims {
+		&-tabs {
+			@include flex;
+			@include flex-direction(column);
+			box-sizing: border-box;
+			margin: 0 $mobile-border-margin;
+			padding: 0;
+			width: calc(100% - #{$mobile-border-margin * 2});
+			&__tab {
+				position: static;
+				margin-right: 0;
+				padding-right: 0;
+				width: available;
+				text-align: left;
+			}
+		}
+		&-titles {
+			display: none;
+		}
+		&-list {
+			margin: 0 $mobile-border-margin;
+			&_empty {
+				margin-top: $mobile-border-margin * 2;
+			}
+		}
+	}
+}

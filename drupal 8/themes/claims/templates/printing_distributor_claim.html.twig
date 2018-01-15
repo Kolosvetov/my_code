@@ -1,0 +1,131 @@
+{#
+/**
+ * Страница претензии магазина для печати
+ */
+#}
+{% set claim = node %}
+{% set distributor = element_by_target_id(node.field_dannye_distributora.value[0]['target_id'], 'node') %}
+	<header>
+		<div class="claim-block claim-print">
+			<div class="claim-block__panel">
+				<div class="claim-print__logo"><img src="/sites/default/files/images/logo/print-logo-new.png"/></div>
+			</div>
+			<div class="claim-block__panel">
+				<div class="claim-print__title print-button">
+					Печать
+				</div>
+			</div>
+		</div>
+	</header>
+	<main>
+ 		<div class="claim-blocks">
+			<div class="claim-block claim-top claim-top_distributor">
+				<img src="{{ qrurl }}" class="claim-top__qr-code"/>
+				<div class="claim-top__url">
+					Уникальная ссылка на обращение:<br/>
+					<a href="/node/{{ node.nid.value }}" target="_blank">claims.tarkett.ru/node/{{ claim.nid.value }}</a>
+				</div>
+				<h1>Претензия Дистрибьютора № {{ claim.nid.value }}</h1>
+				<h2>от {{ claim.field_claims_date.value|date('d.m.Y') }}</h2>
+			</div>
+			<div class="claim-block claim-block_unbordered claim-distributor">
+				<div class="claim-block__panel claim-block__panel_right">
+					<strong>АО «Таркетт Рус»</strong><br>
+					Генеральному директору<br>
+					Азарову М.В.<br>
+					Копия: Руководителю отдела<br>
+					по работе с претензиями<br>
+					Макаровой Д.А.<br>
+				</div>
+			</div>
+			<div class="claim-block claim-head">
+				<div class="claim-block__panel claim-block__panel_full">
+					<h3 class="centered">ПРЕТЕНЗИЯ</h3>
+					<p>При получении товаров, поставляемых Вами по документам:</p>
+{% if distributor.field_d_supply_contract.value %}
+					<p>Контракт № {{ distributor.field_d_supply_contract.value }}</p>
+{% endif %}
+{% if distributor.field_distributor_invoices.value is iterable and 0 < distributor.field_distributor_invoices.value|length %}
+	{% set invoice = element_by_target_id(distributor.field_distributor_invoices.value[0]['target_id'], 'node') %}
+					<p>Счёт-фактура № {{ invoice.title.value }} от {% if invoice.field_data.value|replace({'-':'','.':'','/':''}) %}{{ invoice.field_data.value|date('d.m.Y') }}{% endif %}</p>
+{% endif %}
+				</div>
+			</div>
+			<div class="claim-block claim-goods">
+				<div class="claim-block__panel">
+					<h3>Информация о товаре</h3>
+					<span class="claim-block__title">Категория продукта:</span> {{ distributor.field_product_cat.value }}<br>
+					<span class="claim-block__title">Коллекция:</span> {{ distributor.field_kollekcia.value }}<br>
+					{% if distributor.field_d_defect_type.value %}<span class="claim-block__title">Тип дефекта:</span> {{ distributor.field_d_defect_type.value }}<br>{% endif %}
+					<span class="claim-block__title">Возможны образцы:</span> {{ claim.field_d_can_show.settings["allowed_values"][claim.field_d_can_show.value] }}<br>
+				</div><div class="claim-block__panel">
+					<img class="claim-block__image address-map" data-address="{{ claim.field_product_address_city.value|raw }}, {{ claim.field_product_address.value|raw }}" alt="Карта с адресом места нахождения товара"/>
+				</div>
+			</div>
+{% if distributor.field_products_with_defects.value is iterable and 0 < distributor.field_products_with_defects.value|length %}
+	{% set product_category = distributor.field_product_cat.value %}
+	{% set needs_to_show_numbers = (product_category != product_category|replace({'линолеум': ''})) %}
+			<div class="claim-block claim-goods">
+				<h3>Товары со скрытыми дефектами</h3>
+				<div class="claim-block__panel claim-block__panel_full">
+					<br>
+					<table class="marked" style="width:100%;">
+						<tr>
+							<td><b>Дизайн</b></td>
+							<td><b>Количество брака</b></td>
+							<td><b>Стоимость</b></td>
+	{% if needs_to_show_numbers %}
+							<td><b>Номер рулона</b></td>
+	{% endif %}
+						</tr>
+	{% for defect_ids in distributor.field_products_with_defects.value %}
+		{% set defect = element_by_target_id(defect_ids.target_id) %}
+						<tr>
+							<td>{{ defect.field_dizain.value }}</td>
+							<td>{{ defect.field_count.value }}</td>
+							<td>{{ defect.field_price.value }}{% if defect.field_price.value == defect.field_price.value|replace({'руб.': ''}) %} руб.{% endif %}</td>
+		{% if needs_to_show_numbers %}
+							<td>{{ defect.field_rolls_num.value }}</td>
+		{% endif %}
+						</tr>
+	{% endfor %}
+					</table>
+				</div>
+			</div>
+{% endif %}
+{% if distributor.field_kommentarii_distributora.value %}
+			<div class="claim-block claim-description">
+				<h3>Описание проблемы дистрибьютором</h3>
+				{{ distributor.field_kommentarii_distributora.value }}
+			</div>
+{% endif %}
+{% if distributor.field_d_foto is iterable and 0 < distributor.field_d_foto|length %}
+			<div class="claim-block claim-block_unbordered claim-defects">
+				<h3>Дополнительная информация</h3>
+				<div></div>
+	{% for distributor_photo in distributor.field_d_foto %}
+				<img class="claim-block__image claim-block__image_grid" src="{{ file_url(distributor_photo.entity.fileuri) }}"/>
+	{% endfor %}
+			</div>
+{% endif %}
+			<div class="claim-signature claim-signature_with_data">
+				<div class="claim-block__panel claim-block__panel_full">
+					<span class="claim-signature__title">Менеджер по претензиям:</span>
+					<span class="claim-signature__field claim-signature__field_signature">&nbsp;</span>
+					<span class="claim-signature__note">
+	 				{% if user.field_user_fio.value %}{{ user.field_user_fio.value }}<br>{% elseif distributor.field_d_fio.value %}{{ distributor.field_d_fio.value }}<br>{% endif %}
+	 				от {{ 'now'|date('d.m.Y') }}
+	 				</span>
+ 				</div>
+				<div class="claim-block__panel claim-block__panel_more">
+					<strong>{% if user.field_ur_lico_name.value %}{{ user.field_ur_lico_name.value }}{% else %}{{ user.name.value }}{% endif %}</strong><br>
+					{# {адрес}<br> #}
+					{% if user.field_user_phone.value %}Тел.: {{ user.field_user_phone.value }}<br>{% elseif distributor.field_distributor_phone.value %}Тел.: {{ distributor.field_distributor_phone.value }}<br>{% endif %}
+					{% if user.field_user_email.value %}Email: {{ user.field_user_email.value }}<br>{% elseif distributor.field_distributor_email.value %}Email: {{ distributor.field_distributor_email.value }}<br>{% endif %}
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer>
+		<button class="c-button print-button">Печать</button>
+	</footer>

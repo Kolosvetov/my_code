@@ -1,0 +1,7 @@
+tarkett_api.test_page:
+  path: 'api_test_page'
+  defaults:
+    _controller: '\Drupal\tarkett_api\Test::index'
+    _title: 'Api test page'
+  requirements:
+    _access: 'TRUE'

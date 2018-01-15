@@ -1,0 +1,242 @@
+@import "~style";
+
+.c-form {
+	font-size: 14px;
+	background-color: #f7f7f7;
+	color: #000;
+	width: 100%;
+	overflow: hidden;
+	padding-bottom: 40px;
+
+	h2 {
+		@include grid-column(12, 0);
+
+		font-family: ProximaNova, sans-serif;
+		font-size: 24px;
+		font-weight: 700;
+		line-height: 28px;
+		text-transform: uppercase;
+		letter-spacing: 0.22em;
+		text-align: center;
+
+		@include breakpoint(large) {
+			font-size: 30px;
+			margin-top: 90px !important;
+		}
+	}
+
+	&__field-row {
+		@include grid-column(11, 0);
+
+		box-sizing: border-box;
+		float: none !important;
+		margin: 0 auto;
+		overflow: hidden;
+
+		&:not(.without-margin) {
+			margin-top: 0;
+		}
+
+		@include breakpoint(xlarge) {
+			@include grid-column(8, 0);
+
+			margin-top: 50px;
+		}
+	}
+
+	&__field-column {
+		@include grid-column(12, 0);
+
+		box-sizing: border-box;
+
+		@include breakpoint(large) {
+			@include grid-column(6, 0);
+		}
+	}
+
+	&__c-field {
+		@include grid-column(12, 22px);
+
+		box-sizing: border-box;
+		margin-top: 35px;
+
+		label {
+			display: block;
+			font-weight: 700;
+			margin-bottom: 9px;
+		}
+
+		input,
+		textarea {
+			width: 100%;
+			box-sizing: border-box;
+			background: rgba(0, 0, 0, 0);
+		}
+
+		input[type='file'] {
+			display: none;
+		}
+
+		input[type="submit"] {
+			width: 220px;
+			height: 42px;
+			background-color: #e74c3c;
+			border: 1px solid #e74c3c;
+			border-radius: 2px;
+			color: white;
+			font-family: Roboto;
+			font-size: 16px;
+			font-weight: 300;
+			line-height: 16px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 0.5;
+			}
+		}
+
+		input[type='text'] {
+			height: 42px;
+			border: 1px solid #3d3d3d;
+			border-radius: 2px;
+			padding: 10px;
+		}
+
+		textarea {
+			border: 1px solid #3d3d3d;
+			border-radius: 2px;
+			height: 83px;
+		}
+
+		&.date,
+		&.date-time,
+		&.phone,
+		&.pasport {
+			@include grid-column-end;
+		}
+
+		&.date {
+			width: 136px;
+		}
+
+		&.date-time,
+		&.pasport {
+			width: 200px;
+		}
+
+		&.phone {
+			width: 250px;
+		}
+
+		&.radio {
+			& > div label {
+				font-weight: normal;
+				display: inline;
+			}
+
+			input {
+				width: auto;
+				position: relative;
+				top: 3px;
+				margin-right: 5px;
+			}
+		}
+
+		&.inline {
+			float: left !important;
+			width: auto;
+
+			& > div {
+				display: inline-block;
+				margin-right: 15px;
+				margin-top: 10px;
+
+				label {
+					display: inline-block;
+					margin-bottom: 0;
+				}
+			}
+		}
+
+		&.column {
+			& > div {
+				margin-bottom: 10px;
+			}
+		}
+
+		&--file {
+			width: 100%;
+			height: 42px;
+			border: 1px solid black;
+			border-radius: 2px;
+			box-sizing: border-box;
+			display: flex !important;
+			position: relative;
+			padding-right: 134px;
+			padding-left: 16px;
+			align-items: center;
+			color: #818181;
+			font-family: Roboto;
+			font-size: 14px;
+			margin-bottom: 0 !important;
+			font-weight: 300 !important;
+			cursor: pointer;
+
+			&.active {
+				&::after {
+					background-color: #a6a6a6;
+					border: 1px solid #a6a6a6;
+				}
+
+				& > span:nth-child(2) {
+					display: block;
+				}
+			}
+
+			& > span:nth-child(2) {
+				content: "";
+				width: 17px;
+				height: 100%;
+				position: absolute;
+				right: 143px;
+				background: url(~img/common/i-cross.png) 0 center no-repeat;
+				top: 0;
+				display: none;
+			}
+
+			&::after {
+				content: "Загрузить";
+				width: 134px;
+				height: 42px;
+				background-color: #e74c3c;
+				border: 1px solid #e74c3c;
+				border-radius: 2px;
+				color: white;
+				font-family: Roboto;
+				font-size: 14px;
+				font-weight: 300;
+				line-height: 16px;
+				display: flex;
+				box-sizing: border-box;
+				justify-content: center;
+				align-items: center;
+				right: -1px;
+				top: -1px;
+				position: absolute;
+			}
+
+			&:hover {
+				&::after {
+					opacity: 0.5;
+				}
+			}
+
+			@include breakpoint(xxlarge) {
+				width: 442px;
+			}
+		}
+	}
+}

@@ -1,0 +1,18 @@
+@import "~style";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-defect-list {
+		&__item {
+			width: 100%;
+			height: auto;
+			margin-left: 0;
+		}
+		&__title {
+			width: calc(100% - 40px);
+			img {
+				width: 100%;
+				height: auto;
+			}
+		}
+	}
+}

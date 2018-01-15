@@ -1,0 +1,41 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-route {
+	margin-bottom: 1em;
+	text-align: center;
+
+	a,
+	span {
+		font-size: 0.9em;
+	}
+
+	a {
+		color: $color-green-x-light;
+	}
+
+	span {
+		color: $color-green-x-dark;
+	}
+
+	> * {
+		&:nth-child(2n) {
+			padding: 0 10px;
+			position: relative;
+			top: 2px;
+		}
+	}
+
+	@include breakpoint(large) {
+		max-width: 610px;
+
+		a,
+		span {
+			white-space: nowrap;
+		}
+	}
+
+	@include breakpoint(small) {
+		text-align: left;
+	}
+}

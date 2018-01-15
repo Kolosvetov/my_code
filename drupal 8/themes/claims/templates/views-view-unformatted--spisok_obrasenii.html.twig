@@ -1,0 +1,147 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if title %}
+    <h3>{{ title }}</h3>
+{% endif %}
+{{claims_user_header()}}
+<div class="b-wrapper b-wrapper--blue-bordered">
+    <div class="b-top-tabs">
+        {#<div class="b-top-tabs__tab">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--profile">Профиль</span>
+        </div>#}
+        <div class="b-top-tabs__tab b-top-tabs__tab--active">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--claims">Обращения и претензии</span>
+        </div>
+        <div class="b-top-tabs__tab">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--about">Описание сервиса</span>
+        </div>
+        <div class="b-top-tabs__tab">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--help">Помощь</span>
+        </div>
+    </div>
+</div>
+<div class="b-middle">
+    <div class="b-middle-form">
+        <div class="b-middle-form__col6">
+            <a href="#" class="b-middle-form__new-claim c-button"><span class="c-plus">+</span> Оформить новое обращение</a>
+        </div>
+        <div class="b-middle-form__col6">
+            <div class="b-middle-form__search">
+                <input type="text" class="b-middle-form__search-input" placeholder="Проверить статус">
+                <input type="submit" class="b-middle-form__search-submit" value="">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="b-claims">
+    <h3 class="b-claims__title">Работа с обращениями и претензиями</h3>
+    <div class="b-wrapper b-wrapper--bordered">
+        <div class="b-claims-tabs">
+            <div class="b-claims-tabs__tab js-claims-tab active" data-id="1">
+                <div class="b-claims-tabs__tab-title">
+                    Обращения/претензии
+                </div>
+            </div>
+            <div class="b-claims-tabs__tab js-claims-tab" data-id="2">
+                <div class="b-claims-tabs__tab-title">
+                    Архив обращений/претензий
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="b-claims-list js-claims-content" data-id="1">
+        <div class="b-claims-titles">
+            <div class="b-claims-titles__title">
+                <span class="b-claims-titles__title--id">ID:</span>
+                <span class="b-claims-titles__title--date">Дата:</span>
+            </div>
+            <div class="b-claims-titles__title">
+                Тип / продукт:
+            </div>
+            <div class="b-claims-titles__title">
+                Ожидает обработки:
+            </div>
+        </div>
+        {% set status_classes = [
+        'c-rejected',
+        'c-consideration c-overdue',
+        'c-consideration',
+        'c-rejected',
+        'c-approved',
+        'c-departure',
+        'c-sample-inlab',
+        'c-sample-prepared',
+        'c-sample-requested',
+        'c-consideration c-overdue',
+        ] %}
+        {% for row in rows %}
+            {% set row_classes = [
+            default_row_class ? default_row_class : 'b-claim-item',
+            loop.index % 2 == 0 ? 'b-claim-item--even': '',
+            status_classes[loop.index0]
+            ] %}
+            <div{{ row.attributes.addClass(row_classes) }}>
+                <div class="b-claim-item__fields">
+                    {{ row.content }}
+                    <a href="#" class="b-claim-item__more"></a>
+                    <a href="#" class="b-claim-item__delete"></a>
+                    <a href="#" class="b-claim-item__edit"></a>
+                    <div class="b-claim-item__progressbar">
+                        <span class="b-claim-item__progressbar-item"></span>
+                        <span class="b-claim-item__progressbar-item"></span>
+                        <span class="b-claim-item__progressbar-item"></span>
+                        <span class="b-claim-item__progressbar-item"></span>
+                        <span class="b-claim-item__progressbar-item"></span>
+                    </div>
+                    {% if loop.index0 == 4 %}
+                        <div class="b-claim-item__advice">Вам необходимо распечатать претензию и передать ее в магазин
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="b-claims-list js-claims-content" data-id="2">
+        {% for row in rows %}
+            {% set row_classes = [
+            default_row_class ? default_row_class : 'b-claim-item',
+            loop.index % 2 == 0 ? 'b-claim-item--even': '',
+            status_classes[loop.index0]
+            ] %}
+            <div{{ row.attributes.addClass(row_classes) }}>
+                <div class="b-claim-item__fields">
+                    {{ row.content }}
+                    <a href="#" class="b-claim-item__more"></a>
+                    <div class="b-claim-item__progressbar">
+                        <span class="b-claim-item__progressbar-item"></span>
+                        <span class="b-claim-item__progressbar-item"></span>
+                        <span class="b-claim-item__progressbar-item"></span>
+                        <span class="b-claim-item__progressbar-item"></span>
+                        <span class="b-claim-item__progressbar-item"></span>
+                    </div>
+                    {% if loop.index0 == 4 %}
+                        <div class="b-claim-item__advice">Вам необходимо распечатать претензию и передать ее в магазин
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

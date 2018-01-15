@@ -1,0 +1,14 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "indentation": "tab",
+    "no-invalid-double-slash-comments": null
+  },
+  "ignoreFiles": [
+    "**/*sprite.*",
+    "/**/node_modules/**/*",
+    "node_modules/**/*",
+    '/**/bower_components/**/*',
+    'bower_components/**/*'
+  ]
+}

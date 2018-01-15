@@ -1,0 +1,29 @@
+{% if answer is iterable and 0 < answer|length %}
+	{% for answer_one in answer %}
+			<div class="b-claim-info__option">
+				<div class="b-claim-info__option-head c-without">
+					{{ answer_one.title|raw }}
+				</div>
+				<div class="b-claim-info__option-description only-text">
+					{{ answer_one.text.entity.body.value|raw }}
+				</div>
+			</div>
+	{% endfor %}
+{% endif %}
+{% if form_name != false %}
+			<div class="b-claim-info__option">
+	{% if form_info.title %}
+				<div class="b-claim-info__option-head c-without">{{ form_info.title }}</div>
+	{% else %}
+				<br><br>
+	{% endif %}
+	{% if form_info.description %}
+				<div class="b-claim-info__option-description only-text">
+					{{ form_info.description }}
+				</div>
+	{% endif %}
+				<div class="b-claim-info__option-description">
+					{{ claims_solutions_form(form_name, node) }}
+				</div>
+			</div>
+{% endif %}

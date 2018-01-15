@@ -1,0 +1,79 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-middle-form {
+	@include grid-row();
+	@include grid-column(10, 0);
+	@include grid-column-offset(1);
+	@include grid-column-end();
+	padding: 50px 0 20px;
+	&__new-claim {
+		float: right;
+		margin-right: 20px;
+		&_left {
+			float: left;
+			margin-right: 0;
+			margin-left: 20px;
+		}
+		&:hover {
+			color: #01b5d8;
+		}
+		.c-plus {
+			display: inline-block;
+			margin-right: 10px;
+		}
+		.c-text {
+			display: inline-block;
+		}
+		.text {
+			&-desktop {
+				display: inline-block;
+			}
+			&-mobile {
+				display: none;
+			}
+		}
+	}
+	&__search {
+		width: 316px;
+		margin-left: 20px;
+		position: relative;
+		.b-middle-form__search-input {
+			width: 100%;
+		}
+		&:hover {
+			.b-middle-form__search-input {
+				border-color: #85888a;
+			}
+			.b-middle-form__search-submit {
+				@include sprite($i-search-hover);
+			}
+		}
+	}
+	&__search-submit {
+		position: absolute;
+		right: 40px;
+		top: 20px;
+		touch-action: manipulation;
+		cursor: pointer;
+		user-select: none;
+		background: none;
+		border: none;
+		box-sizing: border-box;
+		padding: 0;
+
+		@include sprite($i-search);
+	}
+	&__input-field {
+		padding-bottom: 20px;
+		&--centered {
+			text-align: center;
+		}
+	}
+	&__label {
+		margin-right: 10px;
+	}
+	&__submit {
+		margin-top: 30px;
+	}
+}

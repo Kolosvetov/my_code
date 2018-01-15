@@ -1,0 +1,120 @@
+@import "~style";
+
+.b-list {
+	&__item {
+		@include grid-column(12, 0);
+
+		padding-bottom: 37px;
+		margin-top: 44px;
+		border-bottom: 1px dashed $color-d-grey;
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+
+	&__img {
+		@include grid-column(5, 0);
+	}
+
+	&__info {
+		@include grid-column(7, 0);
+	}
+
+	&__title {
+		font-weight: bold;
+		font-size: 24px;
+		line-height: 28px;
+		color: $color-black;
+		text-decoration: none;
+		margin-bottom: 25px;
+		display: inline-block;
+	}
+
+	&__date {
+		color: $color-orange;
+		font-size: 16px;
+		line-height: 20px;
+		margin-bottom: 30px;
+	}
+
+	&__announce {
+		display: inline-block;
+		margin-bottom: 30px;
+	}
+
+	&__more {
+		font-size: 16px;
+		line-height: 20px;
+		color: $color-black;
+
+		span {
+			border-bottom: 2px solid $color-green-x-light;
+
+			&:hover {
+				border-bottom: 2px solid rgba(0, 0, 0, 0);
+			}
+		}
+	}
+
+	&__content {
+		margin-top: 70px;
+		font-size: 20px;
+		line-height: 28px;
+
+		p {
+			margin-bottom: 1.5em;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	&__navigation {
+		width: 100%;
+		margin: 120px 0 100px;
+
+		a {
+			font-size: 28px;
+			color: $color-black;
+			line-height: 32px;
+
+			&::before,
+			&::after {
+				content: "";
+				width: 8px;
+				height: 25px;
+				background: url(~img/common/i-orange-small-arrow-right.png) 0 0 no-repeat;
+				display: inline-block;
+				position: relative;
+				top: 4px;
+			}
+
+			&.b-list__navigation-prev {
+				float: left;
+
+				&::after {
+					display: none;
+				}
+
+				&::before {
+					margin-right: 35px;
+					transform: rotate(180deg);
+				}
+			}
+
+			&.b-list__navigation-next {
+				float: right;
+
+				&::before {
+					display: none;
+				}
+
+				&::after {
+					margin-left: 35px;
+				}
+			}
+		}
+	}
+}

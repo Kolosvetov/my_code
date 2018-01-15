@@ -1,0 +1,595 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-claim-item {
+	@include grid-column(12, 0);
+	@include grid-column-offset(0);
+	@include grid-column-end();
+	position: relative;
+
+	&.b-claims-titles {
+		border-color: #bcbcbc;
+		border-style: solid;
+		border-width: 0 0 1px;
+	}
+
+	&.b-claims-titles {
+		border-color: #bcbcbc;
+		border-style: solid;
+		border-width: 0 0 1px;
+	}
+
+	&:hover {
+		.b-claim-item__progressbar-item {
+			background: #bfc8c9;
+		}
+	}
+
+	&__mobile {
+		display: none;
+	}
+	&__detail {
+		display: none;
+	}
+
+	&__fields {
+		cursor: pointer;
+		position: relative;
+
+		&_info {
+			cursor: auto;
+		}
+
+		&.col-6 .b-claim-item__field {
+			&:nth-child(1) {
+				width: 8.3%;
+			}
+			&:nth-child(2) {
+				width: 8.3%;
+			}
+			&:nth-child(3) {
+				width: 12.4%;
+			}
+			&:nth-child(4) {
+				width: 12.4%;
+			}
+			&:nth-child(5) {
+				width: 41.5%;
+			}
+			&:nth-child(6) {
+				width: 16.6%;
+			}
+		}
+		&.col-7 .b-claim-item__field {
+			&:nth-child(1) {
+				width: 8.3%;
+			}
+			&:nth-child(2) {
+				width: 8.3%;
+			}
+			&:nth-child(3) {
+				width: 12.4%;
+			}
+			&:nth-child(4) {
+				width: 12.4%;
+			}
+			&:nth-child(5) {
+				width: 24.9%;
+			}
+			&:nth-child(6) {
+				width: 16.6%;
+			}
+			&:nth-child(7) {
+				width: 16.6%;
+			}
+		}
+		.b-claim-item__field {
+			float: left;
+			border-right: 1px solid #ccc;
+			box-sizing: border-box;
+			padding: 0 5px 0 10px;
+			display: flex;
+			align-items: center;
+			min-height: 40px;
+			&:last-child {
+				border-right: none;
+			}
+		}
+	}
+	&__fields-wrapper {
+		@include grid-row();
+		padding: 30px 40px;
+		&.c-consideration {
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-blue);
+					}
+				}
+			}
+			.b-claim-item__field--claims-status {
+				color: $status-consideration-color;
+				&::before {
+					margin-top: -9px;
+
+					@include sprite($i-eye);
+				}
+			}
+			.b-claim-item__progressbar-item {
+				&:first-of-type {
+					background: $status-consideration-color;
+					width: 20%;
+				}
+			}
+			&:hover {
+				.b-claim-item__progressbar-item {
+					&:first-of-type {
+						background: $status-consideration-hover-color;
+					}
+				}
+			}
+		}
+		&.c-consideration-distributor {
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-lightblue);
+					}
+				}
+			}
+			.b-claim-item__field--claims-status {
+				color: $status-consideration-distributor-color;
+				&::before {
+					margin-top: -9px;
+
+					@include sprite($i-eye-lightblue);
+				}
+			}
+			.b-claim-item__progressbar-item {
+				&:first-of-type {
+					background: $status-consideration-distributor-color;
+					width: 20%;
+				}
+			}
+		}
+		&.c-consideration-tarkett {
+			.b-claim-item__progressbar-item {
+				&:first-of-type {
+					width: 40%;
+				}
+			}
+		}
+		&.c-sample-requested {
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-purple);
+					}
+				}
+			}
+			.b-claim-item__field--claims-status {
+				color: $status-sample-requested-color;
+				&::before {
+					margin-top: -14px;
+
+					@include sprite($i-exclamation);
+
+				}
+			}
+			.b-claim-item__progressbar-item {
+				&:first-of-type {
+					background: $status-sample-requested-color;
+					width: 40%;
+				}
+			}
+			&:hover {
+				.b-claim-item__progressbar-item {
+					&:first-of-type {
+						background: $status-sample-requested-hover-color;
+					}
+				}
+			}
+		}
+		&.c-sample-prepared {
+			.b-claim-item__field--claims-status {
+				color: $status-sample-prepared-color;
+				&::before {
+					margin-top: -14px;
+
+					@include sprite($i-mark);
+				}
+			}
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-yellow);
+					}
+				}
+			}
+			.b-claim-item__progressbar-item {
+				&:first-of-type,
+				&:nth-of-type(2) {
+					background: $status-sample-prepared-color;
+					width: 60%;
+				}
+			}
+			&:hover {
+				.b-claim-item__progressbar-item {
+					&:first-of-type,
+					&:nth-of-type(2) {
+						background: $status-sample-prepared-hover-color;
+					}
+				}
+			}
+		}
+		&.c-sample-inlab {
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-orange);
+					}
+				}
+			}
+			.b-claim-item__field--claims-status {
+				color: $status-sample-inlab-color;
+				&::before {
+					margin-top: -14px;
+					margin-left: -8px;
+
+					@include sprite($i-loupe);
+				}
+			}
+			.b-claim-item__progressbar-item {
+				&:first-of-type,
+				&:nth-of-type(2),
+				&:nth-of-type(3) {
+					background: $status-sample-inlab-color;
+					width: 60%;
+				}
+			}
+			&:hover {
+				.b-claim-item__progressbar-item {
+					&:first-of-type,
+					&:nth-of-type(2),
+					&:nth-of-type(3) {
+						background: $status-sample-inlab-hover-color;
+					}
+				}
+			}
+		}
+		&.c-departure {
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-teal);
+					}
+				}
+			}
+			.b-claim-item__field--claims-status {
+				color: $status-departure-color;
+				&::before {
+					margin-top: -14px;
+					margin-left: -10px;
+
+					@include sprite($i-route);
+				}
+			}
+			.b-claim-item__progressbar-item {
+				&:first-of-type,
+				&:nth-of-type(2),
+				&:nth-of-type(3) {
+					background: $status-departure-color;
+					width: 80%;
+				}
+			}
+			&:hover {
+				.b-claim-item__progressbar-item {
+					&:first-of-type,
+					&:nth-of-type(2),
+					&:nth-of-type(3) {
+						background: $status-departure-hover-color;
+					}
+				}
+			}
+		}
+		&.c-approved {
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-green);
+					}
+				}
+			}
+			.b-claim-item__field--claims-status {
+				color: $status-approved-color;
+				&::before {
+					margin-top: -10px;
+
+					@include sprite($i-check);
+				}
+			}
+			.b-claim-item__progressbar-item {
+				background: $status-approved-color;
+				width: 100%;
+				border-right-width: 0;
+			}
+			&:hover {
+				.b-claim-item__progressbar-item {
+					background: $status-approved-hover-color;
+				}
+			}
+		}
+		&.c-rejected {
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-pink);
+					}
+				}
+			}
+			.b-claim-item__field--claims-status {
+				color: $status-rejected-color;
+				&::before {
+					margin-top: -12px;
+
+					@include sprite($i-reject);
+				}
+			}
+			.b-claim-item__progressbar-item {
+				background: $status-rejected-color;
+				width: 100%;
+				border-right-width: 0;
+			}
+			&:hover {
+				.b-claim-item__progressbar-item {
+					background: $status-rejected-hover-color;
+				}
+			}
+		}
+		&.c-rejected-shop {
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-lightpink);
+					}
+				}
+			}
+			.b-claim-item__field--claims-status {
+				color: $status-rejected-shop-color;
+				&::before {
+					margin-top: -12px;
+
+					@include sprite($i-reject-lightpink);
+				}
+			}
+			.b-claim-item__progressbar-item {
+				background: $status-rejected-shop-color;
+				width: 100%;
+				border-right-width: 0;
+			}
+		}
+		&.c-overdue {
+			.b-claim-item__field--days-passed {
+				.b-days {
+					&::before {
+						@include sprite($i-clock-red);
+					}
+				}
+			}
+		}
+	}
+	&__field {
+		display: inline-block;
+		vertical-align: top;
+		width: 19.6%;
+		color: $main-color;
+		font-size: 20px;
+		line-height: 18px;
+		overflow: hidden;
+
+		&:last-of-type {
+			margin-right: 0;
+		}
+		&--claims-type {
+			&.c-detailed {
+				.c-secondary {
+					padding-top: 5px;
+					font-weight: 400;
+					font-size: 16px;
+					text-transform: none;
+					&::before,
+					&::after {
+						content: '/';
+					}
+				}
+			}
+		}
+		&--claims-source {
+			font-size: 16px;
+			.c-claim-source {
+				display: inline-block;
+				vertical-align: middle;
+				width: 97%;
+			}
+		}
+		&--days-passed {
+			.b-days {
+				padding-left: 35px;
+				position: relative;
+				&::before {
+					content: "";
+					display: block;
+					position: absolute;
+					top: -5px;
+					left: 0;
+				}
+			}
+			&.c-detailed {
+				font-size: 16px;
+				text-align: center;
+			}
+		}
+		&--claims-status {
+			position: relative;
+			overflow: visible;
+
+			&.c-detailed {
+				vertical-align: middle;
+				font-size: 17px;
+				line-height: 18px;
+				width: 17%;
+			}
+		}
+		&--distributor {
+			font-size: 16px;
+			// color: #17323d;
+		}
+	}
+	&__progressbar {
+		margin-top: 16px;
+		float: left;
+		width: 100%;
+		height: 10px;
+		border-radius: 5px;
+		background-color: $progress-bg-color;
+	}
+	&__progressbar-item {
+		height: 10px;
+		float: left;
+		background: #61b0d4;
+		border-radius: 5px;
+
+		border-style: solid;
+		border-color: #fff;
+		border-width: 0 1px 0 0;
+
+		position: relative;
+		z-index: 2;
+	}
+	&__advice {
+		padding-left: 45px;
+		position: relative;
+		color: #a9bdc4;
+		&::before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+
+			@include sprite($i-print);
+		}
+	}
+	&__info {
+		color: #265165;
+		&--warning {
+			position: relative;
+			padding-left: 22px;
+			&::before {
+				content: "";
+				display: block;
+				position: absolute;
+				top: 4px;
+				left: 0;
+
+				@include sprite($i-warning);
+			}
+		}
+	}
+	&__more {
+		position: absolute;
+		right: 0;
+		top: 50%;
+		margin-top: - 14px;
+
+		@include sprite($i-more);
+
+		&::before {
+			top: 0;
+			left: 0;
+			content: "";
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			opacity: 0;
+			transition: opacity 0.1s;
+
+			@include sprite($i-more-active);
+		}
+
+		&:hover {
+			&::before {
+				opacity: 1;
+			}
+		}
+	}
+
+	&__delete {
+		position: absolute;
+		right: -37px;
+		top: 50%;
+		margin-top: - 14px;
+
+		@include sprite($i-trash);
+
+		&::before {
+			top: 0;
+			left: 0;
+			content: "";
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			opacity: 0;
+			transition: opacity 0.1s;
+
+			@include sprite($i-trash-active);
+		}
+
+		&:hover {
+			&::before {
+				opacity: 1;
+			}
+		}
+	}
+	&__edit {
+		position: absolute;
+		right: -71px;
+		top: 50%;
+		margin-top: - 14px;
+
+		@include sprite($i-edit);
+
+		&::before {
+			top: 0;
+			left: 0;
+			content: "";
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			opacity: 0;
+			transition: opacity 0.1s;
+
+			@include sprite($i-edit-active);
+		}
+
+		&:hover {
+			&::before {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+.b-claim-info {
+	@include grid-column(12, 0);
+	&__section {
+		@include grid-column(2, 0);
+	}
+}
+
+.b-claim-progressbar {
+	background-color: #ebf5f7;
+	height: 10px;
+
+	@include grid-column(12, 0);
+}

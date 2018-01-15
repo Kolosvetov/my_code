@@ -1,0 +1,15 @@
+tarkett_claims.claim_print_page:
+  path: '/node/{claim_id}/print'
+  defaults:
+    _controller: '\Drupal\tarkett_claims\controller\Controller::print_claim'
+    _title: 'Страница с данными претензии для печати'
+  requirements:
+    _access: 'TRUE'
+
+tarkett_claims.claim_qr_code:
+  path: '/node/{claim_id}/qr'
+  defaults:
+    _controller: '\Drupal\tarkett_claims\controller\Controller::qr_code'
+    _title: 'QR code с ссылкой на обращение'
+  requirements:
+    _access: 'TRUE'

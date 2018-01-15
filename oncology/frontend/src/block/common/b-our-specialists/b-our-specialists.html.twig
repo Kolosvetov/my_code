@@ -1,0 +1,30 @@
+<div class="inner-row"><div class="sep-line"></div></div>
+<div class="inner-row"><h2>Наши специалисты</h2></div>
+<div class="inner-row">
+	<div class="b-our-specialists-content">
+		<div class="b-our-specialists-content__text">
+			<p class="grey big">
+				Записаться на прием онколога в «СМ-Клиника» вы можете круглосуточно,
+				позвонив по телефону в Москве<br> {{ phone }}<br> или заполнив форму обратной связи
+			</p>
+			<p class="big">
+				<b>В нашем центре {{ directionCountDocs }} {{ docText }}</b>
+			</p>
+			<a href="/doctors/" class="b-our-specialists-content__all" data-count="{{ allCountDocs }}"><span>Все специалисты</span></a>
+		</div>
+
+		<div class="b-our-specialists-content__list">
+			{% for doc in docList %} 
+				<div class="b-our-specialists-content__item">
+					<a href="{{ doc.url() }}"><img src="{{ doc.previewPicture().resizedImage('fit150x200') }}"></a>
+					<a href="{{ doc.url() }}"><span>{{ doc.title() }}</span></a>
+					<div class="b-our-specialists-content__descr">{{ doc.specialty.value() }}</div>
+					<div class="b-our-specialists-content__extra">
+						<a class="button x-light upc b small radius js-appointment-btn" data-form-type="js-analytic-doc-block-appointment">ЗАПИСАТЬСЯ</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="b-our-specialists-content__button-more"><a href="#" class="b-our-specialists-content__show-more"><span>Показать еще</span></a></div>
+	</div>
+</div>

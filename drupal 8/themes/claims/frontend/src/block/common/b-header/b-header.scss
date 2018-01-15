@@ -1,0 +1,109 @@
+@import "~style";
+
+.b-header {
+	color: #fff;
+	padding: 13px 0;
+
+	a {
+		color: #fff;
+		&:hover,
+		&:focus {
+			color: #fff;
+			text-decoration: underline;
+			span {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	@include grid-row();
+	&__section {
+		@include grid-column(4, 0);
+		height: 44px;
+		&.b-logo {
+			background: url(~img/common/new-logo-small.png) 50% 50% no-repeat;
+		}
+		&.b-nav {
+			padding-right: 40px;
+			&_mobile,
+			&_mobile__menu {
+				display: none;
+			}
+		}
+	}
+}
+
+.b-logo {
+	&__title {
+		display: inline-block;
+		text-transform: uppercase;
+		font-size: 13px;
+		line-height: 1em;
+		padding-top: 1em;
+	}
+}
+
+.c-user-page,
+.c-user-page-exit {
+	float: right;
+	height: 44px;
+	line-height: 100%;
+	span {
+		float: right;
+		margin-top: 12px;
+	}
+}
+
+.c-user-page {
+	&::before {
+		content: "";
+		width: 24px;
+		height: 100%;
+		opacity: 0.6;
+		display: inline-block;
+		background: url(~img/common/lock.png) center top no-repeat;
+		margin-right: 15px;
+	}
+}
+
+.c-user-page-exit {
+	&::before {
+		content: "";
+		width: 2px;
+		height: 100%;
+		display: inline-block;
+		background: url(~img/common/sep.png) center 15px no-repeat;
+		margin: 0 12px;
+	}
+}
+
+.b-nav_mobile__menu {
+	position: absolute;
+	top: 44px;
+	overflow: hidden;
+	width: 100%;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	background-color: $dark-blue-color;
+	z-index: 1;
+	transition: height 3s ease;
+
+	.c-user-page,
+	.c-user-page-exit {
+		display: block;
+		width: 100%;
+		float: none;
+		background-position-x: 5px;
+		margin: 0;
+		padding: $mobile-border-margin;
+
+		&::before {
+			display: none;
+		}
+
+		span {
+			float: none;
+		}
+	}
+}

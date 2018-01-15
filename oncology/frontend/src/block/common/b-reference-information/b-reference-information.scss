@@ -1,0 +1,66 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-reference-information {
+	float: left !important;
+
+	&__head,
+	&__text {
+		@include breakpoint(large) {
+			@include grid-column(6, 0);
+		}
+	}
+
+	&__text {
+		position: relative;
+		z-index: 3;
+	}
+
+	&__pickt {
+		background-repeat: no-repeat;
+
+		@include breakpoint(large) {
+			position: absolute;
+			z-index: 1;
+			top: -100px;
+			left: 90px;
+			width: 488px;
+			min-height: 386px;
+		}
+
+		@include breakpoint(xlarge) {
+			left: -120px;
+		}
+	}
+
+	&__head {
+		margin-top: 40px;
+
+		@include breakpoint(large) {
+			padding-right: 100px;
+			padding-left: 0;
+			position: relative;
+			margin-top: 0;
+		}
+
+		h2,
+		p {
+			position: relative;
+			z-index: 2;
+		}
+	}
+
+	&.without-margin-top {
+		margin-top: 0 !important;
+	}
+
+	@include breakpoint(large) {
+		padding: 100px 0 30px;
+	}
+
+	@include breakpoint(xlarge) {
+		margin: 70px 0 0;
+
+		@include grid-column-row(250);
+	}
+}

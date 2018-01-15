@@ -1,0 +1,53 @@
+@import "~style";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-header {
+		padding: 0;
+
+		&__section {
+			&.b-logo {
+				background: url(~img/common/small-logo-mobile.png) 50% 50% no-repeat;
+				float: right;
+				width: calc(100% - 120px);
+				margin-right: 60px;
+			}
+
+			&.b-nav_mobile {
+				display: block;
+				position: relative;
+				float: left;
+				padding: 0 $mobile-border-margin;
+				width: 60px;
+			}
+
+			&:not(.b-logo):not(.b-nav_mobile) {
+				display: none;
+			}
+		}
+	}
+
+	.b-nav_mobile {
+		&__burger {
+			@include hamburger(#fff, #fff, 30px, 20px);
+			display: block;
+			position: absolute;
+			top: calc(50% - 10px);
+			height: 20px;
+			width: 30px;
+		}
+
+		&__close {
+			font-size: 44px;
+			line-height: 44px;
+			cursor: pointer;
+		}
+
+		&__menu {
+			display: block !important;
+
+			&_open {
+				height: auto;
+			}
+		}
+	}
+}

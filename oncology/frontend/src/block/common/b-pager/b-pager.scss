@@ -1,0 +1,89 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-pager {
+	text-align: center;
+	margin: 35px 0 25px;
+
+	&__prev,
+	&__next {
+		height: 25px;
+		background: url(~img/common/i-orange-small-arrow-right.png) 100% 0 no-repeat;
+		margin-top: 7px;
+
+		@include breakpoint(medium) {
+			margin-top: 23px;
+			width: 8px;
+		}
+	}
+
+	&__prev {
+		float: left;
+		transform: rotate(180deg);
+
+		&::before {
+			content: "Назад";
+			transform: rotate(180deg);
+			display: block;
+			color: $color-orange;
+			height: 100%;
+			line-height: 25px;
+			position: relative;
+			left: -10px;
+
+			@include breakpoint(medium) {
+				display: none;
+			}
+		}
+	}
+
+	&__next {
+		float: right;
+
+		&::before {
+			content: "Вперед";
+			display: block;
+			color: $color-orange;
+			height: 100%;
+			line-height: 25px;
+			margin-right: 10px;
+
+			@include breakpoint(medium) {
+				display: none;
+			}
+		}
+	}
+
+	&__page {
+		border-radius: 40px;
+		color: $color-black;
+		font-size: 14px;
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		display: inline-block;
+
+		@include breakpoint(medium) {
+			font-size: 28px;
+			width: 80px;
+			height: 80px;
+			line-height: 80px;
+		}
+
+		&:not(.current) {
+			display: none;
+
+			@include breakpoint(medium) {
+				display: inline-block;
+			}
+		}
+
+		&.current {
+			background-color: rgba(135, 211, 124, 0.2);
+		}
+	}
+
+	@include breakpoint(medium) {
+		margin: 70px 0 50px;
+	}
+}

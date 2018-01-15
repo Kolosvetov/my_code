@@ -1,0 +1,66 @@
+{% set status = element_by_target_id(node.field_consumer_status.value[0]['target_id'], 'term') %}
+{% set positive_status = ('Принято' == status.name.value) %}
+{% set negative_status = ('Отклонено' == status.name.value) %}
+{% if positive_status or negative_status %}
+	{% if node.field_claims_type.value == 1 %}
+		{% set decision_title = 'Решение по обращению' %}
+	{% else %}
+		{% set decision_title = 'Решение по претензии' %}
+	{% endif %}
+	{% if negative_status %}
+		{% if 0 < node.field_m_answer.value|length %}
+			{% set last_answer = element_by_target_id(node.field_m_answer.value[0]['target_id'], 'node') %}
+			{% if last_answer %}
+				{% set decision_title = 'Решение магазина' %}
+			{% endif %}
+		{% endif %}
+		{% if 0 == node.field_privazka_magazina.value|length and 0 < node.field_d_answer.value|length %}
+			{% set last_answer = element_by_target_id(node.field_d_answer.value[0]['target_id'], 'node') %}
+			{% if last_answer %}
+				{% set decision_title = 'Решение дистрибьютора' %}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+			<div class="b-claim-info__option">
+				<div class="b-claim-info__option-head c-without">{{ decision_title }}</div>
+				<div class="b-claim-info__option-description only-text">
+	{% if positive_status %}
+		{% if 0 < node.field_answers|length %}
+			{% for answer in node.field_answers %}
+					<p>{{ answer.entity.body.value|raw }}</p>
+			{% endfor %}
+		{% endif %}
+	{% endif %}
+	{% if negative_status and last_answer %}
+					<p>{{ last_answer.body.value|raw }}</p>
+	{% endif %}
+	{% if node.field_claims_dannye_magazina.value %}
+					<p>Контактное лицо в магазине: <b>{{node.field_claims_dannye_magazina.entity.field_market_consumer_fio.value}}, тел: {{node.field_claims_dannye_magazina.entity.field_market_consumer_phone.value}}, email: <a href="mailto:{{node.field_claims_dannye_magazina.entity.field_market_consumer_email.value}}">{{node.field_claims_dannye_magazina.entity.field_market_consumer_email.value}}</a></b></p>
+	{% elseif node.field_dannye_distributora.value %}
+					<p>Контактное лицо дистрибьютора: <b>{{node.field_dannye_distributora.entity.field_d_fio.value}}, тел: {{node.field_dannye_distributora.entity.field_distributor_phone.value}}, email: <a href="mailto:{{node.field_dannye_distributora.entity.field_distributor_email.value}}">{{node.field_dannye_distributora.entity.field_distributor_email.value}}</a></b></p>
+	{% endif %}
+	{% if positive_status %}
+					<p>При себе необходимо иметь паспорт, реквизиты для перечисления/возврата денежных средств (в случае заявления такого требования).</p>
+	{% elseif negative_status %}
+					<p>Если Вы хотите получить письменный отказ магазина, то необходимо распечатать обращение и предъявить его в магазин. Обращаем Ваше внимание на то, что в магазине потребуется Ваш паспорт и оригиналы документов о покупке товара.</p>
+	{% endif %}
+				</div>
+	{% if trebovanie %}
+				<div class="b-claim-info__option-description only-text">
+		{% if trebovanie.field_pasportnye_dannye.value %}
+					<b>Паспортные данные, серия и номер:</b> {{trebovanie.field_pasportnye_dannye.value|raw}}<br />
+		{% endif %}
+		{% if trebovanie.field_data_vydaci.value|replace({'-':'','.':'','/':''}) %}
+					<b>Дата выдачи:</b> {{trebovanie.field_data_vydaci.value|date('d.m.Y')}}<br />
+		{% endif %}
+		{% if trebovanie.field_c_passport_issueplace.value %}
+					<b>Место выдачи:</b> {{trebovanie.field_c_passport_issueplace.value|raw}}<br />
+		{% endif %}
+		{% if trebovanie.field_trebovanie_po_pretenzii.value %}
+					<b>Требование по претензии:</b><br /> {{trebovanie.field_trebovanie_po_pretenzii.value|raw}}
+		{% endif %}
+				</div>
+	{% endif %}
+			</div>
+{% endif %}
+	{{ claims_answers_block('solution_consumer', current_node) }}

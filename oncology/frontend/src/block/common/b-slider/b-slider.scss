@@ -1,0 +1,349 @@
+@import "~style";
+@import "~style/_sprite";
+
+@include breakpoint(small down) {
+	.b-slider {
+		&__menu {
+			width: 100%;
+
+			a {
+				font-size: 1em;
+			}
+		}
+
+		&__slides {
+			width: 100%;
+		}
+
+		&__slide_info-title {
+			font-size: 2em;
+		}
+
+		&__slide_info-descr {
+			line-height: 1.3em;
+			font-size: 0.9em;
+		}
+
+		&__slide_info-buttons {
+			& > :last-child {
+				padding-left: 0;
+			}
+		}
+	}
+}
+
+.b-slider {
+	display: flex;
+	flex-direction: column;
+	height: auto;
+
+	& > div {
+		&:nth-child(1) {
+			order: 2;
+		}
+
+		&:nth-child(2) {
+			order: 1;
+		}
+	}
+
+	&__slides,
+	&__menu {
+		float: left;
+	}
+
+	&__slides {
+		width: 100%;
+
+		@include breakpoint(large) {
+			width: 670px;
+		}
+
+		@include breakpoint(xlarge) {
+			height: 100%;
+			width: 885px;
+		}
+
+		@include breakpoint(xxlarge) {
+			width: 1049px;
+		}
+	}
+
+	&__slide {
+		display: none;
+		width: calc(100% + 50px);
+		height: 100%;
+		background-position: 100% 16px;
+		background-repeat: no-repeat;
+		position: relative;
+		margin-left: -25px;
+
+		&.active {
+			display: block;
+		}
+
+		@include breakpoint(medium) {
+			height: 420px;
+			overflow: hidden;
+		}
+
+		@include breakpoint(large) {
+			height: 495px;
+			margin-left: -60px;
+			overflow: hidden;
+		}
+
+		@include breakpoint(xxlarge) {
+			margin-left: 0;
+			width: 100%;
+		}
+	}
+
+	&__slide_bg {
+		width: 100%;
+
+		@include breakpoint(large) {
+			width: 450px;
+			float: right;
+			margin-right: 20px;
+			margin-top: 20px;
+		}
+
+		@include breakpoint(xxlarge) {
+			width: auto;
+			position: absolute;
+			left: 420px;
+			top: 16px;
+			margin: 0;
+		}
+	}
+
+	&__slide_info {
+		color: $color-white;
+		padding: 53px 33px 173px 53px;
+		position: relative;
+		width: calc(100% - 50px);
+		margin-left: 25px;
+		margin-top: -50px;
+		background: #64a872;
+		background: -moz-linear-gradient(-45deg, #64a872 0%, #578b64 100%);
+		background: -webkit-linear-gradient(-45deg, #64a872 0%, #578b64 100%);
+		background: linear-gradient(135deg, #64a872 0%, #578b64 100%);
+
+		@include breakpoint(mlarge) {
+			background-image: url('~img/common/bg-slider.png');
+			background-position: 100% 100%;
+
+			&::after {
+				content: "";
+				position: absolute;
+				right: -9px;
+				bottom: -29px;
+
+				@include sprite($i-corner);
+			}
+		}
+
+		@include breakpoint(medium) {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 50%;
+			height: 100%;
+			margin-top: 0;
+			margin-left: 0;
+		}
+
+		@include breakpoint(xlarge) {
+			@include sprite($bg-slider);
+		}
+	}
+
+	&__slide_info-date {
+		font-size: 1.1em;
+		margin-bottom: 24px;
+	}
+
+	&__slide_info-title {
+		color: $color-white;
+		display: block;
+		font-size: 2em;
+		line-height: 1em;
+		margin-bottom: 28px;
+		font-weight: 900;
+
+		span {
+			border-bottom: 2px solid $color-white;
+		}
+
+		@include breakpoint(medium) {
+			font-size: 1.8em;
+		}
+
+		@include breakpoint(xxlarge) {
+			font-size: 2.7em;
+		}
+
+		&:hover {
+			span {
+				border-bottom: 2px solid $color-green-x-light;
+			}
+		}
+	}
+
+	&__slide_info-descr {
+		line-height: 1.5em;
+
+		@include breakpoint(medium) {
+			font-size: 0.9em;
+			line-height: 1.2em;
+		}
+
+		@include breakpoint(xlarge) {
+			font-size: 1em;
+		}
+	}
+
+	&__slide_info-buttons {
+		position: absolute;
+		bottom: 59px;
+		width: 100%;
+
+		& > * {
+			&:last-child {
+				width: 100%;
+				padding-left: 0;
+
+				@include breakpoint(xlarge) {
+					width: auto;
+					padding: 0.9em 1.8em;
+				}
+			}
+		}
+	}
+
+	&__slide_info-controll {
+		position: absolute;
+		left: 27px;
+		width: 50%;
+		top: 47px;
+
+		.next,
+		.prev {
+			display: inline-block;
+			cursor: pointer;
+		}
+
+		.next {
+			margin-left: 93px;
+
+			@include sprite($i-slider-next);
+		}
+
+		.prev {
+			@include sprite($i-slider-prev);
+		}
+	}
+
+	&__menu {
+		float: right;
+
+		a {
+			display: block;
+			width: 100%;
+			height: 55px;
+			color: $base-font-color;
+			position: relative;
+			padding-left: 5em;
+			margin-bottom: 2em;
+			background-repeat: no-repeat;
+			background-position: 0 center;
+			font-size: 1em;
+
+			&:hover {
+				color: $color-green-x-dark;
+			}
+
+			& > span {
+				display: table-cell;
+				height: 55px;
+				vertical-align: middle;
+			}
+
+			&::before {
+				content: "";
+				position: absolute;
+				left: 0;
+				display: none;
+			}
+
+			&.cons {
+				&::before {
+					background-image: inherit;
+					background-position: center center;
+					background-repeat: no-repeat;
+					width: 40px;
+					height: 55px;
+				}
+			}
+
+			&.diag {
+				&::before {
+					@include sprite($i-diagnostica);
+				}
+			}
+
+			&.chim {
+				&::before {
+					@include sprite($i-chimioterapia);
+				}
+			}
+
+			&.chir {
+				&::before {
+					@include sprite($i-chirurgicheskoe);
+				}
+			}
+
+			&.reab {
+				&::before {
+					@include sprite($i-reabilitacia);
+				}
+			}
+
+			@include breakpoint(small) {
+				float: left;
+				width: 50%;
+				margin-right: 0;
+			}
+
+			@include breakpoint(large) {
+				width: 100%;
+			}
+
+			@include breakpoint(xxlarge) {
+				font-size: 1.1em;
+			}
+		}
+
+		@include breakpoint(large) {
+			width: 220px;
+		}
+
+		@include breakpoint(xlarge) {
+			width: 270px;
+		}
+
+		@include breakpoint(xxlarge) {
+			width: 355px;
+		}
+	}
+
+	@include breakpoint(large) {
+		display: block;
+	}
+
+	@include breakpoint(xxlarge) {
+		height: 496px;
+	}
+}

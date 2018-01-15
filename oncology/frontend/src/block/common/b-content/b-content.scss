@@ -1,0 +1,503 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-content {
+	& > * {
+		opacity: 0;
+
+		&.js-show {
+			transition: opacity 1s ease-out 0.1s;
+			opacity: 1;
+		}
+	}
+
+	h2 {
+		margin-bottom: 30px;
+		font-weight: 700;
+
+		@include breakpoint(small) {
+			font-size: 2.4em;
+		}
+	}
+
+	h3 {
+		font-size: 1.5em;
+		font-weight: bold;
+		color: $color-green-middle;
+		text-transform: uppercase;
+		margin: 30px 0;
+		line-height: 1.5em;
+
+		@include breakpoint(large) {
+			font-size: 1.3em;
+		}
+
+		&.without-margin-bottom {
+			margin-bottom: 0;
+		}
+	}
+
+	.p-404 {
+		max-width: 974px;
+		width: 100%;
+		float: none;
+		margin: 100px auto 250px;
+		position: relative;
+
+		img {
+			width: 100%;
+		}
+
+		&__content {
+			position: absolute;
+			width: 100%;
+			text-align: center;
+			top: 0;
+			left: 0;
+			right: 0;
+			padding: 90px 0;
+		}
+
+		@include breakpoint(small) {
+			margin: 100px auto 180px;
+		}
+	}
+
+	.contacts {
+		.marked {
+			margin: 25px 0;
+			display: inline-block;
+			width: 100%;
+		}
+
+		ul {
+			color: $color-l-grey;
+
+			li {
+				&:first-child {
+					&::before {
+						content: "";
+						width: 19px;
+						height: 26px;
+						left: 0;
+						top: 2px;
+						background-image: url(~img/common/i-contact-orange-marker.png);
+					}
+				}
+
+				&:nth-child(2) {
+					margin-bottom: 0;
+
+					&::before {
+						content: "";
+						width: 24px;
+						height: 24px;
+						left: 0;
+						top: 2px;
+						background-image: url(~img/common/i-clock-orange.png);
+					}
+				}
+			}
+		}
+	}
+}
+
+.b-content-top {
+	width: 100%;
+	color: $color-white;
+	position: relative;
+
+	.upc {
+		box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	&__info {
+		width: 100%;
+		padding: 30px 20px 85px;
+		position: relative;
+		z-index: 2;
+		display: inline-block;
+		margin-top: 190px;
+		background: #64a872;
+		background: -moz-linear-gradient(-45deg, #64a872 0%, #578b64 100%);
+		background: -webkit-linear-gradient(-45deg, #64a872 0%, #578b64 100%);
+		background: linear-gradient(315deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 42px, rgba(87, 139, 100, 1) 42px, rgba(100, 168, 114, 1) 100%);
+
+		h1 {
+			line-height: 1em;
+			font-size: 1.7em;
+			font-weight: bold;
+			width: 100%;
+			margin-bottom: 30px;
+
+			@include breakpoint(small) {
+				font-size: 2.3em;
+			}
+
+			@include breakpoint(mlarge) {
+				font-size: 3em;
+			}
+		}
+
+		p {
+			line-height: 1.2em;
+			display: inline-block;
+
+			@include breakpoint(mlarge) {
+				font-size: 1.1em;
+
+				&.fs-20 {
+					font-size: 20px;
+				}
+			}
+
+			@include breakpoint(xxlarge) {
+				float: left;
+				width: 500px;
+			}
+		}
+
+		background-position: 100% 100%;
+
+		&::after {
+			content: "";
+			position: absolute;
+			right: -9.5px;
+			bottom: -29px;
+			transform: rotate(-1deg);
+
+			@include sprite($i-corner);
+		}
+
+		@include breakpoint(medium) {
+			width: 410px;
+			margin-top: 0;
+		}
+
+		@include breakpoint(mlarge) {
+			width: 605px;
+			padding: 55px 33px 55px 55px;
+
+			/* background-image: url('~img/common/bg-slider-605x416.png'); */
+		}
+
+		@include breakpoint(xxlarge) {
+			width: 855px;
+			margin-top: 0;
+
+			/* background-image: url('~img/common/bg-list.png'); */
+
+			.button {
+				float: right;
+			}
+		}
+	}
+
+	&__img {
+		left: -25px;
+		width: calc(100% + 50px);
+		background-size: 480px 250px;
+		background-position: center center;
+		height: 250px;
+		top: 0;
+		position: absolute;
+		z-index: 1;
+
+		&::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url('~img/common/services-headimage-filter.png');
+		}
+
+		@include breakpoint(medium) {
+			width: 604px;
+			height: 317px;
+			left: auto;
+			right: 0;
+			top: 20px;
+			background-size: auto;
+		}
+
+		@include breakpoint(mlarge) {
+			top: -47px;
+			right: 0;
+			left: auto;
+		}
+
+		@include breakpoint(xlarge) {
+			left: 600px;
+			right: auto;
+		}
+
+		@include breakpoint(xxlarge) {
+			left: 627px;
+			width: 604px;
+			height: 317px;
+		}
+	}
+
+	&.doctor {
+		display: flex;
+		flex-direction: column;
+		border-bottom: 1px dashed $color-grey;
+
+		& > div {
+			&:nth-child(1) {
+				order: 2;
+			}
+
+			&:nth-child(2) {
+				order: 1;
+			}
+
+			&:nth-child(3) {
+				order: 3;
+			}
+		}
+
+		.b-content-top__info {
+			margin-top: 0;
+			margin-left: -25px;
+			width: calc(100% + 50px);
+			padding: 30px 20px;
+			background: #64a872;
+			background: -moz-linear-gradient(-45deg, #64a872 0%, #578b64 100%);
+			background: -webkit-linear-gradient(-45deg, #64a872 0%, #578b64 100%);
+			background: linear-gradient(315deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 42px, rgba(87, 139, 100, 1) 42px, rgba(100, 168, 114, 1) 100%);
+
+			@include breakpoint(mlarge) {
+				&::after {
+					display: none;
+				}
+			}
+
+			@include breakpoint(mmlarge) {
+				left: 190px;
+				top: 0;
+				z-index: 1;
+				position: absolute;
+				padding-left: 215px;
+				height: 500px;
+				width: calc(100% - 165px);
+
+				h1 {
+					font-size: 3em;
+				}
+			}
+
+			@include breakpoint(xlarge) {
+				width: 980px;
+				height: 375px;
+				background-image: url('~img/common/bg-green-980x375.png');
+				background-position: 0 2px;
+				background-repeat: no-repeat;
+				padding: 30px 75px 0 250px;
+				left: 125px;
+				top: 0;
+				z-index: 1;
+				position: absolute;
+
+				h1 {
+					font-size: 54px;
+				}
+
+				p {
+					width: 100%;
+				}
+
+				&::after {
+					display: block;
+				}
+			}
+		}
+
+		.b-content-top__img {
+			z-index: 3;
+			position: relative;
+			width: auto;
+			height: auto;
+			margin-top: 35px;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			float: left;
+			text-align: center;
+
+			&::after {
+				display: none;
+			}
+
+			@include breakpoint(mmlarge) {
+				width: 314px;
+			}
+		}
+
+		@include breakpoint(large) {
+			min-height: 470px;
+		}
+
+		@include breakpoint(mlarge) {
+			overflow: hidden;
+		}
+	}
+
+	&__places {
+		a {
+			@include grid-column(12, 0);
+
+			color: $color-white;
+			line-height: 1.5em;
+			margin-bottom: 20px;
+
+			span {
+				border-bottom: 1px dashed $color-green-xx-light;
+			}
+
+			&:hover {
+				span {
+					border-bottom: 1px dashed rgba(0, 0, 0, 0);
+				}
+			}
+
+			&::before {
+				content: "";
+				float: left;
+				height: 51px;
+				width: 43px;
+				background-image: url('~img/common/i-map-point-white.png');
+			}
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			@include breakpoint(mmlarge) {
+				margin-bottom: 0;
+			}
+
+			@include breakpoint(xlarge) {
+				@include grid-column(6, 0);
+			}
+		}
+
+		@include breakpoint(mmlarge) {
+			margin-top: 20px;
+		}
+	}
+
+	&__buttons {
+		@include grid-column(12, 0);
+
+		margin-top: 25px;
+
+		a {
+			color: $color-white;
+			line-height: 1.5em;
+			float: left;
+
+			&:not(.button) {
+				margin-top: 10px;
+			}
+
+			@include span_bottom_line(2px, solid, $color-orange);
+		}
+
+		.make-review {
+			@include span_bottom_line(2px, solid, $color-green-xx-light);
+
+			margin-right: 20px;
+
+			&::before {
+				content: "";
+				float: left;
+				height: 47px;
+				width: 53px;
+				margin-left: -10px;
+				background-image: url('~img/common/i-review.png');
+			}
+		}
+
+		.send-review {
+			margin-left: 44px;
+			margin-bottom: 30px;
+
+			@include breakpoint(small) {
+				margin-left: 0;
+				margin-bottom: 0;
+			}
+		}
+
+		@include breakpoint(small) {
+			margin-top: 0;
+
+			.button {
+				clear: both;
+			}
+		}
+
+		@include breakpoint(xlarge) {
+			.button {
+				clear: none;
+				float: right;
+			}
+		}
+	}
+
+	&__specialization {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		padding-top: 30px;
+
+		label {
+			color: $color-black;
+			font-weight: bold;
+			margin-right: 20px;
+			margin-bottom: 25px;
+
+			@include breakpoint(small) {
+				display: block;
+				width: 100%;
+			}
+
+			@include breakpoint(mmlarge) {
+				display: inline-block;
+				width: auto;
+			}
+		}
+
+		a {
+			background-color: $color-green-light;
+			color: $color-white;
+			padding: 8px 20px;
+			border-radius: 4px;
+			height: 31px;
+			margin-right: 10px;
+			margin-bottom: 10px;
+			white-space: nowrap;
+
+			@include breakpoint(mmlarge) {
+				position: relative;
+				top: -8px;
+			}
+		}
+
+		@include breakpoint(mlarge) {
+			bottom: 0;
+			left: 0;
+			padding-left: 375px;
+			padding-top: 40px;
+			height: 125px;
+		}
+
+		@include breakpoint(xlarge) {
+			position: absolute;
+		}
+	}
+}

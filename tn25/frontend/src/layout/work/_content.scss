@@ -1,0 +1,75 @@
+/* stylelint-disable block-no-empty  */
+
+html,
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.c-content {
+	@include flex-grid-row(null,100%,null,false);
+
+	position: relative;
+
+	p {
+	}
+
+	b,
+	strong {
+	}
+
+	h1 {
+		font-family: 'ProximaNova', sans-serif;
+	}
+
+	h2 {
+		margin: 0;
+	}
+
+	h3 {
+		font-family: 'ProximaNova', sans-serif;
+	}
+
+	ul {
+	}
+
+	.big {
+		color: #010101;
+		font-size: 40px;
+		font-weight: 400;
+		text-transform: uppercase;
+		font-family: 'ProximaNova', sans-serif;
+		letter-spacing: 5px;
+
+		@include breakpoint(large) {
+			font-size: 72px;
+		}
+	}
+}
+
+.fancybox-skin {
+	background-color: #fff;
+	padding: 10px !important;
+
+	@include breakpoint(large) {
+		padding: 50px !important;
+	}
+}
+
+.fancybox-nav {
+	width: 50px;
+}
+
+.fancybox-prev {
+	left: -100px;
+}
+
+.fancybox-next {
+	right: -100px;
+}
+
+#fancybox-loading,
+.fancybox-close,
+.fancybox-prev span,
+.fancybox-next span {
+	background-image: url(~img/common/fancbox.png);
+}

@@ -1,0 +1,46 @@
+$main-color: #010101;
+
+$base-font: 16px;
+$base-font-color: #010101;
+$base-font-family: Muller, Open Sans, arial;
+$breakpoints: (
+	xxsmall: 0,
+	xsmall: 320px,
+	small: 480px,
+	medium: 720px,
+	mmlarge: 920px,
+	large: 1024px,
+	mlarge: 1100px,
+	xlarge: 1320px,
+	xxlarge: 1600px,
+);
+$grid-row-width: 100%;
+$grid-column-gutter: (
+	large: 120px
+);
+
+$color-green-xx-light: #8fe083;
+$color-green-x-light: #87d37c;
+$color-green-light: #65aa73;
+$color-green-middle: #34805a;
+$color-green-m-dark: #61a16d;
+$color-green-dark: #578b64;
+$color-green-x-dark: #477252;
+
+$color-white: #fff;
+$color-black: #000;
+$color-grey: #ebebeb;
+$color-m-grey: #fafafa;
+$color-ll-grey: #f5f5f5;
+$color-l-grey: #7f7f7f;
+$color-d-grey: #d8d8d8;
+$color-orange: #f2784b;
+
+$font-size-base: $base-font;
+$gray-light: $color-m-grey;
+$gray-lighter: $color-grey;
+$btn-primary-bg: $color-green-middle;
+
+// bourbon
+
+// end bourbon

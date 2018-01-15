@@ -1,0 +1,54 @@
+@import "~style";
+
+.b-content {
+	@include grid-column(12, 40px);
+
+	float: none !important;
+	margin: 0 auto;
+	padding-top: 65px;
+	clear: both;
+	box-sizing: border-box;
+
+	&.without-banner {
+		@include breakpoint(xlarge) {
+			padding-top: 146px;
+		}
+	}
+
+	h2 {
+		@include grid-column(12, 10);
+
+		font-family: ProximaNova, sans-serif;
+		font-size: 24px;
+		font-weight: 700;
+		line-height: 28px;
+		text-transform: uppercase;
+		letter-spacing: 0.22em;
+		-moz-hyphens: auto;
+		-webkit-hyphens: auto;
+		-ms-hyphens: auto;
+
+		@include breakpoint(medium) {
+			-moz-hyphens: none;
+			-webkit-hyphens: none;
+			-ms-hyphens: none;
+		}
+
+		@include breakpoint(large) {
+			font-size: 30px;
+		}
+	}
+
+	a {
+		color: #e30416;
+		text-decoration: underline;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	@include breakpoint(xlarge) {
+		@include grid-column(8, 0);
+	}
+}

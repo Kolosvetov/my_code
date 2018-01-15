@@ -1,0 +1,7 @@
+services:
+    tarkett_api.index:
+            class: Drupal\tarkett_api\Index
+    tarkett_api.api:
+            class: Drupal\tarkett_api\API
+    tarkett_api.proxy:
+            class: Drupal\tarkett_api\Proxy

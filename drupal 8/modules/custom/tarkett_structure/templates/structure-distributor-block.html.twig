@@ -1,0 +1,281 @@
+{% set status = element_by_target_id(current_node.field_status_processa_u_distribu.value[0]['target_id'], 'term') %}
+{% set positive_status = ('Принято' == status.name.value) %}
+{% set negative_status = ('Отклонено' == status.name.value) %}
+{% if positive_status %}
+	{% if current_node.field_claims_type.value in ['3', '4'] %}
+		{% set comment_message = 'Просим предоставить возвратные документы согласно договору поставки с АО "ТАРКЕТТ РУС"' %}
+	{% else %}
+		{% set comment_message = '' %}
+	{% endif %}
+	{% if '' != comment_message %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Решение по претензии</div>
+		<div class="b-claim-info__option-description only-text">{{ comment_message }}</div>
+	</div>
+	{% endif %}
+{% endif %}
+{{claims_answers_block('distributor_answer', current_node)}}
+{% set date_delimiters = {'-':'','.':'','/':''} %}
+{% if node %}
+	{% if current_node.field_claims_type.value == '4' and user.roles[1] == 'distributor' %}
+		{% if node.field_d_tarkett_files.value %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Файлы процесса:</div>
+		<div class="b-claim-info__option-description">
+			<table class="marked" style="width: 100%;">
+			{% for d_file in node.field_d_tarkett_files %}
+				<tr>
+					<td style="width:80%;">
+						<a href="{{ file_url(d_file.entity.fileuri) }}" target="_blank">{{ d_file.entity.getFileName() }}</a>
+					</td>
+					<td style="width:20%;">
+						{{ claims_format_size(d_file.entity.getSize()) }}
+					</td>
+				</tr>
+			{% endfor %}
+			</table>
+		</div>
+	</div>
+		{% endif %}
+	{% endif %}
+	{% if node.field_d_fio.value or node.field_distributor_email.value or node.field_distributor_phone.value %}
+		{% if current_node.field_privazka_distributor.value is iterable and 0 < current_node.field_privazka_distributor.value|length %}
+			{% set distributor_user = element_by_target_id(current_node.field_privazka_distributor.value[0]['target_id'], 'user') %}
+		{% else %}
+			{% set distributor_user = false %}
+		{% endif %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Ответственное лицо Дистрибьютора</div>
+		<div class="b-claim-info__option-description">
+			<table class="marked" style="width: 100%;">
+				<tbody>
+		{% if node.field_d_fio.value %}
+					<tr>
+						<td>ФИО:</td>
+						<td>{{node.field_d_fio.value}}</td>
+					</tr>
+		{% endif %}
+		{% if node.field_distributor_email.value %}
+					<tr>
+						<td>E-mail:</td>
+						<td>{{node.field_distributor_email.value}}</td>
+					</tr>
+		{% endif %}
+		{% if node.field_distributor_phone.value %}
+					<tr>
+						<td>Моб. телефон:</td>
+						<td>{{node.field_distributor_phone.value}}</td>
+					</tr>
+		{% endif %}
+		{% if distributor_user and distributor_user.field_ur_lico_name.value %}
+				<tr>
+					<td>Наименование юридического лица:</td>
+					<td>{{distributor_user.field_ur_lico_name.value}}</td>
+				</tr>
+		{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{% endif %}
+	{% if node.field_distributor_invoices.value %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Документы оплаты/поставки:</div>
+		<div class="b-claim-info__option-description only-text">
+		{% if node.field_d_supply_contract.value %}
+			<div>
+				Договор поставки: № {{ node.field_d_supply_contract.value }}
+			</div>
+		{% endif %}
+		{% for invoices_ids in node.field_distributor_invoices.value %}
+			{% set invoice = element_by_target_id(invoices_ids.target_id) %}
+			{% set inv_data = invoice.field_data.value %}
+			<div>
+				Счет фактура № {{ invoice.title.value }}{% if inv_data %}{% if inv_data|replace(date_delimiters) %}, дата {{ inv_data|date('d.m.Y') }}{% endif %}{% endif %}
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+	{% if current_node.field_claims_type.value == '4' %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Тип претензии:</div>
+		<div class="b-claim-info__option-description">
+			<table class="marked" style="margin-bottom: 20px;">
+				<tr><td colspan="2">{{current_node.field_d_claim_type.settings["allowed_values"][current_node.field_d_claim_type.value]}}</td></tr>
+				<tr><td>Возможность предоставить образцы</td><td>{{current_node.field_d_can_show.settings["allowed_values"][current_node.field_d_can_show.value]}}</td></tr>
+			</table>
+		</div>
+	</div>
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Информация о продукции:</div>
+		<div class="b-claim-info__option-description">
+			<table class="marked" style="margin-bottom: 20px;">
+		{% if node.field_d_defect_type.value %}
+				<tr><td><b>Тип дефекта</b></td><td>{{node.field_d_defect_type.value}}</td></tr>
+		{% endif %}
+		{% if node.field_product_cat.value %}
+				<tr><td><b>Категория продукта</b></td><td>{{node.field_product_cat.value}}</td></tr>
+		{% endif %}
+		{% if node.field_kollekcia.value %}
+				<tr><td><b>Коллекция</b></td><td>{{node.field_kollekcia.value}}</td></tr>
+		{% endif %}
+			</table>
+		</div>
+		{% if node.field_products_with_defects.value %}
+			{% set product_category = node.field_product_cat.value %}
+			{% set needs_to_show_numbers = (product_category != product_category|replace({'линолеум': ''})) %}
+		<div class="b-claim-info__option-description">
+			<table class="marked" style="width: 100%;">
+				<tr>
+					<td><b>Дизайн</b></td>
+					<td><b>Количество брака</b></td>
+					<td><b>Стоимость</b></td>
+			{% if needs_to_show_numbers %}
+					<td><b>Номер рулона</b></td>
+			{% endif %}
+				</tr>
+			{% for defect_ids in node.field_products_with_defects.value %}
+				{% set defect = element_by_target_id(defect_ids.target_id) %}
+				{% if defect.field_dizain.value and defect.field_count.value and defect.field_price.value %}
+				<tr>
+					<td>{{defect.field_dizain.value}}</td>
+					<td>{{defect.field_count.value}}</td>
+					<td>{{defect.field_price.value}}{% if defect.field_price.value == defect.field_price.value|replace({'руб.': ''}) %} руб.{% endif %}</td>
+					{% if needs_to_show_numbers %}
+					<td>{{defect.field_rolls_num.value}}</td>
+					{% endif %}
+				</tr>
+				{% endif %}
+			{% endfor %}
+			</table>
+		</div>
+		{% endif %}
+	</div>
+	{% endif %}
+	{% if node.field_d_foto.value %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Фото:</div>
+		<div class="b-claim-info__option-description only-text">
+		{% for d_image in node.field_d_foto %}
+			<a class="b-defect__image b-defect__image_only fancybox" href="{{ file_url(d_image.entity.fileuri) }}" target="_blank" title="Изображение дефекта {{ loop.index }}">
+				<img src="{{ file_url(d_image.entity.fileuri) }}" width="180" height="180" style="height: 180px;">
+			</a>
+		{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+	{% if node.field_d_video.value %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Видеоматериал:</div>
+		<div class="b-claim-info__option-description only-text">
+		{% for d_video in node.field_d_video %}
+			<a href="{{ file_url(d_video.entity.fileuri) }}" target="_blank" title="Видеоматериал дефекта {{ loop.index }}">{{ d_video.entity.getFileName() }} ({{ claims_format_size(d_video.entity.getSize()) }})</a>
+		{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+	{% if node.field_d_docs.value %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Документы:</div>
+		<div class="b-claim-info__option-description">
+			<table class="marked" style="width: 100%;">
+		{% for d_doc in node.field_d_docs %}
+
+				<tr>
+					<td style="width:80%;">
+						<a href="{{ file_url(d_doc.entity.fileuri) }}" target="_blank">{{ d_doc.entity.getFileName() }}</a>
+					</td>
+					<td style="width:20%;">
+						{{ claims_format_size(d_doc.entity.getSize()) }}
+					</td>
+				</tr>
+		{% endfor %}
+			</table>
+		</div>
+	</div>
+	{% endif %}
+{% else %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Ответственное лицо Дистрибьютора</div>
+		<div class="b-claim-info__option-description">
+			{{claims_solutions_form('distributor_data', current_node)}}
+		</div>
+	</div>
+{% endif %}
+{% if current_node and current_node.field_claims_dannye_magazina %}
+	{% set magazin = element_by_target_id(current_node.field_claims_dannye_magazina.value[0]['target_id'], 'node') %}
+	{% if magazin %}
+		{% if current_node.field_privazka_magazina.value is iterable and 0 < current_node.field_privazka_magazina.value|length %}
+			{% set market_user = element_by_target_id(current_node.field_privazka_magazina.value[0]['target_id'], 'user') %}
+		{% else %}
+			{% set market_user = false %}
+		{% endif %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Данные магазина</div>
+		<div class="b-claim-info__option-description">
+			<table class="marked" style="width: 100%;">
+				<tbody>
+		{% if market_user and market_user.field_ur_lico_name.value %}
+					<tr>
+						<td>Наименование юридического лица:</td>
+						<td>{{market_user.field_ur_lico_name.value}}</td>
+					</tr>
+		{% endif %}
+		{% if magazin.field_market_consumer_fio.value %}
+					<tr>
+						<td>ФИО контактного лица:</td>
+						<td>{{magazin.field_market_consumer_fio.value}}</td>
+					</tr>
+		{% endif %}
+		{% if magazin.field_market_consumer_email.value %}
+					<tr>
+						<td>E-mail:</td>
+						<td>{{magazin.field_market_consumer_email.value}}</td>
+					</tr>
+		{% endif %}
+		{% if magazin.field_market_consumer_phone.value %}
+					<tr>
+						<td>Моб. телефон:</td>
+						<td>{{magazin.field_market_consumer_phone.value}}</td>
+					</tr>
+		{% endif %}
+		{% if magazin.field_market_torg_12.value %}
+					<tr>
+						<td>Накладная ТОРГ 12:</td>
+						<td>{{magazin.field_market_torg_12.value}}{% if magazin.field_market_torg_12_date.value|replace(date_delimiters) %} от {{magazin.field_market_torg_12_date.value|date('d.m.Y')}}{% endif %}</td>
+					</tr>
+		{% endif %}
+		{% if magazin.field_market_consumer_invoices.value %}
+					<tr>
+						<td>Счет фактура:</td>
+						<td>{{magazin.field_market_consumer_invoices.value}}{% if magazin.field_market_consumer_invoices_d.value|replace(date_delimiters) %} от {{magazin.field_market_consumer_invoices_d.value|date('d.m.Y')}}{% endif %}</td>
+					</tr>
+		{% endif %}
+		{% if magazin.field_market_defect_type.value %}
+					<tr>
+						<td>Тип дефекта:</td>
+						<td>{{magazin.field_market_defect_type.value}}</td>
+					</tr>
+		{% endif %}
+		{% if magazin.field_market_consumer_comments.value %}
+					<tr>
+						<td>Комментарии магазина:</td>
+						<td>{{magazin.field_market_consumer_comments.value}}</td>
+					</tr>
+		{% endif %}
+		{% if magazin.field_market_consumer_distributo.value is iterable and 0 < magazin.field_market_consumer_distributo.value|length %}
+			{% set distributor = element_by_target_id(magazin.field_market_consumer_distributo.value[0].target_id, "user") %}
+			{% if distributor.name.value %}
+					<tr>
+						<td>Дистрибьютор у которого был куплен продукт:</td>
+						<td>{{distributor.name.value}}</td>
+					</tr>
+			{% endif %}
+		{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{% endif %}
+{% endif %}

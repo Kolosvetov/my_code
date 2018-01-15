@@ -1,0 +1,49 @@
+@import "~style";
+@import "~style/_sprite";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-middle-form {
+		@include flex;
+		@include flex-align(center, middle);
+		@include flex-direction(column);
+		box-sizing: border-box;
+		margin: 0 $mobile-border-margin;
+		width: calc(100% - #{$mobile-border-margin * 2});
+		.b-col6 {
+			float: none !important;
+			clear: both;
+			width: 100%;
+			text-align: left;
+			&.search-customer-claim {
+				@include flex-order(0);
+			}
+			&.new-customer-claim {
+				@include flex-order(1);
+			}
+			&.new-market-claim,
+			&.new-distributor-claim {
+				@include flex-order(2);
+				margin-top: $mobile-border-margin;
+			}
+		}
+		&__new-claim {
+			margin-right: 0;
+			width: 100%;
+			.text {
+				&-desktop {
+					display: none;
+				}
+				&-mobile {
+					display: inline-block;
+				}
+			}
+			&_left {
+				margin-left: 0;
+			}
+		}
+		&__search {
+			margin-left: 0;
+			width: 100%;
+		}
+	}
+}

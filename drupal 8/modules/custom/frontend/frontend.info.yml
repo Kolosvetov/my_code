@@ -1,0 +1,6 @@
+name: Techart Frontend
+description: Модуль подключающий frontend
+package: Custom
+type: module
+version: 1.0
+core: 8.x

@@ -1,0 +1,56 @@
+{{claims_user_header()}}
+<div class="b-wrapper b-wrapper--blue-bordered">
+    <div class="b-top-tabs">
+        <a class="b-top-tabs__tab b-top-tabs__tab--active">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--profile">Профиль</span>
+        </a>
+        <a href="{{ path('tarkett_structure.claims_lists_'~user.roles[1], {'tab':"in_work"}) }}" class="b-top-tabs__tab">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--claims">Обращения и претензии</span>
+        </a>
+        <a href="{{ path('entity.node.canonical', {'node': 11}) }}" class="b-top-tabs__tab">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--about">Описание сервиса</span>
+        </a>
+       {# <a class="b-top-tabs__tab">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--help">Помощь</span>
+        </a>#}
+    </div>
+</div>
+<div class="b-middle">
+	<form method="post" enctype="multipart/form-data" name="user_settings">
+		<div class="b-middle-form">
+			<div class="b-row">
+				<div class="b-col6 b-col6--align-right b-col6--offset">
+					<div class="b-middle-form__input-field">
+						<label class="b-middle-form__label" for="fullname">Фамилия, Имя, Отчество</label>
+						<input class="required" id="fullname" type="text" name="user_fio" value="{{full_user.field_user_fio.value}}">
+					</div>
+				</div>
+				<div class="b-col6 b-col6--align-right b-col6--offset-end">
+					<div class="b-middle-form__input-field">
+						<label class="b-middle-form__label" for="phone">Телефон</label>
+						<input id="phone" class="phone required" type="text" name="user_phone" value="{{full_user.field_user_phone.value}}">
+                    </div>
+				</div>
+			</div>
+			<div class="b-row">
+				<div class="b-col6 b-col6--align-right b-col6--offset">
+					<div class="b-middle-form__input-field">
+						<label class="b-middle-form__label" for="email">E-mail</label>
+						<input class="required" id="email" type="text" data-mask='^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' name="user_email" value="{{full_user.field_user_email.value}}">
+                    </div>
+				</div>
+				<div class="b-col6 b-col6--align-right b-col6--offset-end">
+					<div class="b-middle-form__input-field">
+						<label class="b-middle-form__new-claim c-button c-button--wide c-button--dotted" for="user_avatar"><span class="c-plus">+</span> Загрузить фотографию</label>
+						<input id="user_avatar" type="file" name="files[user_avatar]" style="opacity: 0;">
+					</div>
+				</div>
+			</div>
+			<div class="b-row">
+				<div class="b-middle-form__input-field--centered b-middle-form__submit">
+					<input class="c-button button js-form-submit form-submit" data-drupal-selector="edit-send" id="edit-send" name="op" value="Готово" type="submit">
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,33 @@
+@import "~style";
+@import "~style/_sprite";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-closeable {
+		float: none !important;
+
+		legend {
+			width: $mobile-width;
+			padding: 18px $mobile-border-margin;
+			font-size: 24px;
+		}
+
+		.fieldset-wrapper {
+			width: $mobile-width !important;
+			margin: 0 !important;
+			float: none !important;
+		}
+
+		.with-map {
+			&::after {
+				display: none;
+			}
+			.fieldset-wrapper {
+				padding: 0;
+			}
+		}
+
+		fieldset:not(.fieldgroup):not(.questions):not(.form-composite) > legend::after {
+			display: none;
+		}
+	}
+}

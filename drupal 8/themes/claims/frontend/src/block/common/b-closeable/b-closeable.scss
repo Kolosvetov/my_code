@@ -1,0 +1,133 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-closeable {
+	@include grid-column(12, 0);
+	background: #f7f9f8;
+
+	&__bookmark,
+	legend {
+		width: 100%;
+		padding: 18px 0;
+		color: #17323d;
+		font-size: 32px;
+		box-sizing: border-box;
+		background: #dfe7e9;
+		line-height: 20px;
+		text-align: center;
+		position: relative;
+		font-weight: 600;
+		z-index: 2;
+	}
+	fieldset:not(.fieldgroup):not(.questions):not(.form-composite) {
+		& > .b-closeable__bookmark,
+		& > legend {
+			border: 1px solid $main-border-color;
+			border-width: 1px 0;
+			&::after {
+				content: "";
+				width: 13px;
+				height: 8px;
+				display: inline-block;
+				margin-left: 3px;
+				position: relative;
+				top: -3px;
+			}
+		}
+		.padding-bottom-0 {
+			.fieldset-wrapper {
+				padding-bottom: 0;
+			}
+		}
+	}
+
+	&__content,
+	.fieldset-wrapper {
+		@include grid-column(10, 0);
+		@include grid-column-offset(2);
+		@include grid-column-end();
+
+		padding: 34px 0;
+		color: #17323d;
+		font-size: 14px;
+		box-sizing: border-box;
+		line-height: 100%;
+		&.without-padding {
+			padding: 0;
+		}
+		&_wide {
+			@include grid-column(12, 0);
+			@include grid-column-offset(0);
+			@include grid-column-end();
+		}
+	}
+	.next-step-block {
+		> .fieldset-wrapper {
+			@include grid-column(12, 0);
+			@include grid-column-offset(0);
+			@include grid-column-end();
+
+			text-align: center;
+		}
+	}
+	.b-step {
+		display: none;
+
+		&.active {
+			display: block;
+		}
+		> .fieldset-wrapper {
+			@include grid-column(12, 0);
+			@include grid-column-offset(0);
+			padding: 0;
+		}
+	}
+	#edit-market-info,
+	#edit-agrer-to-process-info {
+		background: #eff3f4;
+	}
+	.without-header {
+		&__bookmark,
+		> legend {
+			display: none;
+		}
+	}
+	.without-content {
+		> .fieldset-wrapper {
+			display: none;
+		}
+	}
+	.no-bg {
+		background: #fff;
+	}
+	.with-map {
+		position: relative;
+		overflow: hidden;
+		&__content,
+		.fieldset-wrapper {
+			@include grid-column(4, 0);
+			@include grid-column-offset(2);
+			@include grid-column-end();
+
+			.form-item:not(.js-form-wrapper) {
+				@include grid-column(12, 0);
+				@include grid-column-end();
+				&.form-item-home-num,
+				&.form-item-corp-num {
+					@include grid-column-end();
+				}
+			}
+		}
+		&::after {
+			content: "";
+			width: 600px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 1;
+			box-sizing: border-box;
+			background: url(~img/common/map.png) 0 0;
+		}
+	}
+}

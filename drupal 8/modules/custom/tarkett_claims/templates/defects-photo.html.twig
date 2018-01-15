@@ -1,0 +1,34 @@
+<fieldset class="form-composite js-form-item form-item js-form-wrapper form-wrapper custom-form with-images" data-drupal-selector="edit-product-state" id="edit-product-defects-photo--wrapper">
+	<legend style="background: rgba(0,0,0,0)">
+		<span class="fieldset-legend">Загрузка фотографий</span>
+	</legend>
+	<div class="fieldset-description">
+{% if name != name|replace({'distributor': ''}) %}
+Пожалуйста, загрузите фотографии, которые помогут понять нам вашу проблему. Фотографии должны давать полное представление о проблеме - например размер(для этого можно приложить линейку), повторяемость недостатка, общий вид. По возможности сфотографируйте штамп Tarkett на обратной стороне продукта, где указана дата и номер партии.
+{% else %}
+Фотографии должны давать максимально полное представление о заявляемом недостатке, поэтому следуйте пожалуйста указанным рекомендациям:
+{% endif %}
+	</div>
+	<div class="fieldset-description photo-list">
+		<ul>
+		{% for list in description['foto-1']['#context']['description'] %}
+			<li>{{list}}</li>
+		{% endfor %}
+		</ul>
+	</div>
+	<div class="fieldset-wrapper">
+		<div class="b-defect-list list" data-action="/" data-type="photo">
+			<div class="b-defect-list__item clone" data-id="">
+				<div class="b-defect-list__title"><img/></div>
+				<div class="b-defect-list__delete"></div>
+				<div class="b-defect-list__edit"></div>
+				<input type="file" style="display:none;" name="{{name}}">
+			</div>
+		</div>
+	</div>
+	<div class="label-fix">
+		<div class="dotted-btn add-photo-btn">
+			<label>Загрузить фотографию</label>
+		</div>
+	</div>
+</fieldset>

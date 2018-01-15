@@ -1,0 +1,11 @@
+{
+  "https://github.com/jquery/jquery-dist.git": {
+    "3.1.0": "6f02bc382c0529d3b4f68f6b2ad21876642dbbfe"
+  },
+  "https://github.com/kenwheeler/slick.git": {
+    "1.6.0": "0aee9fe00e440cc9d72c2dc11768ad9277880603"
+  },
+  "https://github.com/qorbani/fontface-source-sans-pro.git": {
+    "482c5ba1": "482c5ba1"
+  }
+}

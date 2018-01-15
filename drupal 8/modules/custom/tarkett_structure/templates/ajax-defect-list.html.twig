@@ -1,0 +1,16 @@
+<div class="js-form-item form-item js-form-type-select form-item_wide">
+	<label for="edit-select-defect-type-{{ count }}">Выбрать<span>*</span></label>
+	<select id="edit-select-defect-type-{{ count }}" name="defect_type[{{ count }}]" data-drupal-selector="edit-select-defect-type-{{ count }}" class="required form-select form-select_wide{#  no-selectfx #}">
+		<option value="">не выбран</option>
+	{% for key, defect in defects %}
+		<optgroup label="{{ defect.title }}">
+		{% for sub_key, sub_defect in defect.rows %}
+			<option value="{{ start }}_{{ key }}_{{ sub_key }}">{{ sub_defect }}</option>
+		{% endfor %}
+	</optgroup>
+	{% endfor %}
+	</select>
+	{% if 1 < count %}
+	<a class="del_defect_line" data-drupal-selector="delete-defect-{{ count }}-block">Удалить</a>
+	{% endif %}
+</div>

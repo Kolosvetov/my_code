@@ -1,0 +1,63 @@
+@import "~style";
+
+.b-footer {
+	width: 1200px;
+	margin: 0 auto !important;
+	color: #fff;
+	padding: 20px 0;
+	overflow: hidden;
+	font-weight: 600;
+	a {
+		color: #fff;
+		&:hover,
+		&:focus {
+			color: #fff;
+			span {
+				text-decoration: underline;
+			}
+		}
+	}
+	&__section {
+		@include grid-column(4,0);
+
+		&:first-child {
+			@include grid-column-offset(1);
+		}
+		&:last-child {
+			@include grid-column(2,0);
+			@include grid-column-end();
+		}
+		&.msg {
+			&::before {
+				content: "";
+				width: 24px;
+				height: 32px;
+				float: left;
+				background: url(~img/common/msg.png) 0 0 no-repeat;
+				margin-right: 11px;
+				margin-top: -2px;
+			}
+			span {
+				float: left;
+				line-height: 100%;
+				margin-top: 4px;
+			}
+		}
+	}
+}
+
+footer {
+	&::after {
+		content: "";
+		width: 100%;
+		display: block;
+		clear: both;
+	}
+	&.footer--down {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+	}
+}

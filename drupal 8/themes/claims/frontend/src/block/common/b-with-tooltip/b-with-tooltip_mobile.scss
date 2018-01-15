@@ -1,0 +1,8 @@
+@import "~style";
+@import "~style/_sprite";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-with-tooltip.tooltip::before {
+		left: -160px;
+	}
+}

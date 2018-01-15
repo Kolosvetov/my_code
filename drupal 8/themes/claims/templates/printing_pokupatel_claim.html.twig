@@ -1,0 +1,203 @@
+{#
+/**
+ * Страница претензии покупателя для печати
+ */
+#}
+{% set claim = node %}
+{% set consumer = element_by_target_id(node.field_dannye_pokupatela.value[0]['target_id'], 'node') %}
+{% set retail = element_by_target_id(node.field_claims_dannye_magazina.value[0]['target_id'], 'node') %}
+{% set request = element_by_target_id(node.field_trebovanie.value[0]['target_id'], 'node') %}
+{% if node_references %}
+	{% set defects = node_references %}
+{% else %}
+	{% set defects = [] %}
+{% endif %}
+{% if node.field_privazka_magazina.value is iterable and 0 < node.field_privazka_magazina.value|length %}
+	{% set retail_user = element_by_target_id(node.field_privazka_magazina.value[0]['target_id'], 'user') %}
+{% else %}
+	{% set retail_user = false %}
+{% endif %}
+	<header>
+		<div class="claim-block claim-print">
+			<div class="claim-block__panel">
+				<div class="claim-print__logo"><img src="/sites/default/files/images/logo/print-logo-new.png"/></div>
+			</div>
+			<div class="claim-block__panel">
+				<div class="claim-print__title print-button">
+					Печать
+				</div>
+			</div>
+		</div>
+	</header>
+	<main>
+		<div class="claim-blocks">
+			<div class="claim-block claim-top">
+				<img src="{{ qrurl }}" class="claim-top__qr-code"/>
+				<div class="claim-top__url">
+					Уникальная ссылка на обращение:<br/>
+					<a href="/node/{{ node.nid.value }}" target="_blank">claims.tarkett.ru/node/{{ claim.nid.value }}</a>
+				</div>
+				<h1>Претензия покупателя № {{ claim.nid.value }}</h1>
+				<h2>от {{ claim.field_claims_date.value|date('d.m.Y') }}</h2>
+				<div class="claim-block__panel">
+					<h3>Информация о покупателе</h3>
+					<span class="claim-block__title">ФИО:</span> {{ consumer.field_c_fio.value }}
+					<br/><span class="claim-block__title">E-mail:</span> {{ consumer.field_c_email.value }}
+					<br/><span class="claim-block__title">Телефон:</span> {{ consumer.field_c_phone.value }}
+{% if request %}
+					<br/><span class="claim-block__title">Паспортные данные:</span> {{ request.field_pasportnye_dannye.value }}
+	{% if request.field_data_vydaci.value|replace({'-':'','.':'','/':''}) %}
+					<br/><span class="claim-block__title">Дата выдачи:</span> {{ request.field_data_vydaci.value|date('d.m.Y') }}
+	{% endif %}
+{% endif %}
+				</div>
+			</div>
+			<div class="claim-block claim-retail">
+{% if retail %}
+				<div class="claim-block__panel">
+					<h3>Информация о продавце</h3>
+	{% if retail_user and retail_user.field_ur_lico_name.value %}
+					<span class="claim-block__title">Наименование юр.лица:</span> {{ retail_user.field_ur_lico_name.value }}<br/>
+	{% endif %}
+					<span class="claim-block__title">ФИО:</span> {{ retail.field_market_consumer_fio.value }}
+					<br/><span class="claim-block__title">E-mail:</span> {{ retail.field_market_consumer_email.value }}
+					<br/><span class="claim-block__title">Телефон:</span> {{ retail.field_market_consumer_phone.value }}
+				</div><div class="claim-block__panel">
+					<img class="claim-block__image address-map" data-address="{{ consumer.field_c_city.value|raw }}, {{ consumer.field_c_street.value|raw }}, {{ consumer.field_c_home_num.value|raw }}" alt="Карта с адресом места покупки товара"/>
+				</div>
+{% else %}
+	{% set distributor = element_by_target_id(node.field_dannye_distributora.value[0]['target_id'], 'node') %}
+	{% if distributor %}
+		{% if node.field_privazka_distributor.value is iterable and 0 < node.field_privazka_distributor.value|length %}
+			{% set distributor_user = element_by_target_id(node.field_privazka_distributor.value[0]['target_id'], 'user') %}
+		{% else %}
+			{% set distributor_user = false %}
+		{% endif %}
+				<h3>Информация о дистрибьюторе</h3>
+		{% if distributor_user and distributor_user.field_ur_lico_name.value %}
+				<span class="claim-block__title">Наименование юр.лица:</span> {{ distributor_user.field_ur_lico_name.value }}<br/>
+		{% endif %}
+				<span class="claim-block__title">ФИО:</span> {{ distributor.field_d_fio.value }}
+				<br/><span class="claim-block__title">E-mail:</span> {{ distributor.field_distributor_email.value }}
+				<br/><span class="claim-block__title">Телефон:</span> {{ distributor.field_distributor_phone.value }}
+	{% endif %}
+{% endif %}
+			</div>
+			<div class="claim-block claim-goods">
+				<div class="claim-block__panel">
+					<h3>Информация о купленном товаре</h3>
+					<span class="claim-block__title">Категория продукта:</span> {{ claim.field_product_cat.value|default('не указана') }}
+					<br/><span class="claim-block__title">Коллекция:</span> {{ claim.field_product_name.value|default('не указана') }}
+					<br/><span class="claim-block__title">Количество купленного товара:</span> {{ claim.field_product_count_all.value|default('не указано') }} {{ claim.field_product_count_all_ez.value }}
+					<br/><span class="claim-block__title">Количество товара с дефектом:</span> {{ claim.field_product_count_bad.value|default('не указано') }} {{ claim.field_product_count_bad_ez.value }}
+					<br/><span class="claim-block__title">Стоимость:</span> {% if claim.field_product_price.value %}{{ claim.field_product_price.value }} руб.{% else %}не указана{% endif %}
+					<br/><span class="claim-block__title">Номер чека:</span> {{ consumer.field_c_check_num.value }}
+					<br/><span class="claim-block__title">Возможно предоставить образец?</span> {% if 1 == claim.field_product_can_show.value %}Да{% else %}Нет{% endif %}
+				</div><div class="claim-block__panel">
+					<img class="claim-block__image address-map" data-address="{{ claim.field_product_address_city.value|raw }}, {{ claim.field_product_address.value|raw }}" alt="Карта с адресом места нахождения товара"/>
+				</div>
+			</div>
+			<div class="claim-block claim-description">
+				<h3>Описание проблемы покупателем</h3>
+				{{ claim.field_defect_text.value }}
+			</div>
+			<div class="claim-block claim-defects">
+				<h3>Дополнительная информация</h3>
+				<div class="claim-container">
+					<span class="claim-block__title">Состояние продукта:</span> {% if 1 == claim.field_product_state.value %}не {% endif %}уложен
+				</div>
+{% if 0 < defects|length %}
+	{% for defect in defects %}
+		{% set defect_images = [] %}
+		{% set defect_videos = [] %}
+				<div class="claim-container">
+					<div class="claim-block__panel">
+						<span class="claim-block__title">Указан дефект #{{ loop.index }}:</span> {{ defect.second_defect_type }}<br/>
+		{% for fieldset in defect.fields %}
+			{% set fields_count = fieldset|length %}
+			{% if 'inline_template' == fieldset['#type'] %}
+				{% if defect.node.field_test_image|length > 0 %}
+					{% set defect_images = defect.node.field_test_image %}
+				{% endif %}
+				{% if defect.node.field_video_defekta|length > 0 %}
+					{% set defect_videos = defect.node.field_video_defekta %}
+				{% endif %}
+			{% elseif 0 < fields_count %}
+				{% set fieldset_title = fieldset['#title']|replace({'<br>':' '})|trim(': ') %}
+				{% if fieldset_title %}
+					{% set has_childs = ('Климатические условия в помещении' == fieldset_title) %}
+						<br/><span class="claim-block__title">{{ fieldset_title }}:</span><br/>
+				{% elseif 1 < fields_count %}
+					{% for field in fieldset %}
+						{% if field['title'] and field['value'] != '-' %}
+							{% set field_title = field['title']|replace({'<br>':' '})|trim('?: ') %}
+							{% if has_childs %}
+						{% if not loop.first %}<br/>{% endif %}&mdash; {% if 'Укажите значение' == field_title %}Значение{% else %}{{ field_title }}{% endif %}: <b>{{ field['value']|lower }}</b>
+							{% else %}
+						{% if not loop.first %}<br/>{% endif %}<span class="claim-block__title">{% if 'Укажите значение' == field_title %}Значение{% else %}{{ field_title }}{% endif %}:</span> {{ field['value']|lower }}
+							{% endif %}
+						{% elseif field is iterable and 0 < field|length %}
+							{% for s_field in field %}
+								{% if s_field['title'] and s_field['value'] != '-' %}
+									{% set s_field_title = s_field['title']|replace({'<br>':' '})|trim('?: ') %}
+									{% if has_childs %}
+						{% if not loop.first %}<br/>{% endif %}&mdash; {% if 'Укажите значение' == s_field_title %}Значение{% else %}{{ s_field_title }}{% endif %}: <b>{{ s_field['value'] }}</b>
+									{% else %}
+						{% if not loop.first %}<br/>{% endif %}<span class="claim-block__title">{% if 'Укажите значение' == s_field_title %}Значение{% else %}{{ s_field_title }}{% endif %}:</span> {{ s_field['value'] }}
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+					</div>
+					<div class="claim-block__panel">
+		{% if 0 < defect_images|length %}
+			{% for defect_image in defect_images %}
+					<img class="claim-block__image{% if loop.first %} claim-block__image_top{% endif %}" src="{{ file_url(defect_image.entity.fileuri) }}"/>
+			{% endfor %}
+		{% endif %}
+					</div>
+				</div>
+	{% endfor %}
+{% endif %}
+{% if 0 < node.field_photo_pokupatel|length %}
+	{% for pokupatel_photo in node.field_photo_pokupatel %}
+					<img class="claim-block__image claim-block__image_grid" src="{{ file_url(pokupatel_photo.entity.fileuri) }}"/>
+	{% endfor %}
+{% endif %}
+{% if 0 < node.field_photo_magazin|length %}
+	{% for magazin_photo in node.field_photo_magazin %}
+					<img class="claim-block__image claim-block__image_grid" src="{{ file_url(magazin_photo.entity.fileuri) }}"/>
+	{% endfor %}
+{% endif %}
+			</div>
+{% if request %}
+			<div class="claim-block claim-request">
+				<h3>Требование по претензии</h3>
+				{{ request.field_trebovanie_po_pretenzii.value }}
+			</div>
+{% endif %}
+		</div>
+		<div class="claim-signature">
+			<div class="claim-container">
+				<span class="claim-signature__title">Паспортные данные:</span>
+				<span class="claim-signature__field claim-signature__field_passport">&nbsp;</span>
+			</div>
+			<div class="claim-container">
+				<div class="claim-block__panel claim-block__panel_tight">
+					<span class="claim-signature__title">Дата:</span>
+					<span class="claim-signature__field claim-signature__field_date">&nbsp;</span>
+				</div>
+				<div class="claim-block__panel claim-block__panel_wide">
+					<span class="claim-signature__title">Подпись:</span>
+					<span class="claim-signature__field claim-signature__field_signature">&nbsp;</span>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer>
+		<button class="c-button print-button">Печать</button>
+	</footer>

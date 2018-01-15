@@ -1,0 +1,331 @@
+@import "~style";
+@import "~style/_sprite";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_mixins";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap-compass";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
+@import "~bootstrap-datetimepicker-sass/src/sass/bootstrap-datetimepicker";
+
+.b-order-form {
+	background-image: url('~img/common/form.jpg');
+	background-position: 990px 0;
+	background-color: #467051;
+	padding: 4em 0;
+	color: $color-white;
+	overflow: hidden;
+	text-align: center;
+
+	h2 {
+		font-weight: 700;
+	}
+
+	&__descr {
+		line-height: 1.5em;
+		margin-bottom: 2em;
+	}
+
+	&__form {
+		/* overflow: hidden; */
+		width: 100%;
+	}
+
+	&__comment {
+		font-size: 0.9em;
+		margin-top: 1.5em;
+		line-height: 1.5em;
+		width: 100%;
+	}
+
+	input {
+		width: 100%;
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 1em;
+
+		&[type="submit"] {
+			width: auto;
+		}
+
+		@include breakpoint(large) {
+			margin-bottom: 0;
+			max-width: 455px;
+		}
+	}
+
+	select {
+		margin-bottom: 1em;
+	}
+
+	&.inner-row {
+		@include breakpoint(large) {
+			.long {
+				width: 20em;
+			}
+		}
+	}
+
+	&.c-callback {
+		background-position: center;
+
+		input[type='text'] {
+			width: 100%;
+		}
+
+		@include breakpoint(middle down) {
+			margin-left: -25px;
+			width: calc(100% + 50px);
+			max-width: calc(100% + 50px);
+			padding: 20px 25px 35px;
+		}
+
+		@include breakpoint(xlarge) {
+			background-position: 0 0;
+		}
+
+		@include breakpoint(medium) {
+			input[type='text'] {
+				width: 410px;
+			}
+		}
+
+		@include breakpoint(large) {
+			margin-left: -60px;
+			width: calc(100% + 120px);
+			max-width: calc(100% + 120px);
+			padding: 20px 60px 35px;
+
+			input[type='text'] {
+				width: auto;
+
+				&.phone {
+					width: 220px;
+				}
+
+				&.time {
+					width: 210px;
+				}
+			}
+
+			.c-callback-form-select {
+				margin-left: 0;
+				margin-right: 18px;
+				width: 230px;
+			}
+		}
+
+		h2 {
+			margin-top: 0;
+		}
+
+		@include breakpoint(xlarge) {
+			input[type='text'] {
+				width: auto;
+			}
+		}
+	}
+
+	&.с-appointment {
+		text-align: left;
+
+		.long,
+		input[type="text"],
+		.b-order-form__comment {
+			width: 100%;
+			text-align: center;
+		}
+
+		@include breakpoint(middle down) {
+			margin-left: -25px;
+			width: calc(100% + 50px);
+			max-width: calc(100% + 50px);
+			padding: 20px 25px 35px;
+		}
+
+		@include breakpoint(large) {
+			.b-order-form__comment {
+				width: 80%;
+				text-align: left;
+			}
+
+			.long,
+			input[type="text"] {
+				width: 20em;
+				float: left;
+				margin-right: 1.2em;
+				text-align: left;
+			}
+
+			input[type="submit"] {
+				float: left;
+			}
+		}
+
+		@include breakpoint(large) {
+			margin-left: -60px;
+			width: calc(100% + 120px);
+			max-width: calc(100% + 120px);
+			padding: 35px 60px;
+
+			.b-order-form__comment {
+				width: 50%;
+			}
+		}
+	}
+
+	&.c-medical-record {
+		text-align: left;
+		padding: 2em 0;
+
+		input[type="text"] {
+			float: left;
+		}
+
+		& > .field,
+		.field.submit {
+			margin-bottom: 0;
+
+			& > label {
+				display: none;
+
+				@include breakpoint(large) {
+					display: inline-block;
+				}
+			}
+
+			h2 {
+				font-size: 2.2em;
+			}
+		}
+
+		.field {
+			padding: 0 25px;
+		}
+
+		[type="submit"] {
+			float: left;
+		}
+
+		.comment {
+			float: left;
+			width: 100%;
+
+			@include breakpoint(large) {
+				float: none;
+				width: auto;
+				display: inline-block;
+				margin-left: 128px;
+				margin-top: 11px;
+			}
+		}
+	}
+
+	&.bg-grey {
+		background-image: none;
+		background-color: #d7ded9;
+
+		.b-order-form__comment {
+			color: $color-green-x-dark;
+		}
+
+		.long {
+			@include grid-column(6, 0);
+
+			padding: 0.9em 1.8em;
+		}
+	}
+
+	&.bg-grey-light {
+		background-image: none;
+		background-color: #d7ded9;
+
+		h2 {
+			color: $color-black;
+		}
+
+		.comment {
+			color: $color-black;
+		}
+
+		.long {
+			@include breakpoint(large) {
+				@include grid-column(6, 0);
+			}
+		}
+	}
+
+	@include breakpoint(medium) {
+		background-position: 0 0;
+
+		h2 {
+			margin-bottom: 0.7em;
+		}
+	}
+
+	@include breakpoint(large) {
+		text-align: left;
+
+		input {
+			margin-right: 1.2em;
+			width: auto;
+			float: left;
+		}
+
+		.long {
+			width: 30em;
+		}
+
+		h2 {
+			margin-bottom: 0.7em;
+		}
+	}
+
+	@include breakpoint(xxlarge) {
+		background-image: url($bg-order-form-image);
+		background-position: 0 0;
+		text-align: left;
+		background-repeat: no-repeat;
+	}
+}
+
+.field {
+	width: 100%;
+	float: left;
+	margin-bottom: 20px;
+
+	label {
+		font-size: 20px;
+		color: $color-black;
+		line-height: 2.1em;
+		text-align: center;
+
+		@include breakpoint(large) {
+			@include grid-column(4, 0);
+
+			float: left;
+			padding-right: 20px;
+			text-align: right;
+		}
+	}
+
+	& > div {
+		display: block;
+	}
+}
+
+/* .inner-row {
+	.b-order-form {
+		padding: 2em;
+		width: calc(100% + 4em);
+		margin-left: -2em;
+	}
+} */
+
+.bootstrap-datetimepicker-widget td span {
+	width: 100%;
+}
+
+h3.c-callback-title {
+	margin-top: 0;
+}

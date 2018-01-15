@@ -1,0 +1,213 @@
+@import "~style";
+
+.b-countdown {
+	@include grid-column(12, 0);
+
+	padding: 60px 20px;
+	text-align: center;
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+
+	&__border {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 35px 10px;
+		border: 1px solid #cfcfcf;
+		margin: 0 auto;
+
+		@include breakpoint(large) {
+			width: 780px;
+			height: 208px;
+			padding: 35px 50px;
+		}
+	}
+
+	&.small {
+		float: none;
+		padding: 0;
+		width: auto;
+
+		@include grid-column-end;
+
+		.day {
+			margin-right: 20px;
+			margin-left: 0;
+
+			&::before {
+				display: none;
+			}
+		}
+
+		.hour {
+			&::before {
+				display: none;
+			}
+		}
+
+		.value {
+			font-size: 48px;
+		}
+
+		.sep {
+			top: -4px;
+			margin: 0 5px;
+		}
+
+		label {
+			font-size: 14px;
+			font-weight: 300;
+			line-height: 28px;
+		}
+
+		#countdown {
+			margin-right: 0;
+			display: flex;
+		}
+
+		@include breakpoint(xxlarge) {
+			.day {
+				margin-right: 40px;
+			}
+		}
+	}
+
+	.day {
+		@include grid-column(12, 0);
+
+		position: relative;
+		margin-bottom: 0;
+		text-align: center;
+
+		&::before {
+			content: "";
+			width: 42px;
+			height: 41px;
+			display: block;
+			margin: 0 auto;
+			background: url(~img/common/calendar.png) 0 0 no-repeat;
+
+			@include breakpoint(small) {
+				position: absolute;
+				left: -50px;
+				top: 0;
+			}
+
+			@include breakpoint(large) {
+				left: -64px;
+				top: 20px;
+			}
+		}
+
+		@include breakpoint(small) {
+			width: auto;
+			float: none;
+			margin-bottom: 0;
+			margin-right: 80px;
+			margin-left: 30px;
+		}
+
+		@include breakpoint(large) {
+			margin-bottom: 100px;
+		}
+	}
+
+	&__num {
+		display: inline-block;
+
+		.value {
+			font-size: 40px;
+			font-weight: 700;
+			text-transform: uppercase;
+			display: block;
+
+			@include breakpoint(large) {
+				font-size: 72px;
+			}
+		}
+
+		label {
+			font-size: 14px;
+			font-weight: 300;
+			line-height: 28px;
+			display: block;
+			text-align: center;
+
+			@include breakpoint(large) {
+				font-size: 18px;
+			}
+		}
+	}
+
+	.hour {
+		position: relative;
+
+		&::before {
+			content: "";
+			width: 39px;
+			height: 45px;
+			display: block;
+			position: absolute;
+			left: 70px;
+			top: -60px;
+			background: url(~img/common/clock.png) 0 0 no-repeat;
+
+			@include breakpoint(small) {
+				left: -50px;
+				top: 0;
+			}
+
+			@include breakpoint(large) {
+				left: -64px;
+				top: 20px;
+			}
+		}
+	}
+
+	.sep {
+		position: relative;
+		top: -33px;
+
+		@include breakpoint(large) {
+			top: -45px;
+			margin: 0 20px;
+		}
+	}
+
+	b {
+		color: #010101;
+		font-size: 14px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.26em;
+	}
+
+	p {
+		font-size: 16px;
+		font-weight: 300;
+		line-height: 28px;
+	}
+
+	#countdown {
+		margin-top: 20px;
+		margin-right: 0;
+
+		@include breakpoint(large) {
+			margin-right: -45px;
+		}
+	}
+
+	.date-of {
+		&::before {
+			content: "";
+			display: block;
+			width: 32px;
+			height: 46px;
+			background: url(~img/common/flag.png) 0 0 no-repeat;
+			margin: 50px auto 20px;
+		}
+	}
+}
+
+.event .b-countdown.small .day {
+	margin-bottom: 0;
+}

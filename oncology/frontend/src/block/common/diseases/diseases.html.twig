@@ -1,0 +1,34 @@
+<div class="inner-row col-2 margin-60 c-what-we-treat">
+	<h2>Что мы лечим</h2>
+	<div class="inner-col">
+		{{ diseaseText }}
+	</div>
+	<div class="inner-col">
+		<img src="{{ img }}">
+	</div>
+</div>
+
+{% if not_hidden %}
+	<div class="b-sections inner-row disease-list">
+		{% for disease in diseaseList %}
+			{% if disease.is_link.value() == 'yes' %}
+				<a href="{{ disease.url() }}"><span>{{ disease.title() }}</span></a>
+			{% else %}
+				<a class="not-link"><span>{{ disease.title() }}</span></a>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% else %}
+	<div class="b-sections inner-row disease-list">
+		{% for disease in diseaseList %}
+			{% if disease.is_link.value() == 'yes' %}
+				<a href="{{ disease.url() }}" {% if loop.index > 8 %} style="display:none" {% endif %} ><span>{{ disease.title() }}</span></a>
+			{% else %}
+				<a class="not-link" {% if loop.index > 8 %} style="display:none" {% endif %} ><span>{{ disease.title() }}</span></a>
+			{% endif %}
+		{% endfor %}
+		<a class="disease-list__show-more" style="display: none">
+			<span>Показать еще</span>
+		</a>
+	</div>
+{% endif %}

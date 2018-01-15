@@ -1,0 +1,131 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-map {
+	width: 100%;
+	position: relative;
+	background-color: $color-m-grey;
+
+	#map {
+		width: 100%;
+		height: 476px;
+
+		@include breakpoint(medium) {
+			width: 50%;
+			float: right;
+		}
+
+		@include breakpoint(large) {
+			width: 100%;
+		}
+	}
+}
+
+.b-popup-blocks {
+	position: relative;
+	overflow: hidden;
+
+	.clinics__item {
+		padding: 40px;
+		box-sizing: border-box;
+		display: none;
+		text-align: center;
+		z-index: 9999;
+
+		&.is_active {
+			display: block;
+		}
+
+		@include breakpoint(medium) {
+			text-align: left;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0);
+		}
+
+		@include breakpoint(large) {
+			background-color: $color-white;
+			top: 0;
+			left: 0;
+			width: 315px;
+			height: 398px;
+			position: static;
+		}
+
+		@include breakpoint(xxlarge) {
+			width: 355px;
+		}
+	}
+
+	.clinics__title {
+		font-size: 1.5em;
+		font-weight: 900;
+	}
+
+	.clinics__image {
+		margin: 30px 0;
+	}
+
+	.clinics__address {
+		font-size: 0.9em;
+	}
+
+	&__controll-prev,
+	&__controll-next {
+		position: absolute;
+		background: url('~img/common/i-orange-arrow.png');
+		background-repeat: no-repeat;
+		background-size: contain;
+		top: 140px;
+		height: 25px;
+		width: 7px;
+		z-index: 9999;
+
+		@include breakpoint(large) {
+			top: 130px;
+		}
+
+		&:hover {
+			background: url('~img/common/i-green-small-arrow-right.png');
+		}
+	}
+
+	&__controll-prev {
+		left: 17px;
+		transform: rotate(180deg);
+
+		@include breakpoint(medium) {
+			left: 20px;
+		}
+	}
+
+	&__controll-next {
+		right: 17px;
+
+		@include breakpoint(medium) {
+			right: 20px;
+		}
+
+		@include breakpoint(large) {
+			right: 17px;
+			top: 130px;
+		}
+	}
+
+	@include breakpoint(medium) {
+		width: 50%;
+		height: 100%;
+		float: left;
+	}
+
+	@include breakpoint(large) {
+		position: absolute;
+		top: 39px;
+		left: 10%;
+		width: 315px;
+		height: 398px;
+	}
+
+	@include breakpoint(xxlarge) {
+		width: 355px;
+	}
+}

@@ -1,0 +1,48 @@
+services:
+    tarkett_claims.twig.extension.claimsextension:
+            class: Drupal\tarkett_claims\services\ClaimsExtension
+            public: false
+            tags:
+                - { name: twig.extension }
+    tarkett_claims.twig.extension.lists:
+            class: Drupal\tarkett_claims\services\Lists
+            public: false
+            tags:
+                - { name: twig.extension }
+    tarkett_claims.claims_class_solutions:
+            class: Drupal\tarkett_claims\classes\Solutions
+    tarkett_claims.claims_class_pokupatel:
+            class: Drupal\tarkett_claims\classes\Consumers
+    tarkett_claims.claims_class_distributor:
+            class: Drupal\tarkett_claims\classes\Distributors
+    tarkett_claims.claims_class_magazin:
+            class: Drupal\tarkett_claims\classes\Retail
+    tarkett_claims.claims_class_base_form:
+            class: Drupal\tarkett_claims\classes\forms\BaseForm
+    tarkett_claims.claims_class_defects:
+            class: Drupal\tarkett_claims\classes\Defects
+    tarkett_claims.claims_class_controller:
+            class: Drupal\tarkett_claims\controller\Controller
+            
+    tarkett_claims.claims_class_fields:
+            class: Drupal\tarkett_claims\classes\fields\Fields
+    tarkett_claims.claims_class_processing:
+            class: Drupal\tarkett_claims\classes\fields\Processing
+    tarkett_claims.claims_class_utils:
+            class: Drupal\tarkett_claims\classes\Utils
+    tarkett_claims.claims_class_updater:
+            class: Drupal\tarkett_claims\classes\Updater
+    tarkett_claims.claims_class_forms_extra_data_add:
+            class: Drupal\tarkett_claims\classes\FormExtraDataAdd
+            
+            
+    tarkett_claims.claims_class_forms_controller:
+            class: Drupal\tarkett_claims\classes\forms\FormsController
+    tarkett_claims.claims_class_forms_parket:
+            class: Drupal\tarkett_claims\classes\forms\FormsParket
+    tarkett_claims.claims_class_forms_laminat:
+            class: Drupal\tarkett_claims\classes\forms\FormsLA
+    tarkett_claims.claims_class_forms_defects_list:
+            class: Drupal\tarkett_claims\classes\forms\FormsDefectsList
+    tarkett_claims.claims_class_forms_invoices:
+            class: Drupal\tarkett_claims\classes\forms\FormsInvoices

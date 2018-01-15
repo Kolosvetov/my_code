@@ -1,0 +1,105 @@
+@import "~style";
+
+.b-user {
+	background-color: #f6f5f0;
+	padding: 57px 0;
+
+	@include grid-column(12, 0);
+}
+
+.b-user-info {
+	@include grid-column(10, 0);
+	@include grid-column-offset(2);
+	@include grid-column-end();
+	&__h1 {
+		@include grid-column(10, 0);
+	}
+	&__section {
+		@include grid-column(4, 0);
+	}
+}
+
+.user-login-form {
+	height: 100%;
+	background: #eff3f4;
+	position: relative;
+	#block-claims-content {
+		width: 423px;
+		position: absolute;
+		top: calc(50% - 234px);
+		left: calc(50% - 217px);
+	}
+}
+
+#user-login-form,
+#user-pass {
+	float: none;
+	width: 275px;
+	padding: 59px 74px;
+	background: #f7f9f8;
+	box-sizing: content-box;
+	box-shadow: 0 14px 18px rgba(0, 0, 0, 0.5);
+	display: block;
+	&::after {
+		content: "";
+		clear: both;
+		width: 100%;
+		display: block;
+	}
+	&::before {
+		content: "";
+		width: 100%;
+		float: left;
+		text-align: center;
+		color: #000;
+		font-size: 33px;
+		font-weight: 700;
+		line-height: 20px;
+		margin-bottom: 49px;
+	}
+	label {
+		position: static;
+	}
+	.form-item:not(.js-form-wrapper) {
+		@include grid-column(12, 0);
+		margin-bottom: 10px;
+	}
+	.form-actions {
+		@include grid-column(12, 0);
+	}
+	input[type="text"],
+	input[type="password"] {
+		width: 100%;
+	}
+	input[type="submit"] {
+		cursor: pointer;
+		float: none;
+		margin: 33px auto 0;
+		width: 163px;
+		display: block;
+		background: #fff !important;
+		color: $dark-blue-color;
+		border: 1px solid $dark-blue-color !important;
+		&:hover {
+			background: $button-color !important;
+			border-color: $button-color !important;
+			color: #fff !important;
+		}
+	}
+}
+
+#user-login-form {
+	&::before {
+		content: "Авторизация";
+	}
+}
+
+#user-pass {
+	&::before {
+		content: "Сброс пароля";
+	}
+}
+
+.b-claim-info__option .b-user-info {
+	margin-left: 0;
+}

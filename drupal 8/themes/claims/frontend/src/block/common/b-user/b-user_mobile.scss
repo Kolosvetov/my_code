@@ -1,0 +1,32 @@
+@import "~style";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.login-page main {
+		min-height: 395px;
+	}
+
+	.user-login-form {
+		#block-claims-content {
+			width: 100%;
+			top: calc(50% - 198px);
+			left: 0;
+		}
+	}
+
+	#user-login-form {
+		box-sizing: border-box;
+		width: 100% !important;
+		padding: $mobile-border-margin;
+		padding-bottom: $mobile-border-margin * 2;
+		&::before {
+			margin-bottom: $mobile-border-margin;
+		}
+		input[type="submit"] {
+			padding: 0;
+		}
+		.form-item:not(.js-form-wrapper) {
+			width: 100% !important;
+			margin: 0;
+		}
+	}
+}

@@ -1,0 +1,15 @@
+@import "~style";
+
+.search-item {
+	h4 {
+		font-family: Muller, Open Sans, arial;
+
+		a {
+			color: $color-green-dark;
+
+			&:hover {
+				color: $color-green-x-light;
+			}
+		}
+	}
+}

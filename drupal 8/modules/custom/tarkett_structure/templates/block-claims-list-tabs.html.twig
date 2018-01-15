@@ -1,0 +1,12 @@
+<div class="b-wrapper b-wrapper--bordered">
+	<div class="b-claims-tabs">
+		{% for key, tab in tabs %}
+			{% set not_none = (0 < tab['count']) %}
+			<div class="b-claims-tabs__tab claims-tab-{{ key }}{% if not not_none %} claims-tab-{{ key }}_none{% endif %} js-claims-tab{% if key == current_tab %} active{% endif %}" data-id="{{ loop.index }}">
+				<a class="b-claims-tabs__tab-title"{% if key != current_tab %} href="{{ tab['url'] }}"{% endif %}{% if not_none %} data-count="{{ tab['count'] }}"{% endif %}>
+					{{ tab['title'] }}
+				</a>
+			</div>			
+		{% endfor %}
+	</div>
+</div>

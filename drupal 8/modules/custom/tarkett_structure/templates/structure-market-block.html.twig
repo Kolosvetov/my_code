@@ -1,0 +1,100 @@
+{% set status = element_by_target_id(current_node.field_market_status.value[0]['target_id'], 'term') %}
+{% set positive_status = ('Принято' == status.name.value) %}
+{% set negative_status = ('Отклонено' == status.name.value) %}
+{% if positive_status %}
+	{% if '3' == current_node.field_claims_type.value %}
+		{% set comment_message = 'Просим предоставить возвратные документы согласно договору поставки с Вашим Поставщиком или Вам необходимо обратиться к Вашему продавцу.' %}
+	{% else %}
+		{% set comment_message = '' %}
+	{% endif %}
+	{% if '' != comment_message %}
+	<div class="b-claim-info__option">
+		<div class="b-claim-info__option-head c-without">Решение по претензии</div>
+		<div class="b-claim-info__option-description only-text">{{ comment_message }}</div>
+	</div>
+	{% endif %}
+{% endif %}
+		{{claims_answers_block('market_answer', current_node)}}
+{% if node %}
+	{% set date_delimiters = {'-':'','.':'','/':''} %}
+	{% if current_node.field_privazka_magazina.value is iterable and 0 < current_node.field_privazka_magazina.value|length %}
+		{% set market_user = element_by_target_id(current_node.field_privazka_magazina.value[0]['target_id'], 'user') %}
+	{% else %}
+		{% set market_user = false %}
+	{% endif %}
+		<div class="b-claim-info__option">
+			<div class="b-claim-info__option-head c-without">Данные магазина</div>
+			<div class="b-claim-info__option-description">
+				<table class="marked" style="width: 100%;">
+					<tbody>
+				{% if market_user and market_user.field_ur_lico_name.value %}
+						<tr>
+							<td>Наименование юридического лица:</td>
+							<td>{{market_user.field_ur_lico_name.value}}</td>
+						</tr>
+				{% endif %}
+				{% if node.field_market_consumer_fio.value %}
+						<tr>
+							<td>ФИО контактного лица:</td>
+							<td>{{node.field_market_consumer_fio.value}}</td>
+						</tr>
+				{% endif %}
+				{% if node.field_market_consumer_email.value %}
+						<tr>
+							<td>E-mail:</td>
+							<td>{{node.field_market_consumer_email.value}}</td>
+						</tr>
+				{% endif %}
+				{% if node.field_market_consumer_phone.value %}
+						<tr>
+							<td>Моб. телефон:</td>
+							<td>{{node.field_market_consumer_phone.value}}</td>
+						</tr>
+				{% endif %}
+				{% if node.field_market_torg_12.value %}
+						<tr>
+							<td>Накладная ТОРГ 12:</td>
+							<td>{{node.field_market_torg_12.value}}{% if node.field_market_torg_12_date.value|replace(date_delimiters) %} от {{node.field_market_torg_12_date.value|date('d.m.Y')}}{% endif %}</td>
+						</tr>
+				{% endif %}
+				{% if node.field_market_consumer_invoices.value %}
+						<tr>
+							<td>Счет фактура:</td>
+							<td>{{node.field_market_consumer_invoices.value}}{% if node.field_market_consumer_invoices_d.value|replace(date_delimiters) %} от {{node.field_market_consumer_invoices_d.value|date('d.m.Y')}}{% endif %}</td>
+						</tr>
+				{% endif %}
+				{% if node.field_market_defect_type.value %}
+						<tr>
+							<td>Тип дефекта:</td>
+							<td>{{node.field_market_defect_type.value}}</td>
+						</tr>
+				{% endif %}
+				{% if node.field_market_consumer_comments.value %}
+						<tr>
+							<td>Комментарии магазина:</td>
+							<td>{{node.field_market_consumer_comments.value}}</td>
+						</tr>
+				{% endif %}
+				{% if node.field_market_consumer_distributo.value is iterable and 0 < node.field_market_consumer_distributo.value|length %}
+					{% set distributor = element_by_target_id(node.field_market_consumer_distributo.value[0].target_id, "user") %}
+					{% if distributor.name.value %}
+						<tr>
+							<td>Дистрибьютор у которого был куплен продукт:</td>
+							<td>{{distributor.name.value}}</td>
+						</tr>
+					{% endif %}
+				{% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+{% else %}
+	{% if user.roles.1 == "magazin" %}
+		<div class="b-claim-info__option">
+			<div class="b-claim-info__option-head c-without">Данные магазина</div>
+			<div class="b-claim-info__option-description">
+				{{claims_solutions_form('market_data', current_node)}}
+			</div>
+		</div>
+	{% endif %}
+{% endif %}

@@ -1,0 +1,72 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-with-tooltip {
+	position: relative;
+	&::before {
+		content: attr(data-title);
+		position: absolute;
+		display: block;
+		bottom: 41px;
+		left: -30px;
+		padding: 12px;
+		width: 200px;
+		box-sizing: border-box;
+		background: #f6f5f0;
+		color: #265165;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 18px;
+		opacity: 0;
+		transition: opacity 0.2s;
+		border: 1px solid #e0e0e0;
+		z-index: -10;
+	}
+	&::after {
+		content: "";
+		position: absolute;
+		bottom: 30px;
+		left: 20px;
+		height: 25px;
+		width: 18px;
+		opacity: 0;
+		transition: opacity 0.2s;
+		z-index: -10;
+
+		@include sprite($tooltip-corner);
+	}
+	&:hover {
+		&::before {
+			opacity: 1;
+			z-index: 5;
+		}
+		&::after {
+			opacity: 1;
+			z-index: 6;
+		}
+	}
+
+	&.tooltip {
+		display: inline-block;
+		width: 15px;
+		height: 15px;
+		margin: 0 0 5px 3px;
+
+		&-consumer {
+			@include sprite($i-tooltip);
+		}
+
+		&-common {
+			@include sprite($i-tooltip);
+		}
+
+		&::before {
+			bottom: 31px;
+			left: -55px;
+		}
+		&::after {
+			bottom: 20px;
+			left: -5px;
+		}
+	}
+}

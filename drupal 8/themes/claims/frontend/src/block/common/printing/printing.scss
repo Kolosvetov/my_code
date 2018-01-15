@@ -1,0 +1,227 @@
+@import "~style";
+
+$print-column-width: 141px;
+$print-column-space: 12px;
+
+body.printing {
+	background-color: #fff;
+	border-color: $main-color;
+	border-style: solid;
+	border-width: 8px 0;
+	width: 800px;
+	height: auto;
+	margin: 0 auto;
+	padding: 0 100px;
+	header,
+	main,
+	footer {
+		min-width: 600px;
+		width: 600px;
+	}
+	footer,
+	.claim-signature {
+		padding: 2 * $print-column-space 0;
+	}
+	header {
+		padding: 4 * $print-column-space 0;
+		.claim-block {
+			padding: 0;
+		}
+	}
+	footer {
+		height: auto;
+		text-align: center;
+
+		@media print {
+			display: none;
+		}
+	}
+	main {
+		h1,
+		h2 {
+			margin: 0 0 $print-column-space;
+			font-size: 26px;
+			font-weight: 400;
+			line-height: 26px;
+			color: #000;
+		}
+		h2 {
+			margin-bottom: $print-column-space;
+			opacity: 0.19;
+		}
+		h3 {
+			margin: 2 * $print-column-space 0;
+			font-size: 20px;
+			font-weight: 700;
+			line-height: 24px;
+			color: #000;
+		}
+	}
+	.claim {
+		&-print {
+			color: $main-color;
+			font-size: 12px;
+			font-weight: 400;
+			&__logo {
+				// background: url(~img/common/print-logo.png) 0 0 no-repeat;
+				background: url(~img/common/print-logo-new.png) 50% 50% no-repeat;
+				// width: 190px;
+				width: 172px;
+				height: 64px;
+				padding: 2px 0;
+			}
+			&__title {
+				background: url(~img/common/print-icon.png) 100% 13px no-repeat;
+				height: 64px;
+				padding: 25px 52px 0 0;
+				text-align: right;
+				cursor: pointer;
+
+				@media print {
+					display: none;
+				}
+			}
+		}
+		&-container {
+			@include clearfix;
+			margin: 0 0 $print-column-space;
+			vertical-align: top;
+		}
+		&-block {
+			@include clearfix;
+			padding: 0 0 2 * $print-column-space;
+			border-color: #000;
+			border-style: solid;
+			border-width: 0 0 1px;
+			font-size: 12px;
+			font-weight: 400;
+			line-height: 16px;
+			&:last-child,
+			&_unbordered {
+				border-width: 0;
+			}
+			&__panel {
+				float: left;
+				margin: 0;
+				padding: 0;
+				width: 2 * $print-column-width + $print-column-space;
+				&:first-child {
+					margin-right: $print-column-space;
+				}
+				&_full {
+					width: 4 * ($print-column-width + $print-column-space) - $print-column-space;
+					h3.centered {
+						text-align: center;
+					}
+				}
+				&_more {
+					margin-top: 2 * $print-column-space;
+				}
+				&_right {
+					margin-left: 2 * ($print-column-width + $print-column-space);
+					margin-right: 0;
+				}
+				&_tight {
+					width: 2 * $print-column-width;
+				}
+				&_wide {
+					width: 2 * ($print-column-width + $print-column-space);
+				}
+			}
+			&__image {
+				margin: 2 * $print-column-space 0 0;
+				width: 2 * $print-column-width + $print-column-space;
+				height: 195px;
+				&_top {
+					margin-top: 0;
+				}
+				&_grid {
+					width: 2 * $print-column-width;
+					height: 190px;
+					&:first-child,
+					&:nth-child(2) {
+						margin-top: 0;
+					}
+					&:nth-child(2n) {
+						margin-left: 2 * $print-column-space;
+					}
+				}
+			}
+			&__title {
+				font-weight: 700;
+			}
+		}
+		&-top {
+			display: block;
+			position: relative;
+			&__qr-code {
+				display: inline-block;
+				position: absolute;
+				top: 0;
+				right: 0;
+				width: $print-column-width;
+				height: $print-column-width;
+			}
+			&__url {
+				display: inline-block;
+				position: absolute;
+				top: $print-column-width + 10px;
+				right: 0;
+				width: $print-column-width;
+				color: #010101;
+			}
+			&_magazin,
+			&_distributor {
+				height: 224px;
+			}
+		}
+		&-signature {
+			&__title {
+				display: inline-block;
+				font-weight: 700;
+			}
+			&__field {
+				display: inline-block;
+				border-color: #000;
+				border-style: dotted;
+				border-width: 0 0 1px;
+				&_passport {
+					width: 313px;
+				}
+				&_date {
+					width: 100px;
+				}
+				&_signature {
+					width: 235px;
+
+					@media print {
+						width: 230px;
+					}
+				}
+			}
+			&__note {
+				display: inline-block;
+				position: relative;
+				top: 2 * $print-column-space;
+			}
+			&_with_data {
+				@include clearfix;
+				margin-bottom: 2 * $print-column-space;
+			}
+			.claim-container:first-child {
+				margin: $print-column-space 0 4 * $print-column-space;
+			}
+		}
+		&-head {
+			border-width: 0;
+		}
+		&-distributor,
+		&-tarkett {
+			padding-top: 2 * $print-column-space;
+		}
+	}
+
+	@media print {
+		margin: 20px auto;
+	}
+}

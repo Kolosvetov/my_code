@@ -1,0 +1,104 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {{ title }}
+  {{ title_suffix }}
+
+{% if title %}
+    <h3>{{ title }}</h3>
+{% endif %}
+{{claims_user_header()}}
+<div class="b-wrapper b-wrapper--blue-bordered">
+    <div class="b-top-tabs">
+        {#  <a href="{{path('tarkett_structure.user_settings')}}" class="b-top-tabs__tab">
+              <span class="b-top-tabs__tab-title b-top-tabs__tab-title--profile">Профиль</span>
+          </a>#}
+        <a class="b-top-tabs__tab b-top-tabs__tab--active">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--claims">Обращения и претензии</span>
+        </a>
+        {# <a href="{{ path('entity.node.canonical', {'node': 11}) }}" class="b-top-tabs__tab"> #}
+        <a href="/about" class="b-top-tabs__tab">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--about">Описание сервиса</span>
+        </a>
+        {#        <a class="b-top-tabs__tab">
+                    <span class="b-top-tabs__tab-title b-top-tabs__tab-title--help">Помощь</span>
+                </a>#}
+    </div>
+</div>
+
+<div class="b-middle">
+    <div class="b-middle-form">
+        <div class="b-col6 new-customer-claim">
+            <a href="{{ path('tarkett_structure.add_claim') }}" class="b-middle-form__new-claim c-button c-button_with_plus"><span class="text-desktop">Новое обращение Покупателя</span><span class="text-mobile">Новое обращение</span></a>
+        </div>
+        <div class="b-col6 search-customer-claim">
+            <div class="b-middle-form__search">
+                {{ exposed }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="b-claims">
+    {{ block_claims_list_tabs(view.id, view.display.display['id']) }}
+    <div class="b-claims-list js-claims-content">
+{% if rows %}
+        <div class="b-claim-item b-claims-titles col-6">
+            <div class="b-claims-titles__title">
+                <span class="b-claims-title__id">&nbsp;</span>
+            </div>
+            <div class="b-claims-titles__title">
+                <span class="b-claims-title__id">ID:</span>
+            </div>
+            <div class="b-claims-titles__title">
+                <span class="b-claims-title__date">Дата:</span>
+            </div>
+            <div class="b-claims-titles__title b-claim-item__field--claims-type">
+                Тип:
+            </div>
+            <div class="b-claims-titles__title b-claim-item__field--dys-passed">
+                Продукт/коллекция:
+            </div>
+            <div class="b-claims-titles__title b-claim-item__field--claims-status">
+                Статус:
+            </div>
+        </div>
+        {{ attachment_before }}
+
+        {{ rows }}
+        {{ empty }}
+        {{ pager }}
+
+        {{ attachment_after }}
+        {{ more }}
+{% else %}
+        <div class="b-claims-list_empty">Обращений и претензий нет.</div>
+{% endif %}
+    </div>
+
+</div>
+
+</div>

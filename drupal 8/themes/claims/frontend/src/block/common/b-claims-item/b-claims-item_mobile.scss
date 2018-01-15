@@ -1,0 +1,307 @@
+@import "~style";
+@import "~style/_sprite";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-claim {
+		&-item {
+			border-bottom: #e3e7ea solid 2px;
+
+			&_one {
+				border-bottom-width: 0;
+				width: calc(#{$mobile-width} - #{$mobile-border-margin * 2});
+				margin: $mobile-border-margin;
+				.b-claim-item__field {
+					cursor: auto;
+				}
+			}
+
+			&__fields {
+				display: none;
+				&-wrapper {
+					padding: $mobile-border-margin 0;
+				}
+			}
+
+			&__field {
+				font-size: 16px;
+				margin-right: 10px;
+				width: auto;
+				cursor: pointer;
+
+				&-type {
+					text-transform: uppercase;
+				}
+
+				&-data {
+					margin-top: $mobile-border-margin;
+					width: 100%;
+				}
+
+				&-label {
+					width: 100%;
+					font-size: 16px;
+					color: #a0a0a0;
+
+					.b-claim-item__field-value & {
+						width: auto;
+					}
+				}
+
+				&-value {
+					width: 100%;
+				}
+			}
+
+			&__mobile {
+				display: inline-block;
+				width: 100%;
+				position: relative;
+
+				&-progressbar {
+					height: 34px;
+					background-position: 0 100%;
+					background-repeat: repeat-x;
+
+					&-bg {
+						width: 100%;
+						background-image: url(~img/common/claim-indicator-bg.png);
+					}
+
+					&-fg {
+						display: inline-block;
+						font-size: 24px;
+						width: auto;
+						padding-bottom: 10px;
+						text-align: right;
+						border-bottom: #32526b solid 5px;
+					}
+				}
+			}
+
+			&__control {
+				cursor: pointer;
+				position: absolute;
+				width: 16px;
+				height: 16px;
+				top: -2px;
+				right: 2px;
+				font-size: 30px;
+
+				&_plus {
+					background: url(~img/common/i-plus-mobile.png) 100% 50% no-repeat;
+				}
+
+				&_minus {
+					background: url(~img/common/i-minus-mobile.png) 100% 50% no-repeat;
+				}
+			}
+
+			&__detail {
+				display: none;
+
+				&_visible {
+					display: block;
+				}
+
+				.b-claim-item__field {
+					cursor: auto;
+				}
+			}
+
+			&__progressbar {
+				display: none;
+			}
+
+			&_first:first-child {
+				margin-top: $mobile-border-margin;
+			}
+
+			&:last-child {
+				border-bottom-width: 0;
+				margin-bottom: $mobile-border-margin;
+			}
+		}
+	}
+
+	// Цвет и ширина "термометра"
+	.b-claim-item__fields-wrapper {
+		&.c-consideration,
+		&.c-consideraion-distributor {
+			.b-claim-item__mobile-progressbar-fg {
+				width: 20%;
+			}
+		}
+		&.c-consideration {
+			.b-claim-item__mobile-progressbar-fg {
+				border-bottom-color: $status-consideration-color;
+				color: $status-consideration-color;
+			}
+			.b-claim-item__mobile {
+				.b-claim-item__field-type,
+				.b-claim-item__field-status {
+					color: $status-consideration-color;
+				}
+			}
+			.b-claim-item__detail {
+				.b-claim-item__field-status {
+					color: $status-consideration-color;
+				}
+			}
+		}
+		&.c-consideration-distributor {
+			.b-claim-item__mobile-progressbar-fg {
+				border-bottom-color: $status-consideration-distributor-color;
+				color: $status-consideration-distributor-color;
+			}
+			.b-claim-item__mobile {
+				.b-claim-item__field-type,
+				.b-claim-item__field-status {
+					color: $status-consideration-distributor-color;
+				}
+			}
+			.b-claim-item__detail {
+				.b-claim-item__field-status {
+					color: $status-consideration-distributor-color;
+				}
+			}
+		}
+
+		&.c-sample-requested {
+			.b-claim-item__mobile-progressbar-fg {
+				width: 40%;
+				border-bottom-color: $status-sample-requested-color;
+				color: $status-sample-requested-color;
+			}
+			.b-claim-item__mobile {
+				.b-claim-item__field-type,
+				.b-claim-item__field-status {
+					color: $status-sample-requested-color;
+				}
+			}
+			.b-claim-item__detail {
+				.b-claim-item__field-status {
+					color: $status-sample-requested-color;
+				}
+			}
+		}
+
+		&.c-sample-prepared,
+		&.c-sample-inlab {
+			.b-claim-item__mobile-progressbar-fg {
+				width: 60%;
+			}
+		}
+		&.c-sample-prepared {
+			.b-claim-item__mobile-progressbar-fg {
+				border-bottom-color: $status-sample-prepared-color;
+				color: $status-sample-prepared-color;
+			}
+			.b-claim-item__mobile {
+				.b-claim-item__field-type,
+				.b-claim-item__field-status {
+					color: $status-sample-prepared-color;
+				}
+			}
+			.b-claim-item__detail {
+				.b-claim-item__field-status {
+					color: $status-sample-prepared-color;
+				}
+			}
+		}
+		&.c-sample-inlab {
+			.b-claim-item__mobile-progressbar-fg {
+				border-bottom-color: $status-sample-inlab-color;
+				color: $status-sample-inlab-color;
+			}
+			.b-claim-item__mobile {
+				.b-claim-item__field-type,
+				.b-claim-item__field-status {
+					color: $status-sample-inlab-color;
+				}
+			}
+			.b-claim-item__detail {
+				.b-claim-item__field-status {
+					color: $status-sample-inlab-color;
+				}
+			}
+		}
+
+		&.c-departure {
+			.b-claim-item__mobile-progressbar-fg {
+				width: 80%;
+				border-bottom-color: $status-departure-color;
+				color: $status-departure-color;
+			}
+			.b-claim-item__mobile {
+				.b-claim-item__field-type,
+				.b-claim-item__field-status {
+					color: $status-departure-color;
+				}
+			}
+			.b-claim-item__detail {
+				.b-claim-item__field-status {
+					color: $status-departure-color;
+				}
+			}
+		}
+
+		&.c-approved,
+		&.c-rejected,
+		&.c-rejected-shop {
+			.b-claim-item__mobile-progressbar-fg {
+				width: 100%;
+			}
+		}
+		&.c-approved {
+			.b-claim-item__mobile-progressbar-fg {
+				border-bottom-color: $status-approved-color;
+				color: $status-approved-color;
+			}
+			.b-claim-item__mobile {
+				.b-claim-item__field-type,
+				.b-claim-item__field-status {
+					color: $status-approved-color;
+				}
+			}
+			.b-claim-item__detail {
+				.b-claim-item__field-status {
+					color: $status-approved-color;
+				}
+			}
+		}
+		&.c-rejected {
+			.b-claim-item__mobile-progressbar-fg {
+				border-bottom-color: $status-rejected-color;
+				color: $status-rejected-color;
+			}
+			.b-claim-item__mobile {
+				.b-claim-item__field-type,
+				.b-claim-item__field-status {
+					color: $status-rejected-color;
+				}
+			}
+			.b-claim-item__detail {
+				.b-claim-item__field-status {
+					color: $status-rejected-color;
+				}
+			}
+		}
+		&.c-rejected-shop {
+			.b-claim-item__mobile-progressbar-fg {
+				border-bottom-color: $status-rejected-shop-color;
+				color: $status-rejected-shop-color;
+			}
+			.b-claim-item__mobile {
+				.b-claim-item__field-type,
+				.b-claim-item__field-status {
+					color: $status-rejected-shop-color;
+				}
+			}
+			.b-claim-item__detail {
+				.b-claim-item__field-status {
+					color: $status-rejected-shop-color;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,113 @@
+@import "~style";
+@import "~style/_sprite";
+@import "~jquery-fancybox/source/scss/jquery.fancybox";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.layout-container {
+		header,
+		footer {
+			min-width: 320px;
+			width: 100%;
+		}
+
+		&.clear-page {
+			main {
+				width: $mobile-width;
+			}
+		}
+	}
+
+	main {
+		width: $mobile-width;
+		margin: 0 auto;
+	}
+
+	.login-page {
+		main {
+			height: calc(100% - 114px);
+		}
+	}
+
+	footer {
+		height: 54px;
+	}
+
+	.b-content {
+		margin: 40px $mobile-border-margin;
+	}
+
+	.b-row {
+		@include flex;
+		@include flex-align(center, middle);
+		@include flex-direction(column);
+		width: 100%;
+	}
+
+	.ya-map {
+		width: 100%;
+		min-height: 450px;
+		position: static;
+	}
+
+	#place-for-forms {
+		float: none;
+		clear: both;
+
+		.defect {
+			padding: 26px 0;
+
+			.form {
+				float: none !important;
+				width: $mobile-width !important;
+				margin-top: $mobile-border-margin * 2;
+			}
+
+			.break-until-end {
+				display: none;
+			}
+		}
+	}
+
+	.ui-dialog {
+		font-size: 14px;
+
+		&-content {
+			padding: 0 !important;
+		}
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.ya-map {
+		min-height: 420px;
+		height: 420px;
+	}
+}
+
+@media screen and (max-width: 560px) {
+	.ya-map {
+		min-height: 390px;
+		height: 390px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.ya-map {
+		min-height: 360px;
+		height: 360px;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.ya-map {
+		min-height: 330px;
+		height: 330px;
+	}
+}
+
+@media screen and (max-width: 320px) {
+	.ya-map {
+		min-height: 300px;
+		height: 300px;
+	}
+}

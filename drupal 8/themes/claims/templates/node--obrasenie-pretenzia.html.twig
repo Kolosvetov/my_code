@@ -1,0 +1,504 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a node.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+ *   Only method names starting with "get", "has", or "is" and a few common
+ *   methods such as "id", "label", and "bundle" are available. For example:
+ *   - node.getCreatedTime() will return the node creation timestamp.
+ *   - node.hasField('field_example') returns TRUE if the node bundle includes
+ *     field_example. (This does not indicate the presence of a value in this
+ *     field.)
+ *   - node.isPublished() will return whether the node is published or not.
+ *   Calling other methods, such as node.delete(), will result in an exception.
+ *   See \Drupal\node\Entity\Node for a full list of public properties and
+ *   methods for the node object.
+ * - label: The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - author_picture: The node author user entity, rendered using the "compact"
+ *   view mode.
+ * - metadata: Metadata for this node.
+ * - date: Themed creation date field.
+ * - author_name: Themed author name field.
+ * - url: Direct URL of the current node.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - node: The current template type (also known as a "theming hook").
+ *   - node--type-[type]: The current node type. For example, if the node is an
+ *     "Article" it would result in "node--type-article". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
+ *     teaser would result in: "node--view-mode-teaser", and
+ *     full: "node--view-mode-full".
+ *   The following are controlled through the node publishing options.
+ *   - node--promoted: Appears on nodes promoted to the front page.
+ *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
+ *     teaser listings.
+ *   - node--unpublished: Appears on unpublished nodes visible only to site
+ *     admins.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - content_attributes: Same as attributes, except applied to the main
+ *   content tag that appears in the template.
+ * - author_attributes: Same as attributes, except applied to the author of
+ *   the node tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
+ * - page: Flag for the full page state. Will be true if view_mode is 'full'.
+ * - readmore: Flag for more state. Will be true if the teaser content of the
+ *   node cannot hold the main body content.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_node()
+ *
+ * @todo Remove the id attribute (or make it a class), because if that gets
+ *   rendered twice on a page this is invalid CSS for example: two lists
+ *   in different view modes.
+ *
+ * @ingroup themeable
+ */
+#}
+{% if user.roles[1] == 'pokupatel' %}
+	{% set status = element_by_target_id(node.field_consumer_status.value[0]['target_id'], 'term') %}
+{% elseif user.roles[1] == 'magazin' %}
+	{% set status = element_by_target_id(node.field_market_status.value[0]['target_id'], 'term') %}
+{% elseif user.roles[1] == 'distributor' %}
+	{% set status = element_by_target_id(node.field_status_processa_u_distribu.value[0]['target_id'], 'term') %}
+{% endif %}
+{% if node.field_dannye_pokupatela.value %}
+	{% set dannye_pokupatela = element_by_target_id(node.field_dannye_pokupatela.value[0]['target_id'], 'node') %}
+{% endif %}
+{% if node.field_claims_date.value %}
+	{% set difference = date('now').timestamp - node.field_claims_date.value|striptags|replace({"\n" : ''})|date('U') %}
+	{% set daysDiff = (difference / (60 * 60 * 24))|round(0, 'ceil') %}
+{% endif %}
+{% set date_delimiters = {'-':'','.':'','/':''} %}
+{% set claim_in_tarkett = node.field_schemeuid.value in ['a9c14f1d-82e2-4f65-bf72-6e0c8815a54e','4df25582-7608-4ffa-b8f2-3b09a50aa897','6eee5b3e-7584-477e-a7a8-9054edef8e95','9b2c6fcb-fae5-47e5-bcd5-eac44cf23d64'] %}
+<article{{ attributes }}>
+	<div class="b-head">
+{% if 1 == node.field_claims_type.value and user.roles[1] in ['magazin', 'distributor'] %}
+	{% if 'magazin' == user.roles[1] %}
+		{% set h1_text = 'Решение магазина по обращению' %}
+	{% else %}
+		{% set h1_text = 'Решение дистрибьютора по обращению' %}
+	{% endif %}
+{% elseif 2 == node.field_claims_type.value and user.roles[1] in ['magazin', 'distributor'] %}
+	{% if 'magazin' == user.roles[1] %}
+		{% set h1_text = 'Решение магазина по претензии' %}
+	{% else %}
+		{% set h1_text = 'Решение дистрибьютора по претензии' %}
+	{% endif %}
+{% elseif 4 == node.field_claims_type.value %}
+	{% set h1_text = 'Претензия дистрибьютора' %}
+{% else %}
+	{% set h1_text = node.field_claims_type.settings['allowed_values'][node.field_claims_type.value] %}
+{% endif %}
+		<div class="b-head__h1">{{ h1_text }} №{{ node.nid.value }}</div>
+		<div class="b-head__description">
+			Уникальная ссылка на обращение: <a href="{{ path('entity.node.canonical', {'node': node.nid.value}) }}">claims.tarkett.ru{{ path('entity.node.canonical', {'node': node.nid.value}) }}</a>
+		</div>
+	</div>
+	<div class="b-claim-item b-claim-item_one">
+		<div class="b-claim-item__fields-wrapper {{ status.field_klass.value? status.field_klass.value:"c-consideration" }}{% if claim_in_tarkett %} c-consideration-tarkett{% endif %}">
+			<div class="b-claim-item__fields b-claim-item__fields_info col-6">
+				<div class="b-claim-item__field">
+					<span class="b-claim-item__field--nid c-status-percentage"></span>
+				</div>
+				<div class="b-claim-item__field">
+					<span class="b-claim-item__field--nid">{{ node.nid.value }}</span>
+				</div>
+				<div class="b-claim-item__field">
+					<span class="b-claim-item__field--claims-date">{{ node.field_claims_date.value|date('d.m.Y') }}</span>
+				</div>
+				<div class="b-claim-item__field b-claim-item__field--claims-type">{% if node.field_claims_type.value %}{{ node.field_claims_type.settings["allowed_values"][node.field_claims_type.value] }}{% endif %}</div>
+				<div class="b-claim-item__field b-claim-item__field--days-passed">
+					{% if node.field_claims_type.value == 4 %}
+						<span>{{ node.field_dannye_distributora.entity.field_product_cat.value }} / {{ node.field_dannye_distributora.entity.field_kollekcia.value }}</span>
+					{% else %}
+						<span>{{ node.field_product_cat.value }} / {{ node.field_product_name.value }}</span>
+					{% endif %}
+				</div>
+				{% if status %}
+					<div class="b-claim-item__field b-claim-item__field--claims-status">
+						<span class="b-with-tooltip" data-title="{{status.description.value|striptags}}">{{status.name.value }}</span>
+					</div>
+				{% endif %}
+			</div>
+			<div class="b-claim-item__progressbar">
+				<span class="b-claim-item__progressbar-item" title="{{ status.name.value }}"></span>
+			</div>
+			<div class="b-claim-item__mobile">
+				<div class="b-claim-item__field">
+					<span class="b-claim-item__field--claims-date">{{ row._entity.field_claims_date.value|date('d.m.Y') }}</span>
+				</div>
+				<div class="b-claim-item__field b-claim-item__field-value">
+{% if node.field_claims_type.value == '4' %}
+					<span>{{ node.field_product_cat_1.value }} / {{ node.field_kollekcia.value }}</span>
+{% else %}
+					<span>{{ node.field_product_cat.value }} / {{ node.field_product_name.value }}</span>
+{% endif %}
+				</div>
+				<div class="b-claim-item__field b-claim-item__field-value b-claim-item__field-status">
+					<div class="b-claim-item__field b-claim-item__field-label">Статус:</div> {{ status.name.value }}
+				</div>
+				<div class="b-claim-item__mobile-progressbar b-claim-item__mobile-progressbar-bg"><div class="b-claim-item__mobile-progressbar b-claim-item__mobile-progressbar-fg">&nbsp;</div></div>
+			</div>
+		</div>
+	</div>
+	<div class="b-claim-info b-claim-info_view">
+		<div class="b-claim-info__options">
+			{{claims_add_block(node)}}
+{% if node.field_claims_type.value < 3 %}
+			<div class="b-claim-info__option">
+				<div class="b-claim-info__option-head c-without">Персональные данные</div>
+				<div class="b-claim-info__option-description">
+					
+					<table class="marked">
+						<tr>
+							<td><b>ФИО:</b></td>
+							<td>{{dannye_pokupatela.field_c_fio.value}}</td>
+						</tr>
+						<tr>
+							<td><b>E-mail:</b></td>
+							<td><a href="mailto:{{dannye_pokupatela.field_c_email.value}}">{{dannye_pokupatela.field_c_email.value}}</a></td>
+						</tr>
+						<tr>
+							<td><b>Телефон:</b></td>
+							<td>{{dannye_pokupatela.field_c_phone.value}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="b-claim-info__option">
+				<div class="b-claim-info__option-head">Место покупки</div>
+				<div class="b-claim-info__option-description">
+					<table class="marked">
+						<tr>
+							<td>Город:</td>
+							<td>{{dannye_pokupatela.field_c_city.value}}</td>
+						</tr>
+						<tr>
+							<td>Улица:</td>
+							<td>{{dannye_pokupatela.field_c_street.value}} </td>
+						</tr>
+						<tr>
+							<td>Дом:</td>
+							<td>{{dannye_pokupatela.field_c_home_num.value}}</td>
+						</tr>
+					</table>
+					<table class="marked">
+						<tr>
+							<td>Магазин:</td>
+							<td>{{dannye_pokupatela.field_c_market_name.value}}</td>
+						</tr>
+	{% if dannye_pokupatela.field_c_buy_date.value|replace(date_delimiters) %}
+						<tr>
+							<td>Дата:</td>
+							<td>{{dannye_pokupatela.field_c_buy_date.value|date('d.m.Y')}}</td>
+						</tr>
+	{% endif %}
+	{% if dannye_pokupatela.field_c_check_num.value %}
+						<tr>
+							<td>Номер чека:</td>
+							<td>{{dannye_pokupatela.field_c_check_num.value}}</td>
+						</tr>
+	{% endif %}
+	{% if dannye_pokupatela.field_c_check_photo.entity.fileuri %}
+						<tr>
+							<td>Скан чека:</td>
+							<td>
+								<a href="{{ file_url(dannye_pokupatela.field_c_check_photo.entity.fileuri) }}" class="fancybox">Посмотреть</a>
+								<a href="{{ file_url(dannye_pokupatela.field_c_check_photo.entity.fileuri) }}" target="_blank">Скачать</a>
+							</td>
+						</tr>
+	{% endif %}
+					</table>
+				</div>
+			</div>
+	{% if 'pokupatel' == user.roles[1] and status.name.value in ['Отклонено', 'Принято'] %}
+		{% set retail = element_by_target_id(node.field_claims_dannye_magazina.value[0]['target_id'], 'node') %}
+		{% set distributor = element_by_target_id(node.field_dannye_distributora.value[0]['target_id'], 'node') %}
+		{% if retail %}
+			{% if node.field_privazka_magazina.value is iterable and 0 < node.field_privazka_magazina.value|length %}
+				{% set retail_user = element_by_target_id(node.field_privazka_magazina.value[0]['target_id'], 'user') %}
+			{% else %}
+				{% set retail_user = false %}
+			{% endif %}
+			<div class="b-claim-info__option">
+				<div class="b-claim-info__option-head">Информация о продавце</div>
+				<div class="b-claim-info__option-description">
+					<table class="marked">
+			{% if retail_user and retail_user.field_ur_lico_name.value %}
+						<tr>
+							<td>Наименование юр.лица:</td>
+							<td>{{ retail_user.field_ur_lico_name.value }}</td>
+						</tr>
+			{% endif %}
+						<tr>
+							<td>ФИО контактного лица:</td>
+							<td>{{ retail.field_market_consumer_fio.value }}</td>
+						</tr>
+						<tr>
+							<td>E-mail:</td>
+							<td>{{ retail.field_market_consumer_email.value }}</td>
+						</tr>
+						<tr>
+							<td>Телефон:</td>
+							<td>{{ retail.field_market_consumer_phone.value }}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		{% elseif distributor %}
+			{% if node.field_privazka_distributor.value is iterable and 0 < node.field_privazka_distributor.value|length %}
+				{% set distributor_user = element_by_target_id(node.field_privazka_distributor.value[0]['target_id'], 'user') %}
+			{% else %}
+				{% set distributor_user = false %}
+			{% endif %}
+			<div class="b-claim-info__option">
+				<div class="b-claim-info__option-head">Информация о дистрибьюторе</div>
+				<div class="b-claim-info__option-description">
+					<table class="marked">
+			{% if distributor_user and distributor_user.field_ur_lico_name.value %}
+						<tr>
+							<td>Наименование юр.лица:</td>
+							<td>{{ distributor_user.field_ur_lico_name.value }}</td>
+						</tr>
+			{% endif %}
+						<tr>
+							<td>ФИО контактного лица:</td>
+							<td>{{ distributor.field_d_fio.value }}</td>
+						</tr>
+						<tr>
+							<td>E-mail:</td>
+							<td>{{ distributor.field_distributor_email.value }}</td>
+						</tr>
+						<tr>
+							<td>Телефон:</td>
+							<td>{{ distributor.field_distributor_phone.value }}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		{% endif %}
+	{% endif %}
+{% endif %}
+			<div class="b-claim-info__option with-map">
+				<div class="b-claim-info__option-head c-without">Местонахождение товара</div>
+				<div class="b-claim-info__option-description">
+					<table class="marked">
+						<tr>
+							<td>Регион:</td>
+							<td>{{node.field_product_address_region.value | raw}}</td>
+						</tr>
+						<tr>
+							<td>Город:</td>
+							<td>{{node.field_product_address_city.value | raw}}</td>
+						</tr>
+						<tr>
+							<td>Адрес:</td>
+							<td>{{node.field_product_address.value | raw}}</td>
+						</tr>
+					</table>
+					{# <img id="showProductAddress" class="address-map" data-address="{{node.field_product_address_region.value | raw}}, {{node.field_product_address_city.value | raw}}, {{node.field_product_address.value | raw}}" style="position:relative;width:calc(50% - 20px);min-height:300px;float:right;" alt="Карта с адресом места нахождения товара"> #}
+					<img id="showProductAddress" class="address-map" data-address="{{node.field_product_address_city.value | raw}}, {{node.field_product_address.value | raw}}" style="position:relative;width:calc(50% - 20px);min-height:300px;float:right;" alt="Карта с адресом места нахождения товара">
+				</div>
+			</div>
+{% if node.field_claims_type.value != 4 %}
+			<div class="b-claim-info__option">
+				<div class="b-claim-info__option-head">Информация о купленном продукте</div>
+				<div class="b-claim-info__option-description">
+					<table class="marked">
+						<tr>
+							<td>Категория продукта:</td>
+							<td>{{ node.field_product_cat.value|default('не указана') }}</td>
+						</tr>
+						<tr>
+							<td>Коллекция:</td>
+							<td>{{ node.field_product_name.value|default('не указана') }}</td>
+						</tr>
+						<tr>
+							<td>Возможно предоставить образец?</td>
+							<td>{% if 1 == node.field_product_can_show.value %}Да{% else %}Нет{% endif %}</td>
+						</tr>
+					</table>
+					<table class="marked">
+						<tr>
+							<td>Количество купленного товара:</td>
+							<td>{{ node.field_product_count_all.value|default('не указано') }}{% if node.field_product_count_all_ez.value|length > 0 %} {{ node.field_product_count_all_ez.value }}{% endif %}</td>
+						</tr>
+						<tr>
+							<td>Количество товара с дефектом:</td>
+							<td>{{ node.field_product_count_bad.value|default('не указано') }}{% if node.field_product_count_bad_ez.value|length > 0 %} {{ node.field_product_count_bad_ez.value }}{% endif %}</td>
+						</tr>
+						<tr>
+							<td>Стоимость:</td>
+							<td>{% if node.field_product_price.value %}{{ node.field_product_price.value }} руб.{% else %}не указана{% endif %}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+{% endif %}
+{% if node.field_defect_text.value %}
+	{% if 4 == node.field_claims_type.value %}
+		{% set source_title = 'дистрибьютором' %}
+	{% elseif 3 == node.field_claims_type.value %}
+		{% set source_title = 'магазином' %}
+	{% else %}
+		{% set source_title = 'покупателем' %}
+	{% endif %}
+			<div class="b-claim-info__option b-claim-info__option_bordered">
+				<div class="b-claim-info__option-head">Описание проблемы {{ source_title }}</div>
+				<div class="b-claim-info__option-description only-text">{% if node.field_c_buy_date.value|replace(date_delimiters) %}{{node.field_c_buy_date.value|date('d.m.Y')}} {% endif %}{{node.field_defect_text.value}}</div>
+			</div>
+{% endif %}
+{% if node_references | length > 0 %}
+			<div class="b-claim-info__option b-claim-info__option_bordered">
+				<div class="b-claim-info__option-head">Дополнительная информация</div>
+				<div class="b-claim-info__option-description only-text">
+					<div class="b-defect">
+						<div class="b-defect__option-title">Состояние продукта:</div>
+						<div class="b-defect__product-status">Продукт {% if 1 == node.field_product_state.value %} не{% endif %}уложен</div>
+					</div>
+	{% for index, defect in node_references %}
+		{% set defect_number = index + 1 %}
+					<div class="b-defect">
+						<div class="b-defect__title"><span>Указан дефект #{{ defect_number }}</span>{{defect.second_defect_type}}</div>
+		{% for d_index, fieldset in defect.fields %}
+			{% set fields_count = fieldset|length %}
+			{% if fieldset['#type'] == "inline_template" %}
+				{% if defect.node.field_test_image | length > 0 %}
+						<div class="b-defect__option">
+							<div class="b-defect__option-title">Загруженные фотографии:</div>
+							<div class="b-defect__option-description only-text">
+					{% for d_image in defect.node.field_test_image %}
+								<a class="b-defect__image b-defect__image_only fancybox" href="{{ file_url(d_image.entity.fileuri) }}" target="_blank" title="Дефект #{{ defect_number }}, изображение {{ loop.index }}">
+									<img src="{{ file_url(d_image.entity.fileuri) }}" width="180" height="180" style="height: 180px;">
+								</a>
+					{% endfor %}
+							</div>
+						</div>
+				{% endif %}
+				{% if defect.node.field_video_defekta | length > 0 %}
+						<div class="b-defect__option">
+							<div class="b-defect__option-title">Видеоматериал:</div>
+							<div class="b-defect__option-description only-text">
+					{% for d_video in defect.node.field_video_defekta %}
+								<a href="{{ file_url(d_video.entity.fileuri) }}" target="_blank" title="Дефект #{{ defect_number }}, видеоматериал">{{ d_video.entity.getFileName() }} ({{ claims_format_size(d_video.entity.getSize()) }})</a>
+					{% endfor %}
+							</div>
+						</div>
+				{% endif %}
+			{% elseif 0 < fields_count %}
+				{% set fieldset_title = fieldset['#title']|replace({'<br>':' '})|trim(': ') %}
+				{% if fieldset_title %}
+					{% set has_childs = ('Климатические условия в помещении' == fieldset_title) %}
+						<div class="b-defect__option{% if has_childs %} b-defect__option_with-childs{% endif %}">
+							<div class="b-defect__option-title">{{ fieldset_title }}</div>
+						</div>
+				{% elseif 1 < fields_count %}
+						<div class="b-defect__option">
+					{% for f_index, field in fieldset %}
+						{% if field['title'] and field['value'] != '-' %}
+							{% set field_title = field['title']|replace({'<br>':' '})|trim('?: ') %}
+							<div class="b-defect__option-description">
+								{% if 'Укажите значение' == field_title %}Значение{% else %}{{ field_title }}{% endif %}: <b>{{ field['value']|lower }}</b>
+							</div>
+						{% elseif field is iterable and 0 < field|length %}
+							{% for s_index, s_field in field %}
+								{% if s_field['title'] and s_field['value'] != '-' %}
+									{% set field_title = s_field['title']|replace({'<br>':' '})|trim('?: ') %}
+							<div class="b-defect__option-description">
+								{% if 'Укажите значение' == field_title %}Значение{% else %}{{ field_title }}{% endif %}: <b>{{ s_field['value'] }}</b>
+							</div>
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					{% endfor %}
+						</div>
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+					</div>
+	{% endfor %}
+				</div>
+			</div>
+{% endif %}
+{% if 0 < node.field_photo_pokupatel|length %}
+			<div class="b-claim-info__option b-claim-info__option_bordered">
+				<div class="b-claim-info__option-head">Изображения проблемы от покупателя</div>
+				<div class="b-claim-info__option-description only-text">
+	{% for pokupatel_photo in node.field_photo_pokupatel %}
+					<a class="b-defect__image b-defect__image_only fancybox" href="{{ file_url(pokupatel_photo.entity.fileuri) }}" target="_blank" title="Изображение дефекта {{ loop.index }}">
+						<img src="{{ file_url(pokupatel_photo.entity.fileuri) }}" width="180" height="180" style="height: 180px;">
+					</a>
+	{% endfor %}
+				</div>
+			</div>
+{% endif %}
+{% if 0 < node.field_video_pokupatel|length %}
+			<div class="b-claim-info__option b-claim-info__option_bordered">
+				<div class="b-claim-info__option-head">Видеоматериал от покупателя:</div>
+				<div class="b-claim-info__option-description only-text">
+		{% for pokupatel_video in node.field_video_pokupatel %}
+					<a href="{{ file_url(pokupatel_video.entity.fileuri) }}" target="_blank" title="Видеоматериал">{{ pokupatel_video.entity.getFileName() }} ({{ claims_format_size(pokupatel_video.entity.getSize()) }})</a>
+		{% endfor %}
+				</div>
+			</div>
+{% endif %}
+{% if 0 < node.field_photo_magazin|length %}
+			<div class="b-claim-info__option b-claim-info__option_bordered">
+				<div class="b-claim-info__option-head">Изображения проблемы от магазина</div>
+				<div class="b-claim-info__option-description only-text">
+	{% for magazin_photo in node.field_photo_magazin %}
+					<a class="b-defect__image b-defect__image_only fancybox" href="{{ file_url(magazin_photo.entity.fileuri) }}" target="_blank" title="Изображение дефекта {{ loop.index }}">
+						<img src="{{ file_url(magazin_photo.entity.fileuri) }}" width="180" height="180" style="height: 180px;">
+					</a>
+	{% endfor %}
+				</div>
+			</div>
+{% endif %}
+{% if 0 < node.field_video_magazin|length %}
+			<div class="b-claim-info__option b-claim-info__option_bordered">
+				<div class="b-claim-info__option-head">Видеоматериал от магазина:</div>
+				<div class="b-claim-info__option-description only-text">
+		{% for magazin_video in node.field_video_magazin %}
+					<a href="{{ file_url(magazin_video.entity.fileuri) }}" target="_blank" title="Видеоматериал">{{ magazin_video.entity.getFileName() }} ({{ claims_format_size(magazin_video.entity.getSize()) }})</a>
+		{% endfor %}
+				</div>
+			</div>
+{% endif %}
+		</div>
+	</div>
+	<div class="c-padding-wrapper">
+{% if 1 == node.field_claims_type.value and 'pokupatel' == user.roles[1] and status.name.value in ['Отклонено', 'Принято'] %}
+	{% set needs_printing = true %}
+{% elseif 2 == node.field_claims_type.value and user.roles[1] in ['magazin','pokupatel'] %}
+	{% set needs_printing = true %}
+{% elseif 3 == node.field_claims_type.value and 'magazin' == user.roles[1] and status.name.value in ['Отклонено', 'Принято'] %}
+	{% set needs_printing = true %}
+{% elseif 4 == node.field_claims_type.value and 'distributor' == user.roles[1] and status.name.value in ['Отклонено', 'Принято'] %}
+	{% set needs_printing = true %}
+{% else %}
+	{% set needs_printing = false %}
+{% endif %}
+		<a href="{{ path('tarkett_structure.claims_lists_'~user.roles[1], {'tab':(node.field_eta_obrasenia_u_prodavca.value? node.field_eta_obrasenia_u_prodavca.value:"in_work")}) }}" class="c-button left-arrow with-loading{% if needs_printing %} c-margin-left-30{% endif %}">Назад</a>
+{% if needs_printing %}
+		<a href="/node/{{ node.nid.value }}/print" target="_blank" class="c-button">Напечатать</a>
+{% endif %}
+	</div>
+</article>

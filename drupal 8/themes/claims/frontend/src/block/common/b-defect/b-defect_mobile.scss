@@ -1,0 +1,51 @@
+@import "~style";
+@import "~style/_sprite";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-defect {
+		&__image {
+			width: calc(50% - 10px);
+			height: calc(50% - 10px);
+			margin: 14px 20px 16px 0;
+
+			&:nth-child(2n) {
+				margin-right: 0;
+			}
+
+			img {
+				width: 100% !important;
+				height: 224px !important;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.b-defect__image img {
+		height: 199px !important;
+	}
+}
+
+@media screen and (max-width: 560px) {
+	.b-defect__image img {
+		height: 174px !important;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.b-defect__image img {
+		height: 149px !important;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.b-defect__image img {
+		height: 124px !important;
+	}
+}
+
+@media screen and (max-width: 320px) {
+	.b-defect__image img {
+		height: 99px !important;
+	}
+}

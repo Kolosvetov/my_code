@@ -1,0 +1,188 @@
+@import "~style";
+@import "~swiper/dist/css/swiper.css";
+
+.b-history {
+	@include grid-column(12, 0);
+
+	overflow: hidden;
+	position: relative;
+	background-color: #f7f7f7;
+
+	@include breakpoint(large) {
+		height: 530px;
+		margin: 70px 0;
+	}
+
+	&__image,
+	&__info {
+		@include grid-column(12, 0);
+		@include grid-column-end;
+
+		@include breakpoint(large) {
+			@include grid-column(6, 0);
+
+			height: 530px;
+		}
+	}
+
+	&__item {
+		@include flex-grid-column(12, 0);
+		@include grid-column-end;
+
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&__image {
+		background-color: #f7f7f7;
+		height: auto;
+		padding: 0 20px 25px;
+		box-sizing: border-box;
+		order: 2;
+
+		img {
+			display: block;
+
+			@include breakpoint(large) {
+				display: none;
+			}
+		}
+
+		@include breakpoint(large) {
+			order: 1;
+		}
+
+		@include breakpoint(medium down) {
+			background: none !important;
+		}
+	}
+
+	&__info {
+		text-align: center;
+		padding: 60px 10%;
+		box-sizing: border-box;
+		background-color: #f7f7f7;
+		order: 1;
+
+		@include breakpoint(large) {
+			padding: 60px 5%;
+			order: 2;
+		}
+	}
+
+	&__descr {
+		font-size: 16px;
+		font-weight: 300;
+		line-height: 28px;
+		margin-top: 30px;
+
+		@include breakpoint(large) {
+			font-size: 18px;
+		}
+	}
+
+	&__comp-logo {
+		width: 41px;
+		height: 40px;
+		margin: 0 auto;
+		background: url(~img/common/logo-2.png) 0 0 no-repeat;
+	}
+
+	&__comp-name {
+		color: #010101;
+		font-size: 14px;
+		font-weight: 700;
+		text-transform: uppercase;
+		margin-top: 22px;
+		letter-spacing: 3px;
+
+		@include breakpoint(large) {
+			margin-top: 45px;
+		}
+	}
+
+	&__date {
+		font-size: 37px;
+		font-weight: 700;
+		line-height: 48px;
+		text-transform: uppercase;
+		margin-top: 20px;
+
+		@include breakpoint(large) {
+			font-size: 48px;
+			margin-top: 40px;
+		}
+	}
+
+	.swiper-button-prev,
+	.swiper-button-next {
+		top: 30%;
+		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2050%22%3E%3Cpolyline%20fill%3D%22none%22%20stroke%3D%22%23E30512%22%20stroke-width%3D%223%22%20points%3D%2217.266%2C48.223%203.206%2C25%2017.266%2C1.778%22%2F%3E%3C%2Fsvg%3E");
+
+		@include breakpoint(large) {
+			top: 50%;
+		}
+
+		&.swiper-button-disabled {
+			opacity: 1;
+			background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2050%22%3E%3Cpolyline%20fill%3D%22none%22%20stroke%3D%22%23D0D0D0%22%20stroke-width%3D%223%22%20points%3D%2217.266%2C48.223%203.206%2C25%2017.266%2C1.778%22%2F%3E%3C%2Fsvg%3E");
+		}
+	}
+
+	.swiper-button-prev {
+		display: none;
+		left: 20px;
+
+		@include breakpoint(small) {
+			display: block;
+		}
+
+		@include breakpoint(large) {
+			display: block;
+			left: auto;
+			right: calc(50% - ((5% + 27px) / 2));
+		}
+	}
+
+	.swiper-button-next {
+		display: none;
+		right: 20px;
+		transform: rotate(180deg);
+
+		@include breakpoint(small) {
+			display: block;
+		}
+
+		@include breakpoint(large) {
+			display: block;
+			right: calc((5% - 27px) / 2);
+		}
+	}
+
+	.swiper-pagination {
+		width: 100%;
+		position: relative;
+		right: 0;
+		left: auto;
+		margin: 20px 0;
+
+		@include breakpoint(large) {
+			position: absolute;
+			width: 50%;
+			bottom: 54px;
+			margin: 0;
+		}
+	}
+
+	.swiper-pagination-bullet {
+		width: 32px;
+		height: 3px;
+		background-color: #cfcfcf;
+		border-radius: 0;
+		opacity: 1;
+	}
+
+	.swiper-pagination-bullet-active {
+		background-color: #ef444a;
+	}
+}

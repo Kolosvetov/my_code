@@ -1,0 +1,118 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {{ title }}
+  {{ title_suffix }}
+
+  {% if header %}
+    <header>
+      {{ header }}
+    </header>
+  {% endif %}
+{% if title %}
+    <h3>{{ title }}</h3>
+{% endif %}
+{{claims_user_header()}}
+<div class="b-wrapper b-wrapper--blue-bordered">
+    <div class="b-top-tabs">
+        <a class="b-top-tabs__tab b-top-tabs__tab--active">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--claims">Обращения и претензии</span>
+        </a>
+        <a href="/about_distributor" class="b-top-tabs__tab">
+            <span class="b-top-tabs__tab-title b-top-tabs__tab-title--about">Описание сервиса</span>
+        </a>
+    </div>
+</div>
+<div class="b-middle">
+    <div class="b-middle-form">
+        <div class="b-row">
+            <div class="b-col6 new-customer-claim from-distributor">
+                <a href="{{ path('tarkett_structure.add_claim') }}" class="b-middle-form__new-claim c-button c-button_with_plus">
+                    <span class="text-desktop">Регистрация претензии покупателя</span><span class="text-mobile">Претензия покупателя</span>
+                </a>
+            </div>
+            <div class="b-col6 new-distributor-claim">
+                <a href="{{ path('tarkett_structure.add_claim_distributor_defect') }}" class="b-middle-form__new-claim b-middle-form__new-claim_left c-button c-button_with_plus">
+                    <span class="text-desktop">Новая претензия дистрибьютора</span><span class="text-mobile">Претензия дистрибьютора</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="b-claims">
+  {{ block_claims_list_tabs(view.id, view.display.display['id']) }}
+    <div class="b-claims-list js-claims-content" data-id="1">
+        <div class="b-filter">
+            <div class="b-filter__title">Поиск по параметрам
+                <div class="b-filter__toggle"></div>
+            </div>
+            <div class="b-filter-fields c-toggle">
+        {{ exposed }}
+            </div>
+        </div>
+{% if rows %}
+        <div class="b-claim-item b-claims-titles col-7">
+            <div class="b-claims-titles__title">
+                <span class="b-claims-title__id">&nbsp;</span>
+            </div>
+            <div class="b-claims-titles__title">
+                <span class="b-claims-title__id">ID:</span>
+            </div>
+            <div class="b-claims-titles__title">
+                <span class="b-claims-title__date">Дата:</span>
+            </div>
+            <div class="b-claims-titles__title">
+                Тип:
+            </div>
+            <div class="b-claims-titles__title">
+                Продукт/коллекция:
+            </div>
+            <div class="b-claims-titles__title">
+                Поступило от:
+            </div>
+            <div class="b-claims-titles__title">
+                Статус:
+            </div>
+        </div>
+  
+  {{ attachment_before }}
+
+  {{ rows }}
+  {{ empty }}
+  {{ pager }}
+
+  {{ attachment_after }}
+  {{ more }}
+{% else %}
+        <div class="b-claims-list_empty">Обращений и претензий нет.</div>
+{% endif %}
+    </div>
+</div>
+
+{# TODO: реализоваь добавление класса к body в зависимости от роли пользователя и убрать это #}
+<script>
+  $('body').addClass('c-seller');
+</script>

@@ -1,0 +1,224 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-wrapper {
+	@include grid-row();
+	&--blue-bordered {
+		background-color: #e2e2e2;
+		border-top: 1px solid #e1e1e1;
+	}
+	&--bordered {
+		border-bottom: 1px solid #000;
+		border-bottom: 1px solid $main-color;
+	}
+}
+
+.b-top {
+	@include grid-row();
+	padding: 70px 0 80px;
+	background-color: #f6f6f6;
+	&__title {
+		@include grid-column(10,0);
+		@include grid-column-offset(0);
+		@include grid-column-end();
+		color: $main-color;
+		font-size: 22px;
+		font-weight: 700;
+		line-height: 20px;
+		text-transform: uppercase;
+		padding-left: 80px;
+	}
+}
+
+.b-top-info {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0 80px;
+	float: left;
+	color: $main-color;
+	& > div {
+		float: left;
+		margin-top: 60px;
+		& > div {
+			margin-bottom: 30px;
+		}
+	}
+	&__left-part {
+		display: inline-block;
+		width: 40%;
+	}
+
+	&__name,
+	&__company_name,
+	&__address,
+	&__phone {
+		color: #284864;
+	}
+
+	&__name,
+	&__company_name {
+		width: 100%;
+		position: relative;
+		padding-left: 35px;
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 30px;
+		vertical-align: bottom;
+		&::before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 4px;
+			left: 0;
+			height: 24px;
+			width: 24px;
+
+			@include sprite($i-profile-small);
+		}
+	}
+
+	&__company_name {
+		&::before {
+			@include sprite($i-group);
+		}
+	}
+
+	&__logo {
+		display: inline-block;
+		width: 20%;
+		height: 125px;
+		background: url(~img/common/profile.png) 50% 50% no-repeat;
+	}
+	&__right-part {
+		display: inline-block;
+		width: 40%;
+		color: #0c2833;
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 30px;
+	}
+	&__mail {
+		position: relative;
+		padding-left: 45px;
+		&::before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 4px;
+			left: 0;
+			height: 24px;
+			width: 30px;
+
+			@include sprite($i-mail);
+		}
+	}
+	&__address {
+		position: relative;
+		padding-left: 45px;
+		&::before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 4px;
+			left: 0;
+			height: 19px;
+			width: 28px;
+
+			@include sprite($i-marker);
+		}
+	}
+	&__phone {
+		position: relative;
+		padding-left: 40px;
+		&::before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 4px;
+			left: 0;
+
+			@include sprite($i-phone);
+		}
+	}
+}
+
+.b-top-tabs {
+	@include grid-column(12,0);
+	&__tab {
+		flex-grow: 1;
+		float: left;
+		width: 50%;
+		padding: 40px;
+		border-color: #e1e1e1;
+		border-style: solid;
+		border-width: 0 0 0 1px;
+		&:last-of-type {
+			border-width: 0 1px;
+		}
+		&:hover {
+			.b-top-tabs__tab-title {
+				&--profile {
+					&::before {
+						@include sprite($i-profile-hover);
+					}
+				}
+				&--claims {
+					&::before {
+						@include sprite($i-bookmark-hover);
+					}
+				}
+				&--about {
+					&::before {
+						@include sprite($i-sheet-hover);
+					}
+				}
+				&--help {
+					&::before {
+						@include sprite($i-help-hover);
+					}
+				}
+			}
+		}
+		&--active {
+			background: #fff;
+		}
+	}
+	&__tab-title {
+		position: relative;
+		display: inline-block;
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 20px;
+		text-transform: uppercase;
+		padding-left: 40px;
+		&::before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: -5px;
+			left: 0;
+		}
+		&--profile {
+			&::before {
+				@include sprite($i-profile);
+			}
+		}
+		&--claims {
+			&::before {
+				@include sprite($i-bookmark);
+			}
+		}
+		&--about {
+			&::before {
+				@include sprite($i-sheet);
+			}
+
+		}
+		&--help {
+			&::before {
+				@include sprite($i-help);
+			}
+
+		}
+	}
+}

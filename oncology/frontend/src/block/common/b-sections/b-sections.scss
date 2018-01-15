@@ -1,0 +1,84 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-sections {
+	margin-top: 5.7em;
+	margin-bottom: 3.7em;
+	font-size: 0.9em;
+
+	&.inner-row {
+		margin: 60px 0 20px;
+
+		a {
+			font-size: 1em;
+			font-weight: normal;
+
+			&::before {
+				background-image: url(~img/common/i-orange-arrow-with-circle.png);
+				background-position: 0 0;
+				width: 25px;
+				height: 25px;
+			}
+		}
+
+		&.work {
+			margin: 0 0 20px;
+			border-bottom: 1px dashed $color-l-grey;
+
+			@include breakpoint(large) {
+				margin: 60px 0 20px;
+				border-bottom: 0;
+			}
+		}
+	}
+
+	a {
+		display: inline-block;
+		width: 100%;
+		color: $base-font-color;
+		margin-bottom: 3em;
+		font-size: 0.9em;
+		padding-left: 3em;
+		padding-right: 20px;
+		line-height: 2.4em;
+		position: relative;
+
+		&::before {
+			content: "";
+			display: inline-block;
+			position: absolute;
+			top: 0;
+			left: 0;
+
+			@include sprite($i-list-arrow);
+		}
+
+		span {
+			border-bottom: 2px solid $color-green-x-light;
+		}
+
+		&:hover {
+			span {
+				border-bottom: 2px solid rgba(0, 0, 0, 0);
+			}
+		}
+
+		@include breakpoint(small) {
+			width: 50%;
+			float: left;
+		}
+
+		@include breakpoint(large) {
+			width: 25%;
+			float: left;
+			font-weight: bold;
+			font-size: 1em;
+			line-height: 1.9em;
+			margin-bottom: 2em;
+		}
+
+		@include breakpoint(xxlarge) {
+			font-size: 1.2em;
+		}
+	}
+}

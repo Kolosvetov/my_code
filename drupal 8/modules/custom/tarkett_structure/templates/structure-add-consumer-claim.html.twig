@@ -1,0 +1,9 @@
+<div class="b-head">
+{% set eto_pokupatel = (user.roles.1 == 'pokupatel') or (user.roles.1 == '') %}
+	<div class="b-head__h1">{% if eto_pokupatel %}Новое обращение{% else %}Новая претензия{% endif %} покупателя</div>
+	<div class="b-head__description">Для оформления {% if eto_pokupatel %}вашего обращения{% else %}вашей претензии{% endif %}, пожалуйста, заполните поля ниже.<br />
+	Обратите внимание, что поля отмеченные звездочкой являются обязательными.<br />
+	Обращаем Ваше внимание, что оформление {% if eto_pokupatel %}обращения{% else %}претензии{% endif %} возможно только для каждой позиции вашей покупки(товарного чека) ОТДЕЛЬНО! 
+	</div>
+</div>
+{{claims_form('pokupatel')}}

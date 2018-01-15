@@ -1,0 +1,40 @@
+@import "~style";
+@import "~style/_sprite";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-filter {
+		width: 100%;
+		margin: $base-white-size 0 $mobile-border-margin;
+
+		&-fields {
+			width: 100%;
+			margin: 0 0 $base-white-size 0;
+			&:last-child:last-child {
+				float: none;
+			}
+
+			.form-item {
+				width: calc(#{$mobile-width} - #{$mobile-border-margin * 2});
+				&:not(.js-form-wrapper) {
+					width: 100% !important;
+					margin: 0;
+
+					&.form-item-field-claims-date-value-min,
+					&.form-item-field-claims-date-value-max {
+						width: 140px !important;
+						float: left !important;
+						clear: none !important;
+						margin: 0;
+
+						input {
+							width: 140px !important;
+						}
+					}
+					&.form-item-field-claims-date-value-min {
+						margin-right: 10px;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{{dump(result.result.processes)}}
+{#<input id="test">
+<script>
+$(function(){
+	$('#test').click(function(){
+		$.ajax({
+		  type: "POST",
+		  url: "https://195.75.72.138/api/is/contact/person/get",
+		  data: "contactUid=b789b729-dcd8-45d6-84ad-250c1922db47",
+		  success: function(msg){
+			console.debug(msg);
+		  }
+		});
+	});
+})
+</script>#}

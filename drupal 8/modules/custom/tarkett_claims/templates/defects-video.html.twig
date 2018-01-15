@@ -1,0 +1,26 @@
+<div class="video-description{% if embeded %} video-description_embeded{% endif %}">
+	Вы можете загрузить видеоматериал, поясняющий вашу проблему. Размер файла не должен превышать 20&nbsp;мегабайт.
+</div>
+<div id="retail-defects-form-wrapper"{% if embeded %} style="width:800px;padding:0;"{% endif %}>
+	<div id="place-for-forms">
+		<fieldset class="form-composite js-form-item form-item js-form-wrapper form-wrapper custom-form" data-drupal-selector="edit-video" id="edit-video--wrapper">
+			<div class="fieldset-wrapper">
+				<div class="b-video list" data-action="/" data-type="video">
+					<div class="b-video__item" style="display:none;" data-id="">
+						<div class="b-video__title">
+							<img src="/sites/default/files/images/files/tarkett-video.gif" width="140" height="112" border="0" alt="Видеоматериал" title="Видеоматериал">
+						</div>
+						<div class="b-video__delete"></div>
+						<div class="b-video__edit"></div>
+						<input type="file" style="display:none;" name="{{name}}">
+					</div>
+				</div>
+			</div>
+			<div class="label-fix">
+				<div class="dotted-btn add-video-btn">
+					<label>Загрузить видео</label>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>

@@ -1,0 +1,4 @@
+
+> tao-webpack@1.0.0 watch /var/www/tarkett/claims.tarkett.ru/www/sites/all/themes/claims/frontend
+> NODE_ENV=dev webpack --progress --colors --watch
+

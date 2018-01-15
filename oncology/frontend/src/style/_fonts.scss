@@ -1,0 +1,16 @@
+@include font-face("Open Sans", "~font/open_sans-normal", $file-formats: woff);
+@include font-face("Open Sans", "~font/normal-italic", 400, italic, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerBlack", 900, normal, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerRegular", normal, normal, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerLight", 300, normal, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerExtraBoldItalic", 800, italic, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerBlackItalic", 900, italic, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerBlackItalic", 900, italic, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerThinItalic", 100, italic, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerUltraLightItalic", 200, italic, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerMediumItalic", 500, italic, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerRegularItalic", normal, italic, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerRegularItalic", normal, italic, $file-formats: woff2 woff);
+@include font-face("Muller", "~font/muller/hinted-MullerBold", bold, normal, $file-formats: woff2 woff);
+@include font-face('Glyphicons Halflings', "~font/glyphicons/glyphicons-halflings-regular", bold, normal, $file-formats: woff2 woff);
+@include font-face("Univers", "~font/univers/hinted-UniversLTCYR39ThinUltraCn", normal, normal, $file-formats: woff2 woff);

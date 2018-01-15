@@ -1,0 +1,36 @@
+@import "~style";
+@import "~style/_sprite";
+
+.b-footer {
+	padding: 2em;
+	color: $color-white;
+	background-color: #317b56;
+
+	.light {
+		font-size: 0.8em;
+	}
+
+	@include breakpoint(xxlarge) {
+		padding: 30px 0 0;
+	}
+}
+
+.b-footer-words {
+	font-family: "Univers";
+	text-transform: uppercase;
+	letter-spacing: 4px;
+	margin: 0 auto;
+	opacity: 0.2;
+	font-size: 35px;
+	line-height: 1em;
+	text-align: center;
+
+	@include breakpoint(xlarge) {
+		font-size: 55px;
+	}
+
+	@include breakpoint(xxlarge) {
+		font-size: 72px;
+		line-height: 1.5em;
+	}
+}

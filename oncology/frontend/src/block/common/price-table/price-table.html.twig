@@ -1,0 +1,15 @@
+<div class="inner-row margin-40"><h2>Цены</h2></div>
+<div class="inner-row">
+	<table class="c-price">
+		<tr>
+			<th>Наименование услуги</th>
+			<th>цена (руб.)</th>
+		</tr>
+		{% for price in priceList %}
+			<tr>
+				<td>{{ price.title() }}</td>
+				<td>{{ price.sum }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>

@@ -1,0 +1,260 @@
+@import "~style";
+
+.b-news {
+	@include grid-column(12, 0);
+	@include grid-column-end;
+
+	@include breakpoint(medium) {
+		h2.big {
+			margin-top: 40px;
+		}
+	}
+
+	.tao-list-news {
+		margin-top: 28px !important;
+	}
+
+	&__row > div {
+		@include flex-grid-row(null,100%,null);
+
+		margin: 0 20px;
+		justify-content: flex-start;
+
+		@include breakpoint(large) {
+			margin: 0 grid-column(2);
+		}
+	}
+
+	&__item {
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+		height: 100%;
+
+		&:hover {
+			a {
+				color: #e30512;
+			}
+		}
+	}
+
+	&__column {
+		@include flex-grid-column(12, 0);
+
+		box-sizing: border-box;
+		padding: 10px;
+		align-items: stretch;
+
+		@include breakpoint(medium) {
+			@include flex-grid-column(6, 20%);
+		}
+	}
+
+	&__ajax-button {
+		width: 100%;
+		float: left;
+		margin-top: 40px;
+
+		& > a {
+			width: 190px;
+			height: 42px;
+			display: block;
+			margin: 0 auto;
+			border: 1px solid red;
+			border-radius: 3px;
+			text-align: center;
+			color: #e30512;
+			font-size: 18px;
+			font-weight: 100;
+			line-height: 22px;
+			text-decoration: none;
+			box-sizing: border-box;
+			padding-top: 9px;
+			transition: background-color 0.2s ease-out 0s;
+
+			&:hover {
+				background-color: #e30512;
+				color: #fff;
+				font-weight: 400;
+			}
+		}
+	}
+
+	&__image {
+		width: 100%;
+
+		/* height: 305px; */
+		background-color: #ccc;
+
+		img {
+			display: block;
+		}
+	}
+
+	&__descr {
+		@include flex-grid-row(null,100%,null);
+
+		padding: 30px 20px;
+	}
+
+	&__date {
+		@include flex-grid-column(3, 0);
+
+		color: #e30512;
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 32px;
+		text-transform: uppercase;
+
+		@include breakpoint(xlarge) {
+			@include flex-grid-column(2, 0);
+
+			font-size: 24px;
+		}
+	}
+
+	&__title {
+		@include flex-grid-column(9, 0);
+
+		font-size: 18px;
+		font-weight: 100;
+		line-height: 150%;
+		color: black;
+		text-decoration: none;
+
+		@include breakpoint(xlarge) {
+			@include flex-grid-column(10, 0);
+
+			font-size: 24px;
+		}
+	}
+}
+
+.b-news-full {
+	&__date {
+		color: #e30512;
+	}
+
+	&__navigation {
+		@include grid-column(12, 0);
+		@include grid-column-end;
+
+		display: flex;
+	}
+
+	&__navigation-block {
+		@include grid-column(12, 0);
+		@include grid-column-end;
+
+		min-height: 1px;
+		box-sizing: border-box;
+		position: relative;
+		margin-top: 60px;
+		display: none;
+
+		&.all {
+			display: flex;
+			justify-items: flex-end;
+			justify-content: center;
+			flex-wrap: wrap;
+			align-items: end;
+
+			a {
+				font-size: 18px;
+				font-weight: 100;
+				line-height: 150%;
+				color: black !important;
+				text-decoration: none !important;
+			}
+		}
+
+		&:hover {
+			a {
+				color: #e30512 !important;
+			}
+		}
+
+		&.prev,
+		&.next {
+			cursor: pointer;
+
+			&::before {
+				content: "";
+				background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2050%22%3E%3Cpolyline%20fill%3D%22none%22%20stroke%3D%22%23E30512%22%20stroke-width%3D%223%22%20points%3D%2217.266%2C48.223%203.206%2C25%2017.266%2C1.778%22%2F%3E%3C%2Fsvg%3E");
+				background-size: cover;
+				background-repeat: no-repeat;
+				position: absolute;
+				width: 16px;
+				height: 40px;
+				top: calc((100% - 40px) / 2);
+			}
+		}
+
+		&.prev {
+			padding-left: 60px;
+
+			&::before {
+				left: 0;
+			}
+		}
+
+		&.next {
+			padding-right: 60px;
+			text-align: right;
+
+			&::before {
+				right: 0;
+				transform: rotate(180deg);
+			}
+		}
+
+		@include breakpoint(large) {
+			@include grid-column(4, 0);
+			@include grid-column-end;
+
+			display: block;
+		}
+	}
+
+	&__nav-date {
+		color: #e30512;
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 32px;
+		text-transform: uppercase;
+	}
+
+	&__nav-title {
+		font-size: 18px;
+		font-weight: 100;
+		line-height: 150%;
+		color: black !important;
+		text-decoration: none !important;
+	}
+
+	&__text {
+		line-height: 24px;
+	}
+
+	h1.big {
+		font-size: 24px;
+		-moz-hyphens: auto;
+		-webkit-hyphens: auto;
+		-ms-hyphens: auto;
+
+		@include breakpoint(xlarge) {
+			font-size: 48px;
+			-moz-hyphens: none;
+			-webkit-hyphens: none;
+			-ms-hyphens: none;
+		}
+	}
+}
+
+.news-selector {
+	float: left;
+	width: 100%;
+
+	@include breakpoint(xlarge) {
+		margin-top: 200px;
+	}
+}

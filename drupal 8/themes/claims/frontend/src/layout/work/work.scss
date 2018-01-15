@@ -1,0 +1,12 @@
+@import "~style";
+@import "~normalize-scss/sass/normalize";
+@import "~foundation-sites/scss/foundation";
+
+/* doiuse-disable */
+@include normalize();
+@include foundation-global-styles;
+@include foundation-typography;
+
+/* doiuse-enable */
+@import "content";
+@import "layout";

@@ -1,0 +1,119 @@
+@import "~style";
+
+.b-vote {
+	&__count {
+		color: #010101;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 16px;
+		display: table-cell;
+		height: 18px;
+		box-sizing: border-box;
+		vertical-align: middle;
+	}
+
+	&__button {
+		font-size: 12px;
+		font-weight: 300;
+		line-height: 16px;
+		display: table-cell;
+		height: 18px;
+		box-sizing: border-box;
+		vertical-align: middle;
+
+		& > button {
+			width: 19px;
+			height: 19px;
+			float: left;
+			background: url(~img/common/star.svg) 0 0 no-repeat;
+			background-size: cover;
+			border: none;
+			margin: 2px 9px 2px 19px;
+			transition: all 0.2s ease-out 0s;
+		}
+
+		span {
+			padding-top: 2px;
+		}
+	}
+
+	&:not(.disabled):not(.voted) {
+		.b-vote__button {
+			&:hover {
+				color: #e30416;
+				cursor: pointer;
+
+				& > button {
+					width: 23px;
+					height: 23px;
+					margin: 0 7px 0 17px;
+				}
+			}
+		}
+	}
+
+	&.disabled:not(.voted) {
+		.b-vote__button {
+			color: #cfcfcf;
+		}
+	}
+
+	&.voted {
+		.b-vote__count {
+			font-weight: 700;
+		}
+
+		.b-vote__button {
+			color: #cfcfcf;
+
+			& > button {
+				background: url(~img/common/star-current.png) 0 0 no-repeat;
+			}
+		}
+
+		.voted {
+			display: inline-block;
+		}
+
+		.no-voted {
+			display: none;
+		}
+	}
+
+	.voted {
+		display: none;
+	}
+
+	.no-voted {
+		display: inline-block;
+	}
+}
+
+.b-vote-popup {
+	&__count,
+	&__button {
+		display: inline-block;
+	}
+
+	&__count {
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 32px;
+	}
+
+	&__button {
+		& > button {
+			cursor: pointer;
+			height: 42px;
+			background: url(~img/common/fat-star.png) #ff9e00 21px center no-repeat;
+			border-radius: 2px;
+			box-sizing: border-box;
+			text-align: left;
+			padding-left: 55px;
+			padding-right: 21px;
+			border: none;
+			color: #fff;
+			margin-left: 15px;
+		}
+	}
+}

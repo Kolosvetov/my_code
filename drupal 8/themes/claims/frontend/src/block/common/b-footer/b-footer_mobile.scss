@@ -1,0 +1,22 @@
+@import "~style";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-footer {
+		width: $mobile-width;
+		margin: 0;
+		padding: $mobile-border-margin;
+		&__section {
+			width: 49% !important;
+			&:first-child {
+				margin: 0;
+			}
+			&.msg {
+				display: none;
+			}
+		}
+	}
+
+	a.b-footer__section {
+		text-align: right;
+	}
+}

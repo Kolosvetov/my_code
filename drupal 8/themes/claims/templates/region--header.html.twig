@@ -1,0 +1,23 @@
+<div class="b-header">
+	<div class="b-header__section">
+		&nbsp;
+	</div>
+	<a class="b-header__section b-logo" href="/"></a>
+	<div class="b-header__section b-nav">
+{% if user.roles.0 == "anonymous" %}
+		<a href="http://www.tarkett.ru/#register" class="c-user-page"><span>Зарегистрироваться</span></a>
+{% else %}
+		<a href="/user/logout" class="c-user-page-exit"><span>Выйти</span></a>
+		<a href="http://www.tarkett.ru/profile/" class="c-user-page"><span>{{ user_mail() }}</span></a>
+{% endif %}
+	</div>
+	<div class="b-header__section b-nav_mobile"><div class="b-nav_mobile__close" style="display:none;">&times;</div><div class="b-nav_mobile__burger"></div></div>
+	<div class="b-header__section b-nav_mobile__menu">
+{% if user.roles.0 == "anonymous" %}
+		<a href="http://www.tarkett.ru/#register" class="c-user-page"><span>Зарегистрироваться</span></a>
+{% else %}
+		<a href="http://www.tarkett.ru/profile/" class="c-user-page"><span>{{ user_mail() }}</span></a>
+		<a href="/user/logout" class="c-user-page-exit"><span>Выйти</span></a>
+{% endif %}
+	</div>
+</div>

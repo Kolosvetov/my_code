@@ -1,0 +1,429 @@
+/* stylelint-disable block-no-empty  */
+
+html,
+body {
+	color: $base-font-color;
+	font-family: $base-font-family;
+	max-width: 1600px;
+	font-size: $base-font;
+	font-weight: 400;
+	line-height: 16px;
+	margin: 0 auto;
+	-moz-hyphens: auto;
+	-webkit-hyphens: auto;
+	-ms-hyphens: auto;
+
+	@include breakpoint(large) {
+		-moz-hyphens: none;
+		-webkit-hyphens: none;
+		-ms-hyphens: none;
+	}
+}
+
+h1 {
+	font-family: $base-font-family;
+}
+
+h2 {
+	font-size: 1.8em;
+	line-height: 1em;
+	font-family: $base-font-family;
+	font-weight: 900;
+	margin-bottom: 1em;
+
+	@include breakpoint(medium) {
+		font-size: 2.5em;
+		margin-bottom: 0;
+	}
+
+	@include breakpoint(xxlarge) {
+		font-size: 2.5em;
+		margin-bottom: 0;
+	}
+}
+
+.reveal-overlay {
+	-moz-hyphens: none;
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+}
+
+a:hover,
+a:focus {
+	color: inherit;
+}
+
+.margin-70 {
+	margin-bottom: 70px !important;
+}
+
+.color-black {
+	color: $color-black;
+}
+
+.color-grey {
+	color: $color-d-grey;
+}
+
+.color-05 {
+	opacity: 0.5;
+}
+
+.fs-24 {
+	font-size: 24px !important;
+}
+
+a.marked {
+	font-size: 20px;
+	text-decoration: none;
+	line-height: 1.2em;
+	font-weight: 900;
+	color: $base-font-color;
+
+	& > span {
+		border-bottom: 2px solid $color-green-x-light;
+	}
+
+	&:hover {
+		& > span {
+			border-bottom: 2px solid $color-orange;
+		}
+	}
+}
+
+h3 {
+	font-size: 1.5em;
+	line-height: 1em;
+	font-family: $base-font-family;
+	font-weight: 900;
+}
+
+img {
+	vertical-align: top;
+}
+
+p {
+	line-height: 1.4em;
+
+	&.grey {
+		color: $color-l-grey;
+	}
+
+	&.big {
+		font-size: 1.3em;
+		font-weight: 300;
+		line-height: 1.2em;
+		margin-bottom: 30px;
+	}
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+ul:not(.list-unstyled) {
+	padding: 0;
+	margin: 0;
+
+	li {
+		padding-left: 35px;
+		margin-bottom: 20px;
+		line-height: 1.4em;
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			display: inline-block;
+			left: 10px;
+			font-size: 45px;
+			line-height: 0.4em;
+			width: 17px;
+			height: 13px;
+			background: url(~img/common/bullet.png) 0 0 no-repeat;
+			color: $color-green-light;
+		}
+	}
+}
+
+ol {
+	margin: 0;
+	list-style-position: inside;
+	counter-reset: item;
+
+	li {
+		padding-left: 35px;
+		margin-bottom: 20px;
+		line-height: 1.4em;
+		position: relative;
+
+		&::before {
+			content: counter(item) ". ";
+			counter-increment: item;
+			position: absolute;
+			top: 0;
+			left: 20px;
+			color: $color-green-light;
+		}
+	}
+}
+
+select {
+	@include grid-column(12, 0);
+	@include grid-column-offset(0);
+
+	border: none;
+	border-radius: 3px;
+	height: auto;
+	font-size: 0.9em;
+	background-image: url('~img/common/i-clock.png');
+	background-repeat: no-repeat;
+	background-position: left -30px center !important;
+	background-size: auto;
+	padding: 0.8em 1.8em 0.9em 50px;
+
+	@include breakpoint(medium) {
+		@include grid-column(6, 0);
+		@include grid-column-offset(1);
+
+		padding: 0.8em 1.8em 0.9em 50px;
+	}
+
+	@include breakpoint(large) {
+		@include grid-column(3, 0);
+		@include grid-column-offset(1);
+
+		padding: 0.8em 1.8em 0.9em 50px;
+	}
+
+	option {
+		color: #d8d8d8;
+
+		&:checked {
+			color: $color-black;
+		}
+	}
+}
+
+input[type="tel"],
+input[type="text"],
+textarea {
+	@include grid-column(12, 0);
+
+	box-sizing: border-box;
+	border: none;
+	border-radius: 3px;
+	font-size: 0.9em;
+	padding: 0.9em 1.8em;
+
+	&.date,
+	&.time,
+	&.date-time {
+		@include grid-column(12, 0);
+
+		background-image: url('~img/common/i-calendar.png');
+		background-repeat: no-repeat;
+		background-position: 15px center;
+		padding-left: 50px;
+
+		@include breakpoint(medium) {
+			@include grid-column(5, 0);
+
+			margin-right: 0;
+			padding-left: 50px;
+		}
+
+		@include breakpoint(large) {
+			@include grid-column(4, 0);
+
+			padding-left: 50px;
+		}
+	}
+
+	&.email,
+	&.phone {
+		@include breakpoint(medium) {
+			@include grid-column(5, 0);
+		}
+	}
+
+	&.time {
+		background-image: url('~img/common/i-clock.png');
+	}
+
+	&:hover {
+		box-shadow: 0 3px 11px rgba(0, 0, 0, 0.3);
+	}
+
+	@include breakpoint(large) {
+		max-width: 605px;
+		width: auto;
+		float: left;
+	}
+}
+
+textarea {
+	height: 230px;
+}
+
+table:not(.table-condensed):not(.unstylished) {
+	width: 100%;
+	border-spacing: 0;
+
+	tr {
+		th {
+			text-align: left;
+			padding: 20px 0;
+			font-size: 16px;
+			font-weight: 400;
+			color: $color-l-grey;
+			text-transform: uppercase;
+			letter-spacing: 3px;
+		}
+
+		td {
+			padding: 20px;
+			border-bottom: 1px dashed $color-grey;
+
+			&:nth-child(1) {
+				border-left: 3px solid $color-white;
+			}
+		}
+
+		&:nth-child(1) {
+			&:hover {
+				th {
+					background-color: $color-white;
+				}
+			}
+		}
+
+		&:last-child {
+			td {
+				border-bottom: 1px dashed $color-white;
+			}
+		}
+
+		&:hover {
+			background-color: #e7f6e5;
+
+			td {
+				&:nth-child(1) {
+					border-left: 3px solid $color-green-middle;
+				}
+
+				&:nth-child(2) {
+					color: $color-green-middle;
+				}
+			}
+		}
+	}
+
+	&.c-price {
+		tr {
+			display: flex;
+			flex-direction: column;
+
+			& > td {
+				@include breakpoint(xsmall down) {
+					border-left: 3px solid $color-white;
+
+					&:first-child {
+						border-bottom: 0;
+						padding-bottom: 0;
+					}
+				}
+
+				@include breakpoint(small) {
+					&:first-child {
+						padding-left: 0;
+						text-align: right;
+						width: 50%;
+					}
+				}
+
+				@include breakpoint(medium) {
+					&:first-child {
+						padding-left: 20px;
+						text-align: left;
+						width: auto;
+					}
+
+					&:last-child {
+						width: 20%;
+					}
+				}
+
+				&:last-child {
+					font-weight: bold;
+				}
+			}
+
+			@include breakpoint(xsmall down) {
+				&:hover {
+					& > td {
+						border-left: 3px solid $color-green-middle;
+					}
+				}
+			}
+
+			&:first-child {
+				display: none;
+
+				@include breakpoint(medium) {
+					display: table-row;
+				}
+			}
+
+			@include breakpoint(small) {
+				display: table-row;
+			}
+		}
+	}
+}
+
+.center {
+	text-align: center;
+}
+
+.c-content {
+	font-family: "Open Sans", serif;
+	font-size: 16px;
+	color: $main-color;
+
+	p {
+	}
+
+	b,
+	strong {
+	}
+
+	h1 {
+	}
+
+	h2 {
+	}
+
+	h3 {
+	}
+
+	ul {
+		list-style: none;
+		margin-left: 0;
+		padding: 0 0 25px 50px;
+
+		> li::before {
+			display: inline-block;
+			padding: 5px 0;
+			content: "\2014";
+			width: 1.3em;
+			margin-left: -1.2em;
+		}
+	}
+}
+
+.b-strong-text {
+	font-size: 20px;
+}

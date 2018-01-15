@@ -1,0 +1,326 @@
+@import "~style";
+@import "~style/sprite";
+
+.b-our-specialists-content,
+.b-our-specialists,
+.b-our-specialists-full {
+	&__all {
+		font-weight: 400 !important;
+		position: relative;
+		float: left;
+
+		&::after {
+			position: absolute;
+			right: -15px;
+			top: -15px;
+			color: $color-orange;
+			font-size: 0.7em;
+			content: attr(data-count);
+		}
+
+		&:hover {
+			text-decoration: none;
+		}
+
+		@include breakpoint(medium) {
+			line-height: 2em !important;
+			margin-left: 20px;
+		}
+	}
+
+	&__extra {
+		position: absolute;
+		width: 100%;
+		height: 125px;
+		overflow: hidden;
+		bottom: 0;
+		left: 0;
+
+		@include breakpoint(large) {
+			width: calc(100% - 20px);
+			height: 42px;
+		}
+	}
+
+	&__place {
+		color: $color-l-grey;
+		font-size: 14px;
+		width: 100%;
+		height: 80px;
+
+		&::before {
+			content: "";
+			width: 100%;
+			height: 30px;
+			background: url(~img/common/i-orange-marker.png) center 0 no-repeat;
+			background-size: contain;
+			position: static;
+			display: inline-block;
+			left: 0;
+			top: 0;
+
+			@include breakpoint(medium) {
+				width: 21px;
+				position: absolute;
+				background-position: 0 0;
+			}
+		}
+
+		@include breakpoint(medium) {
+			padding-left: 40px;
+		}
+
+		@include breakpoint(large) {
+			height: 100px;
+		}
+	}
+
+	&__descr {
+		line-height: 22px;
+	}
+
+	a:not(.button) {
+		font-size: 20px;
+		text-decoration: none;
+		line-height: 1.5em;
+		font-weight: 900;
+		color: $base-font-color;
+
+		& > span {
+			border-bottom: 2px solid $color-green-x-light;
+		}
+
+		&:hover {
+			& > span {
+				border-bottom: 2px solid $color-orange;
+			}
+		}
+	}
+}
+
+.b-our-specialists-content,
+.b-our-specialists-full {
+	&__item {
+		float: left;
+		padding-bottom: 150px;
+		position: relative;
+		margin-bottom: 70px;
+		text-align: center;
+
+		@include grid-column(12, 0);
+
+		& > * {
+			display: block;
+
+			&:first-child {
+				margin-bottom: 1em;
+			}
+
+			&:nth-child(2) {
+				margin-bottom: 0.5em;
+			}
+		}
+
+		@include breakpoint(medium) {
+			text-align: left;
+			padding-right: 20px !important;
+		}
+
+		@include breakpoint(large) {
+			padding-bottom: 56px;
+		}
+	}
+
+	&__list {
+		float: left;
+		width: 100%;
+		display: flex;
+		align-items: stretch;
+		flex-wrap: wrap;
+	}
+}
+
+.b-our-specialists {
+	padding: 4em 0;
+
+	&__list {
+		width: 100%;
+		margin: 3em 0;
+		float: left;
+	}
+
+	&__item {
+		width: 100%;
+		float: left;
+		box-sizing: border-box;
+		padding: 0 1em;
+		margin-bottom: 4em;
+
+		& > * {
+			display: block;
+			width: 100%;
+			text-align: center;
+
+			&:first-child {
+				margin-bottom: 1em;
+			}
+
+			&:nth-child(2) {
+				margin-bottom: 0.5em;
+			}
+		}
+
+		@include breakpoint(medium) {
+			width: 50%;
+		}
+
+		@include breakpoint(large) {
+			width: 25%;
+			margin-bottom: 0;
+		}
+	}
+
+	h2 {
+		float: left;
+
+		&:nth-child(1) {
+			width: auto;
+		}
+	}
+}
+
+.b-our-specialists-content {
+	width: 100%;
+	float: left;
+	padding-bottom: 40px;
+	border-bottom: 1px dashed $color-l-grey;
+
+	&__text {
+		width: 100%;
+		float: left;
+
+		@include breakpoint(large) {
+			margin-left: -250px;
+			width: 230px;
+		}
+	}
+
+	&__item {
+		@include breakpoint(medium) {
+			@include grid-column(6, 0);
+		}
+
+		@include breakpoint(large) {
+			@include grid-column(4, 0);
+		}
+	}
+
+	&__all {
+		margin-left: 0 !important;
+		margin-bottom: 30px;
+
+		@include breakpoint(large) {
+			margin-bottom: 0;
+		}
+	}
+
+	&__button-more {
+		text-align: center;
+	}
+
+	&__show-more {
+		color: $color-black;
+		font-size: 18px;
+		text-transform: uppercase;
+		font-weight: 400;
+		text-decoration: none !important;
+		border-bottom: 1px dashed $color-green-x-light;
+		position: relative;
+		float: left;
+
+		&::after {
+			content: "";
+			position: absolute;
+			top: calc(100% / 2);
+			right: -18px;
+
+			@include sprite($i-small-orange-arrow-down);
+		}
+
+		& > span {
+			font-weight: 400;
+		}
+	}
+
+	@include breakpoint(large) {
+		padding-left: 250px;
+	}
+}
+
+.b-our-specialists-full {
+	margin-top: 81px;
+
+	@include breakpoint(large) {
+		&__list {
+			width: calc(100% + 60px);
+			margin-left: -30px;
+		}
+	}
+
+	&__item {
+		padding-bottom: 70px;
+		padding-top: 30px;
+		margin-bottom: 40px;
+		position: relative;
+
+		@include breakpoint(medium) {
+			@include grid-column(6, 0);
+		}
+
+		@include breakpoint(large) {
+			@include grid-column(3, 60);
+
+			padding-right: 30px !important;
+		}
+
+		@include breakpoint(large) {
+			&:hover {
+				background: url(~img/common/frame-doctor-hover.png) 0 0 no-repeat;
+				background-size: 100% 100%;
+
+				a {
+					&.b-our-specialists-full__add-review {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+
+	&__extra {
+		width: 100%;
+		height: auto;
+		bottom: 20px;
+
+		@include breakpoint(large) {
+			left: 30px;
+			width: calc(100% - 50px);
+		}
+	}
+
+	a {
+		&.b-our-specialists-full__add-review {
+			@include breakpoint(large) {
+				display: none;
+			}
+
+			display: inline-block;
+			font-weight: normal;
+			font-size: 1em;
+			padding-left: 40px;
+			height: 24px;
+			margin-top: 24px;
+			background: url(~img/common/i-doctor-review.png) 0 0 no-repeat;
+		}
+	}
+}

@@ -1,0 +1,382 @@
+@import "~style";
+@import "~style/_sprite";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	input[type="text"],
+	input[type="password"],
+	textarea,
+	.label-fix,
+	.form-select,
+	.form-select .cs-placeholder {
+		width: 100%;
+	}
+
+	input[type="file"] {
+		display: none;
+	}
+
+	input#edit-send {
+		margin-right: 0;
+	}
+
+	.label-fix {
+		margin-bottom: 26px;
+	}
+
+	.b-steps-panel,
+	.next-step-block:not([id="edit-next-step-block-4"]) {
+		display: none;
+	}
+
+	.b-step,
+	.next-step-block[id="edit-next-step-block-4"] {
+		display: block !important;
+	}
+
+	.c-button {
+		padding-right: 20px;
+		padding-left: 20px;
+
+		&_with_plus {
+			padding-right: 0;
+			padding-left: 50px;
+
+			&::before {
+				left: 25px;
+			}
+		}
+	}
+
+	body {
+		textarea,
+		textarea.col-10 {
+			width: 100% !important;
+		}
+
+		.form-item {
+			width: $mobile-width;
+
+			&.js-form-type-file,
+			.dotted-btn {
+				label {
+					display: block;
+					width: 100%;
+					float: none;
+
+					&::before {
+						left: 37px;
+					}
+				}
+			}
+
+			.dotted-btn {
+				width: 100%;
+				position: static;
+			}
+		}
+	}
+
+	.form-item:not(.js-form-wrapper) {
+		width: calc(#{$mobile-width} - #{$mobile-border-margin * 2}) !important;
+		margin: 0 $mobile-border-margin;
+	}
+
+	// .form-item.js-form-wrapper:not(.with-radios) .form-item:not(.js-form-wrapper) {
+	.form-item:not(.js-form-wrapper) {
+		float: none !important;
+		clear: both;
+
+		& > label {
+			display: inline-block;
+			position: static;
+			width: 100%;
+			margin: $mobile-border-margin 0;
+			text-align: left;
+
+			br {
+				display: none;
+			}
+		}
+	}
+
+	#views-exposed-form-pokupatel-spisok-obrasenii-in-work {
+		margin-bottom: $mobile-border-margin;
+
+		.form-item:not(.js-form-wrapper) {
+			margin: 0;
+		}
+	}
+
+	.form-select {
+		font-size: 14px;
+
+		&_wide {
+			font-size: 13px;
+		}
+	}
+
+	.merge-fields {
+		.form-item:not(.js-form-wrapper):last-child {
+			bottom: 0;
+			left: calc(#{$mobile-width} - 90px - #{$mobile-border-margin});
+			width: 90px !important;
+			margin: 0;
+		}
+		.form-item:not(.js-form-wrapper) {
+			&.form-item-product-count-all-ez,
+			&.form-item-product-count-bad-ez,
+			&.form-item-ez {
+				.form-select,
+				.form-select .cs-placeholder {
+					width: 90px !important;
+				}
+			}
+		}
+	}
+
+	#retail-defects-form-wrapper {
+		padding: 0;
+		margin: 0;
+	}
+
+	#edit-product-info .fieldset-wrapper {
+		@include flex;
+		@include flex-direction(column);
+
+		.js-form-item-product-cat {
+			@include flex-order(0);
+		}
+
+		#product-collection {
+			@include flex-order(1);
+		}
+
+		.js-form-item-product-state {
+			@include flex-order(2);
+		}
+
+		#edit-product-count-all-fs {
+			@include flex-order(3);
+		}
+
+		#edit-product-price-fs {
+			@include flex-order(4);
+		}
+
+		#edit-product-count-bad-fs {
+			@include flex-order(5);
+		}
+	}
+
+	#edit-product-defects-photo--wrapper,
+	#edit-product-defects-photo-one--wrapper {
+		width: calc(#{$mobile-width} - #{$mobile-border-margin * 2});
+		margin: 0 $mobile-border-margin $base-white-size;
+	}
+	#edit-product-defects-photo--wrapper {
+		legend,
+		.fieldset-description,
+		.fieldset-wrapper {
+			width: calc(#{$mobile-width} - #{$mobile-border-margin * 2}) !important;
+		}
+
+		.fieldset-description {
+			font-size: 14px;
+		}
+
+		.label-fix {
+			margin-bottom: 0;
+		}
+	}
+	#edit-product-defects-photo-one--wrapper .fieldset-wrapper {
+		@include clearfix;
+		width: 100% !important;
+		margin: 0 !important;
+	}
+
+	#edit-step-3 {
+		textarea#edit-requirement {
+			width: 100%;
+		}
+	}
+
+	#edit-defect-list-photos .fieldset-wrapper,
+	#edit-defect-list-fields .fieldset-wrapper,
+	#edit-pretenzia-photos-description .fieldset-wrapper {
+		padding: 34px $mobile-border-margin;
+	}
+
+	#edit-distributor-consumer-info-2 .fieldset-wrapper {
+		@include clearfix;
+		padding-bottom: 0;
+	}
+
+	#edit-invoices-fieldset .fieldset-wrapper,
+	#edit-add-invoices-fieldset .fieldset-wrapper,
+	#edit-formsdefectslist-fieldset .fieldset-wrapper,
+	#edit-add-defect-fieldset .fieldset-wrapper {
+		width: calc(#{$mobile-width} - #{$mobile-border-margin * 2}) !important;
+		margin: 0 $mobile-border-margin !important;
+	}
+
+	#edit-invoices-fieldset .fieldset-wrapper,
+	#edit-formsdefectslist-fieldset .fieldset-wrapper {
+		border-bottom: #e3e7ea solid 2px;
+		padding: 0;
+	}
+
+	#edit-add-invoices-fieldset .fieldset-wrapper,
+	#edit-add-defect-fieldset .fieldset-wrapper {
+		padding-top: $mobile-border-margin;
+	}
+
+	#edit-invoices-fieldset,
+	#edit-formsdefectslist-fieldset {
+		&.table {
+			display: block;
+
+			& > div {
+				display: block;
+				position: relative;
+
+				& > div {
+					display: block;
+					width: 100% !important;
+					margin: 0;
+					padding: 0;
+
+					&.del-link-container {
+						max-width: 100% !important;
+						width: 100% !important;
+						padding: $mobile-border-margin 0;
+						text-align: right;
+
+						.del_form_line {
+							position: static;
+						}
+					}
+				}
+			}
+
+			&.clone {
+				label {
+					display: block !important;
+				}
+			}
+		}
+	}
+
+	.distributor_invoices,
+	.field_products_with_defects {
+		.form-item:not(.js-form-wrapper) {
+			label {
+				font-weight: normal;
+			}
+		}
+
+		.defect-line {
+			.form-item:not(.js-form-wrapper) {
+				width: 100% !important;
+				margin: 0;
+			}
+
+			&.merge-fields {
+				.form-item:not(.js-form-wrapper):last-child {
+					width: 90px !important;
+					left: calc(100% - 90px);
+				}
+
+				.number {
+					width: calc(100% - 90px) !important;
+				}
+			}
+		}
+	}
+
+	#edit-agrer-to-process-info {
+		margin-bottom: $base-white-size !important;
+
+		.fieldset-wrapper {
+			padding: 0;
+		}
+	}
+
+	.switcher {
+		padding: 0;
+
+		&:last-child:last-child {
+			float: none;
+		}
+
+		.fieldset-wrapper {
+			width: 60px !important;
+			margin: 0 auto !important;
+
+			#edit-d-can-show {
+				width: 60px !important;
+				margin: 0;
+
+				.form-item:not(.js-form-wrapper) {
+					width: calc(160px - #{$mobile-border-margin}) !important;
+					margin: 0 !important;
+					float: left !important;
+					clear: none;
+
+					label {
+						position: absolute;
+						width: 180px !important;
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
+
+	.c-padding-wrapper {
+		margin-bottom: 26px;
+	}
+
+	.photo-preview {
+		width: 100%;
+	}
+
+	.no-field {
+		display: none;
+	}
+
+	.role--magazin {
+		.views-exposed-form {
+			.form-actions {
+				width: calc(#{$mobile-width} - #{$mobile-border-margin * 2});
+				text-align: center;
+
+				.c-button {
+					&:first-child {
+						margin-left: 0 !important;
+					}
+
+					&:last-child {
+						margin-left: $mobile-border-margin * 2 !important;
+					}
+				}
+			}
+		}
+	}
+
+	.role--pokupatel {
+		.views-exposed-form {
+			.form-item:not(.js-form-wrapper) {
+				width: 100% !important;
+			}
+		}
+	}
+
+	.form-item > a.del_defect_line {
+		top: 14px;
+		right: 0;
+	}
+
+	.video-description_embeded {
+		width: 100%;
+	}
+}

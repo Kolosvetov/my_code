@@ -1,0 +1,159 @@
+@import "~style";
+
+.b-defect-list {
+	font-size: 16px;
+	font-weight: 400;
+
+	@include grid-column(10, 0);
+	&__main-title {
+		font-size: 20px;
+		font-weight: 700;
+		text-align: center;
+		margin-bottom: 12px;
+	}
+	&__item {
+		box-sizing: border-box;
+		padding: 12px;
+		position: relative;
+		border: 1px solid $main-border-color;
+		float: left;
+		width: 200px;
+		height: 136px;
+		overflow: hidden;
+		margin: 5px 0;
+		margin-left: 10px;
+		&:nth-child(4n + 2) {
+			margin-left: 0;
+		}
+		> div {
+			display: inline-block;
+		}
+		&.clone {
+			display: none;
+		}
+	}
+	&__title {
+		img {
+			width: 140px;
+			height: 112px;
+		}
+	}
+	&__id {
+		color: #878787;
+		margin-right: 10px;
+	}
+	&__edit,
+	&__delete {
+		width: 28px;
+		height: 28px;
+		cursor: pointer;
+		position: absolute;
+		right: 8px;
+	}
+	&__edit {
+		background: url(~img/sprite/png/i-edit.png) 0 0;
+		top: 52px;
+		&:hover,
+		&:focus {
+			background-image: url(~img/sprite/png/i-edit-active.png);
+		}
+	}
+	&__delete {
+		background: url(~img/sprite/png/i-trash.png) 0 0;
+		top: 12px;
+		&:hover,
+		&:focus {
+			background-image: url(~img/sprite/png/i-trash-active.png);
+		}
+	}
+}
+
+.b-defect-type-list {
+	margin-top: 40px;
+
+	@include grid-column(10, 0);
+	@include grid-column-end();
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	li {
+		font-size: 16px;
+		font-weight: 400;
+		position: relative;
+		margin-bottom: 5px;
+		[type=radio] {
+			display: none;
+		}
+		[type=radio]:checked ~ label {
+			&::before {
+				background: url(~img/common/radio-full-circle.png) 0 0;
+			}
+		}
+		label {
+			cursor: pointer;
+			&::before {
+				content: "";
+				width: 23px;
+				height: 23px;
+				margin-right: 23px;
+				float: left;
+				position: relative;
+				top: 3px;
+				background: url(~img/common/radio-empty-circle.png) 0 0;
+			}
+		}
+	}
+	&__title {
+		font-size: 18px;
+		font-weight: 700;
+		cursor: pointer;
+		text-transform: uppercase;
+		&::after {
+			content: "";
+			width: 16px;
+			height: 16px;
+			float: right;
+			margin-right: 19px;
+			background: url(~img/common/i-plus-fat.png) no-repeat 0 0;
+		}
+	}
+	&__subs_list {
+		display: none;
+	}
+	&__main-title {
+		font-size: 20px;
+		font-weight: 700;
+		text-align: center;
+		margin-bottom: 12px;
+	}
+	&__item {
+		border: 1px solid #d7e1e3;
+		border-width: 1px 0 0;
+		box-sizing: border-box;
+		padding: 29px 0 20px 29px;
+		&:last-child {
+			border-bottom: 1px solid #d7e1e3;
+		}
+		&.active {
+			.b-defect-type-list__title {
+				&::after {
+					background: url(~img/common/i-minus-fat.png) no-repeat 0 0;
+				}
+			}
+			.b-defect-type-list__subs_list {
+				margin-top: 23px;
+				display: block;
+			}
+		}
+
+		@include grid-column(12, 0);
+		@include grid-column-end();
+	}
+}
+
+#current-form {
+	float: left;
+	width: 100%;
+}

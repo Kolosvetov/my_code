@@ -1,0 +1,233 @@
+<?php
+
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+use Drupal\tarkett_api\TarkettSite;
+use \Drupal\views\ViewExecutable;
+use \Drupal\views\Plugin\views\query\QueryPluginBase;
+
+function tarkett_structure_theme() {
+  return [
+	'structure_index' => ['variables' => ['title' => NULL],],
+    'structure_add_consumer_claim' => ['variables' => ['title' => NULL],],
+    'structure_add_market_claim' => ['variables' => ['title' => NULL],],
+    'structure_add_claim_distributor_defect' => ['variables' => ['title' => NULL],],
+    'structure_add_claim_distributor_logistic' => ['variables' => ['title' => NULL],],
+    'structure_claims_lists' => ['variables' => ['tab' => NULL],],
+    'structure_claims_user_settings' => ['variables' => ['title' => NULL],],
+    'about' => ['variables' => ['title' => NULL],],
+    'structure_solutions_block' => ['variables' => ['node' => NULL,	'current_node' => NULL, 'trebovanie' => NULL],],
+    'structure_market_block' => ['variables' => ['node' => NULL,	'current_node' => NULL],],
+    'structure_distributor_block' => ['variables' => ['node' => NULL,	'current_node' => NULL],],
+    'ajax_defect_list' => ['variables' => ['title' => NULL],],
+    'ajax_defect_form' => ['variables' => ['code' => NULL, 'type' => NULL],],
+    'pdf_defects' => ['variables' => ['head_title' => NULL, 'consumer_fio' => NULL, 'defect_title' => NULL, 'fields' => NULL],],
+    'block_user_header' => ['variables' => ['title' => "Личный кабинет покупателя", 'full_user' => NULL ],],
+    'block_claims_list_tabs' => ['variables' => ['tabs' => NULL, 'current_tab' => NULL],],
+    'block_invoices_form' => ['variables' => [],],
+    'block_defects_list_form' => ['variables' => [], ],
+    'block_answers_block' => ['variables' => ['answer' => NULL, 'form_name' => NULL, 'node' => NULL, 'form_info' => NULL],],
+  ];
+}
+function template_preprocess_structure_claims_user_settings(&$variables) {
+	$variables['full_user'] = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+}
+function template_preprocess_block_user_header(&$variables) {
+	$variables['full_user'] = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+}
+function template_preprocess_ajax_defect_list(&$variables) {
+	$category =  isset($_POST['category']) ? $_POST['category'] : 'Неизвестная категория';
+	$data = \Drupal::service('tarkett_claims.claims_class_defects')->getDefects($category);
+	$variables['defects'] = ($data && isset($data['defects'])) ? $data['defects'] : [];
+	$variables['start'] = ($data && isset($data['start'])) ? $data['start'] : 'case';
+	$variables['count'] = $_POST['count'];
+//	$variables['type']  = $_POST['type'];
+}
+function template_preprocess_ajax_defect_form(&$variables) {
+	$variables['code']  = $_POST['code'];
+	$variables['type']  = $_POST['type'];
+	$variables['count']  = $_POST['count'];
+}
+function tarkett_structure_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+	if ($form_id == "user_login_form") {
+		unset($form['name']['#description']);
+		unset($form['pass']['#description']);
+		$form['name']['#title'] = "Логин";
+		$form['actions']['submit']['#attributes'] = ['class' => ['c-button']];
+	}
+	if ($form_id == "user_pass") {
+		$form['name']['#title'] = "Логин или email адрес";
+		$form['actions']['submit']['#attributes'] = ['class' => ['c-button']];
+	}
+	if ($form_id == 'views_exposed_form') {
+//		if (isset($form['field_claims_type_value'])) {
+//			var_dump($form);
+//			die;
+//		}
+//		if (isset($form['field_market_status_target_id_1'])) {
+//			var_dump($form['field_market_status_target_id_1']['#options']);
+//			die;
+//		}
+		
+	}
+	if ($form_id == 'node_obrasenie_pretenzia_edit_form') {
+		
+		
+		$form['distributor_tab'] = [
+            '#type' => 'vertical_tabs',
+		];
+		$form['all_fieldset'] = [
+			'#type' => 'details',
+			'#title' => "Доп. поля",
+			'#group' => 'distributor_tab',
+		];
+		$form['product_fieldset'] = [
+			'#type' => 'details',
+			'#title' => "Данные по товару",
+			'#group' => 'distributor_tab',
+		];
+		$form['distributor_fieldset'] = [
+			'#type' => 'details',
+			'#title' => "Поля дистрибьютора",
+			'#group' => 'distributor_tab',
+		];
+		$form['magazin_fieldset'] = [
+			'#type' => 'details',
+			'#title' => "Поля магазина",
+			'#group' => 'distributor_tab',
+		];
+		$form['consumer_fieldset'] = [
+			'#type' => 'details',
+			'#title' => "Поля покупателя",
+			'#group' => 'distributor_tab',
+		];
+		
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_consumer_fio', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_consumer_phone', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_consumer_email', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_buy_place', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_buy_date', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_market_name', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_check_num', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_buy_place_city', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_buy_place_home_num', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_buy_place_corp_num', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_buy_place_street', $form['consumer_fieldset']);
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_check_image', $form['consumer_fieldset']);
+		
+//		$form['consumer_fieldset'] = array_element_move($form, 'field_check_image', $form['consumer_fieldset']);
+		$form['distributor_fieldset'] = array_element_move($form, 'field_d_claim_type', $form['distributor_fieldset']);
+		$form['distributor_fieldset'] = array_element_move($form, 'field_d_can_show', $form['distributor_fieldset']);
+		
+		$form['all_fieldset'] = array_element_move($form, 'field_claims_date', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_claims_type', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_claims_status', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_claims_resenia_po_obraseni', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_claims_dannye_magazina', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_privazka_magazina', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_privazka_distributor', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_dannye_distributora', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_trebovanie', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_consumer_status', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_status_processa_u_distribu', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_market_status', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_dannye_pokupatela', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_agent_visit', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_sample_request_date', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_sample_test_date', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_sample_request', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_process_uid', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_agent_visit_date', $form['all_fieldset']);
+		$form['all_fieldset'] = array_element_move($form, 'field_agent_visit_result', $form['all_fieldset']);
+		unset($form['field_privazka_distributor_test']);
+		
+		$form['product_fieldset'] = array_element_move($form, 'field_product_name', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_count_all', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_count_all_ez', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_count_bad', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_count_bad_ez', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_price', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_can_show', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_address_full', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_address_region', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_address_city', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_address', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_defects', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_condition', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_defect_text', $form['product_fieldset']);
+		$form['product_fieldset'] = array_element_move($form, 'field_product_cat', $form['product_fieldset']);
+		
+		
+	}
+}
+
+function array_element_move(&$from, $key, $to) {
+	$to[$key] = $from[$key];
+	unset($from[$key]);
+	return $to;
+}
+
+// Прерываем "замкнутый круг" автомагической авторизации
+function tarkett_structure_user_logout() {
+	$host = trim($_SERVER['HTTP_HOST'], 'www.');
+	$intra = str_replace("claims.tarkett.ru", "", $host);
+//	if ($intra != "") {
+		$host = str_replace("claims", "", $host);
+//	}
+	if (isset($_COOKIE['ci_session_id'])) {
+		setcookie('ci_session_id', '', 0, '/', $host);
+	}
+	if (isset($_COOKIE['runewci_sessions_standart'])) {
+		setcookie('runewci_sessions_standart', '', 0, '/', $host);
+	}
+	if (isset($_COOKIE['last_visit'])) {
+		setcookie('last_visit', '', 0, '/', $host);
+	}
+	if (isset($_COOKIE['uid'])) {
+		setcookie('uid', '', 0, '/', $host);
+	}
+	if (isset($_COOKIE['contactuid'])) {
+		setcookie('contactuid', '', 0, '/', $host);
+	}
+
+
+}
+
+// Пытаемся починить поиск и включить название в поиск по номеру
+function tarkett_structure_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+	// Работаем с фильтром на списке обращений
+	$view_name = $view->id();
+	if (!in_array($view_name, ['distributor_spisok_obrasenii', 'prodavec_spisok_obrasenii', 'pokupatel_spisok_obrasenii'])) {
+		return;
+	}
+	// Нам нужен номер обращения
+	$claim_id = $view->exposed_raw_input['nid'];
+	if (!is_numeric($claim_id) || (0 >= $claim_id)) {
+		return;
+	}
+
+	foreach ($query->where as $group_index => &$cond_group) {
+		foreach ($cond_group['conditions'] as $cond_index => &$condition) {
+			if ('node_field_data.nid' === $condition['field']) {
+				break;
+			}
+		}
+		array_splice($cond_group['conditions'], $cond_index, 1);
+		array_splice($query->where, $group_index, 0, [
+			[
+				'conditions' => [
+					$condition,
+					[
+						'field' => 'node_field_data.title',
+						'value' => '%№%' . $condition['value'] . '% - %',
+						'operator' => 'like',
+					],
+				],
+				'args' => [],
+				'type' => 'OR',
+			]
+		]);
+		break;
+	}
+}

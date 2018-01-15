@@ -1,0 +1,37 @@
+@import "~style";
+@import "~style/_sprite";
+
+.c-list-with-head {
+	& > div {
+		@include grid-column(12, 0);
+
+		margin-bottom: 30px;
+
+		label {
+			font-size: 24px;
+			color: $color-green-x-light;
+			text-transform: uppercase;
+			display: inline-block;
+			margin-bottom: 20px;
+		}
+
+		&::after {
+			content: "";
+			width: 100%;
+			height: 1px;
+			display: block;
+			border-bottom: 1px dashed $color-l-grey;
+			margin-top: 20px;
+		}
+
+		&:nth-child(2n+1) {
+			clear: both;
+		}
+
+		@include breakpoint(xxlarge) {
+			@include grid-column(6, 0);
+
+			padding-right: 20px;
+		}
+	}
+}

@@ -1,0 +1,30 @@
+<?php
+use Drupal\tarkett_api\TarkettSite;
+use \Drupal\Core\Url;
+function tarkett_api_theme()
+{
+	return array(
+		'index' => array(
+			'variables' => array(
+				'title' => NULL,
+				'result' => NULL
+			),
+		),
+	);
+}
+
+function tarkett_api_form_alter(&$form, $form_state, $form_id)
+{
+	switch ($form_id) {
+		case 'user_login_form':
+			$form['actions']['submit']['#ajax'] = [
+				'url' => Url::fromRoute('tarkett_structure.ajax.login'),
+				'event' => 'click',
+				'progress' => [
+					'type' => 'throbber',
+					'message' => "Авторизация",
+				],
+			];
+		break;
+	}
+}

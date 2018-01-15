@@ -1,0 +1,27 @@
+<div class="b-wrapper">
+    <div class="b-top">
+        <h3 class="b-top__title">{{ title|raw }}</h3>
+        <div class="b-top-info">
+			<div class="b-top-info__left-part">
+{% if (user.roles.1 == 'magazin') or (user.roles.1 == 'distributor') %}
+				<div class="b-top-info__company_name">{{ full_user.name.value }}</div>
+{% endif %}
+				<div class="b-top-info__name">{{ full_user.field_user_fio.value }}</div>
+			</div>
+            <div class="b-top-info__logo"{% if full_user.user_picture.entity.fileuri %} style="background: url({{ file_url(full_user.user_picture.entity.fileuri) }}) center center no-repeat;"{% endif %}></div>
+            <div class="b-top-info__right-part">
+{% if (user.roles.1 == 'magazin') or (user.roles.1 == 'distributor') %}
+	{% if full_user.field_adres.value %}
+				<div class="b-top-info__address">{{ full_user.field_adres.value }}</div>
+	{% endif %}
+{% endif %}
+{% if full_user.field_user_phone.value %}
+                <div class="b-top-info__phone">{{ full_user.field_user_phone.value }}</div>
+{% endif %}
+{% if 'pokupatel' == user.roles.1 %}
+				<div class="b-top-info__mail"><a href="mailto:{{ full_user.field_user_email.value }}">{{ full_user.field_user_email.value }}</a></div>
+{% endif %}
+            </div>
+        </div>
+    </div>
+</div>

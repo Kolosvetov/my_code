@@ -1,0 +1,148 @@
+tarkett_structure.structure_index:
+  path: 'its_front_page_baby'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::structureIndex'
+    _title: 'Главная'
+  requirements:
+    _access: 'TRUE'
+tarkett_structure.add_claim:
+  path: 'add_consumer_claim'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::add_consumer_claim'
+    _title: 'Новое обращение/претензия Покупателя'
+  requirements:
+    _access: 'TRUE'
+tarkett_structure.add_claim_market:
+  path: 'add_market_claim'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::add_market_claim'
+    _title: 'Новая претензия Магазина'
+  requirements:
+    _access: 'TRUE'
+
+tarkett_structure.add_claim_distributor_defect:
+  path: 'add_claim_distributor_defect'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::add_claim_distributor_defect'
+    _title: 'Новая претензия Дистрибьютора'
+  requirements:
+    _access: 'TRUE'
+tarkett_structure.add_claim_distributor_logistic:
+  path: 'add_claim_distributor_logistic'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::add_claim_distributor_logistic'
+    _title: 'Hello world!'
+  requirements:
+    _access: 'TRUE'
+
+tarkett_structure.claims_lists_pokupatel:
+  path: 'claims_lists_pokupatel/{tab}'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::lists'
+    _title: 'Обращения и претензии Покупателя'
+  requirements:
+    _custom_access:  '\Drupal\tarkett_structure\Controller\Controller::access'
+tarkett_structure.claims_lists_pokupatel_notab:
+  path: 'claims_lists_pokupatel'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::lists'
+    _title: 'Обращения и претензии Покупателя'
+  requirements:
+    _custom_access:  '\Drupal\tarkett_structure\Controller\Controller::access'
+tarkett_structure.claims_lists_magazin:
+  path: 'claims_lists_magazin/{tab}'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::lists'
+    _title: 'Обращения и претензии Магазина'
+  requirements:
+    _custom_access:  '\Drupal\tarkett_structure\Controller\Controller::access'
+tarkett_structure.claims_lists_magazin_notab:
+  path: 'claims_lists_magazin'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::lists'
+    _title: 'Обращения и претензии Магазина'
+  requirements:
+    _custom_access:  '\Drupal\tarkett_structure\Controller\Controller::access'
+tarkett_structure.claims_lists_distributor:
+  path: 'claims_lists_distributors/{tab}'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::lists'
+    _title: 'Обращения и претензии Дистрибьютора'
+  requirements:
+    _custom_access:  '\Drupal\tarkett_structure\Controller\Controller::access'
+tarkett_structure.claims_lists_distributor_notab:
+  path: 'claims_lists_distributors'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::lists'
+    _title: 'Обращения и претензии Дистрибьютора'
+  requirements:
+    _custom_access:  '\Drupal\tarkett_structure\Controller\Controller::access'
+tarkett_structure.user_settings:
+  path: 'user_settings'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Controller::user_settings'
+    _title: 'Пользовательские настройки'
+  requirements:
+    _access: 'TRUE'
+
+
+
+
+tarkett_structure.ajax.defect_list:
+  path: 'ajax/get_defect_list'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Ajax::defect_list'
+    _title: 'Служебная: Список дефектов'
+  requirements:
+    _access: 'TRUE'
+tarkett_structure.ajax.check_email:
+  path: 'ajax/check_email'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Ajax::check_email'
+    _title: 'Служебная: проверка электронной почты'
+  requirements:
+    _access: 'TRUE'
+tarkett_structure.ajax.distributors_defects_list:
+  path: 'ajax/distributors_defects_list'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Ajax::distributors_defects_list'
+    _title: 'Служебная: Список дефектов для Дистрибьютора'
+  requirements:
+    _access: 'TRUE'
+tarkett_structure.ajax.distributors_invoices:
+  path: 'ajax/distributors_invoices'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Ajax::distributors_invoices'
+    _title: 'Служебная: Счета-фактуры'
+  requirements:
+    _access: 'TRUE'
+tarkett_structure.ajax.defect_form:
+  path: 'ajax/get_defect_form'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Ajax::defect_form'
+    _title: 'Служебная: Форма выбора дефекта'
+  requirements:
+    _access: 'TRUE'
+tarkett_structure.ajax.defect_add:
+  path: 'ajax/add_defect'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Ajax::add_defect'
+    _title: 'Служебная: Добавление дефекта'
+  requirements:
+    _access: 'TRUE'
+tarkett_structure.ajax.login:
+  path: 'ajax/login'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Ajax::login'
+    _title: 'Служебная: хитрая авторизация'
+  requirements:
+    _access: 'TRUE'
+
+
+tarkett_structure.import.product:
+  path: 'import/producttypes'
+  defaults:
+    _controller: '\Drupal\tarkett_structure\Controller\Ajax::import_producttypes'
+    _title: 'Служебная: Импорт типов продукции'
+  requirements:
+    _access: 'TRUE'

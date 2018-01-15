@@ -1,0 +1,53 @@
+@import "~style";
+
+.b-video {
+	color: #aabdc3;
+	font-size: 28px;
+	font-weight: 400;
+	line-height: 28px;
+
+	&__item {
+		box-sizing: border-box;
+		padding: 12px;
+		padding-right: 12px;
+		position: relative;
+		border: 1px solid $main-border-color;
+		width: 200px;
+		height: 136px;
+		overflow: hidden;
+		margin: 5px auto;
+		> div {
+			display: inline-block;
+		}
+		&.clone {
+			display: none;
+		}
+	}
+
+	&__edit,
+	&__delete {
+		width: 28px;
+		height: 28px;
+		cursor: pointer;
+		position: absolute;
+		right: 8px;
+	}
+
+	&__edit {
+		background: url(~img/sprite/png/i-edit.png) 0 0;
+		top: 52px;
+		&:hover,
+		&:focus {
+			background-image: url(~img/sprite/png/i-edit-active.png);
+		}
+	}
+
+	&__delete {
+		background: url(~img/sprite/png/i-trash.png) 0 0;
+		top: 12px;
+		&:hover,
+		&:focus {
+			background-image: url(~img/sprite/png/i-trash-active.png);
+		}
+	}
+}

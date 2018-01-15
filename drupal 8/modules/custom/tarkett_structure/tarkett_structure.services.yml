@@ -1,0 +1,5 @@
+services:
+    tarkett_structure.claims_blocks_block:
+            class: Drupal\tarkett_structure\Blocks\Block
+    tarkett_structure.claims_utils_user:
+            class: Drupal\tarkett_structure\Utils\User

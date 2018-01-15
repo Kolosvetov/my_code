@@ -1,0 +1,10 @@
+@import "~style";
+
+@media screen and (max-width: #{$mobile-width-limit}) {
+	.b-head {
+		padding: 26px $mobile-border-margin;
+		&__h1 {
+			font-size: 30px;
+		}
+	}
+}

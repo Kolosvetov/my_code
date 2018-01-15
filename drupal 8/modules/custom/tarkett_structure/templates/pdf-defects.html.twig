@@ -1,0 +1,16 @@
+<h1>{{ head_title }}</h1>
+{% if consumer_fio %}
+<p>ФИО покупателя: {{ consumer_fio }}</p>
+{% endif %}
+<h2>{{ defect_title }}</h2>
+{% for field in fields %}
+	{% if field.value %}
+<p>
+		{% if 'Укажите значение:' == field.title %}
+	Значение: {{ field.value }}
+		{% else %}
+	{{ field.title }} {{ field.value|lower }}
+		{% endif %}
+</p>
+	{% endif %}
+{% endfor %}

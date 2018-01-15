@@ -1,0 +1,16 @@
+@include font-face("Open Sans", "~font/open_sans-normal", $file-formats: woff);
+@include font-face("Open Sans", "~font/normal-italic", 400, italic, $file-formats: woff2 woff);
+@include font-face("ProximaNova", "~font/hinted-ProximaNova-Bold", 800, normal, $file-formats: woff2 woff);
+@include font-face("ProximaNova", "~font/hinted-ProximaNova-Regular", 400, normal, $file-formats: woff2 woff);
+@include font-face("Roboto", "~font/roboto/Roboto-Regular", 400, normal, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-Italic", 400, italic, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-Light", 300, normal, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-LightItalic", 300, italic, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-Thin", 100, normal, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-ThinItalic", 100, italic, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-Medium", 500, normal, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-MediumItalic", 500, italic, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-Bold", 700, normal, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-BoldItalic", 700, italic, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-Black", 900, normal, $file-formats: woff eot ttf svg);
+@include font-face("Roboto", "~font/roboto/Roboto-BlackItalic", 900, italic, $file-formats: woff eot ttf svg);
